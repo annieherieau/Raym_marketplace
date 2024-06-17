@@ -6,9 +6,6 @@ import { Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
 export default function Login() {
-  if (useAtomValue(isAuthAtom)) {
-    return <Navigate to="/" />;
-  }
   const [notice, setNotice] = useAtom(noticeAtom);
 
   // soumission formulaire + requete
@@ -30,7 +27,7 @@ export default function Login() {
         const { data, status } = await response.json();
         if (status.code == 200) {
           setNotice({ type: "success", message: status.message });
-          
+
           // creéation du cookie
           const cookieData = {
             token: getTokenFromResponse(response),
@@ -51,36 +48,37 @@ export default function Login() {
     }
   };
 
-  if (notice.type == "success") {
+  if (notice.type == "success" || useAtomValue(isAuthAtom)) {
     return <Navigate to="/" />;
+  } else {
+    return (
+      <section>
+        <h1>Connexion</h1>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              required
+              name="email"
+              id="email"
+              autoComplete="email"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Mot de passe</label>
+            <input type="password" required name="password" id="password" />
+          </div>
+          <div className="form-group">
+            <input type="checkbox" name="remember_me" id="remember_me" />
+            <label htmlFor="remember_me">Se souvenir de moi</label>
+          </div>
+          <button type="submit">Se connecter</button>
+        </form>
+        <Link to="/register">Créer un compte</Link>
+        <br />
+        <Link to="/password/forgot">Mot de passe oublié</Link>
+      </section>
+    );
   }
-  return (
-    <section>
-      <h1>Connexion</h1>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            required
-            name="email"
-            id="email"
-            autoComplete="email"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Mot de passe</label>
-          <input type="password" required name="password" id="password" />
-        </div>
-        <div className="form-group">
-          <input type="checkbox" name="remember_me" id="remember_me" />
-          <label htmlFor="remember_me">Se souvenir de moi</label>
-        </div>
-        <button type="submit">Se connecter</button>
-      </form>
-      <Link to="/register">Créer un compte</Link>
-      <br />
-      <Link to="/password/forgot">Mot de passe oublié</Link>
-    </section>
-  );
 }

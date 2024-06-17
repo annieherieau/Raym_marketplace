@@ -6,10 +6,13 @@ import ForgotPassword from "../components/ForgotPassword";
 
 export default function Password() {
   const { action } = useParams();
+  const isLoggedIn = useAtomValue(isAuthAtom);
 
-  if (useAtomValue(isAuthAtom)) {
-    return <Navigate to="/" />;
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      redirectTo("/");
+    }
+  }, [isLoggedIn]);
   return (
     <div>
       {action == "forgot" && <ForgotPassword />}

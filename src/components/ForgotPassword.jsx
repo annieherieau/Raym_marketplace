@@ -3,10 +3,10 @@ import { getFormData } from "../app/utils";
 import { buildRequestOptions } from "../app/api";
 import { useAtom } from "jotai";
 import { noticeAtom } from "../app/atoms";
-import { Navigate } from "react-router-dom";
 
 // Formulaire mot de passe oublié
 export default function ForgotPassword() {
+  const isLoggedIn = useAtomValue(isAuthAtom);
   const [notice, setNotice] = useAtom(noticeAtom);
 
   // soumission formulaire + requete singin
@@ -38,9 +38,11 @@ export default function ForgotPassword() {
       console.log(error.message);
     }
   };
-  if (notice.type == "success") {
-    return <Navigate to="/login" />;
-  }
+  useEffect(() => {
+    if (isLoggedIn || notice.type == "success") {
+      redirectTo("/");
+    }
+  }, [isLoggedIn, notice]);
   return (
     <section>
       <h1>Mot de passe oublié</h1>

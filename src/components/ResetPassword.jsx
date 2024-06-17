@@ -3,9 +3,9 @@ import { checkPasswords, getFormData } from "../app/utils";
 import { useSearchParams } from "react-router-dom";
 import { useAtom } from "jotai";
 import { noticeAtom } from "../app/atoms";
-import { Navigate } from "react-router-dom";
 
 export default function ResetPassword() {
+  const isLoggedIn = useAtomValue(isAuthAtom);
   const [notice, setNotice] = useAtom(noticeAtom);
   // récupérer le reset_passord_token
   const [searchParams] = useSearchParams();
@@ -42,9 +42,11 @@ export default function ResetPassword() {
     }
   };
 
-  if (notice.type == "success") {
-    return <Navigate to="/" />;
-  }
+  useEffect(() => {
+    if (isLoggedIn || notice.type == "success") {
+      redirectTo("/");
+    }
+  }, [isLoggedIn, notice]);
   return (
     <section>
       <h1>Changez votre mot de passe</h1>

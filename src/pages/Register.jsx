@@ -51,52 +51,52 @@ export default function Register() {
       console.log(error.message);
     }
   };
-
-  if (notice.type == "success") {
+  if (notice.type == "success" || useAtomValue(isAuthAtom)) {
     return <Navigate to="/" />;
+  } else {
+    return (
+      <section>
+        <h1>Créer un compte</h1>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              required
+              name="email"
+              id="email"
+              autoComplete="email"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Mot de passe</label>
+            <input
+              type="password"
+              required
+              name="password"
+              id="password"
+              onChange={checkPasswords}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password_confirmation">
+              Confirmer le Mot de passe
+            </label>
+            <input
+              type="password"
+              required
+              name="password_confirmation"
+              id="password_confirmation"
+              onChange={checkPasswords}
+            />
+          </div>
+          <div className="form-group">
+            <input type="checkbox" name="remember_me" />
+            <label htmlFor="remember_me">Se souvenir de moi</label>
+          </div>
+          <button type="submit">Se connecter</button>
+        </form>
+      </section>
+    );
   }
-  return (
-    <section>
-      <h1>Créer un compte</h1>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            required
-            name="email"
-            id="email"
-            autoComplete="email"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Mot de passe</label>
-          <input
-            type="password"
-            required
-            name="password"
-            id="password"
-            onChange={checkPasswords}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password_confirmation">
-            Confirmer le Mot de passe
-          </label>
-          <input
-            type="password"
-            required
-            name="password_confirmation"
-            id="password_confirmation"
-            onChange={checkPasswords}
-          />
-        </div>
-        <div className="form-group">
-          <input type="checkbox" name="remember_me" />
-          <label htmlFor="remember_me">Se souvenir de moi</label>
-        </div>
-        <button type="submit">Se connecter</button>
-      </form>
-    </section>
-  );
 }

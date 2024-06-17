@@ -1,4 +1,4 @@
-// src/contexts/CartContext.jsx
+// src/components/CartContext.jsx
 import { createContext, useContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
 

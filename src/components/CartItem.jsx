@@ -1,5 +1,6 @@
 // src/components/CartItem.jsx
-import { useCart } from '../contexts/CartContext';
+import PropTypes from 'prop-types';
+import { useCart } from '../components/CartContext';
 
 const CartItem = ({ item }) => {
   const { dispatch } = useCart();
@@ -28,6 +29,16 @@ const CartItem = ({ item }) => {
       <button onClick={handleRemove}>Remove</button>
     </div>
   );
+};
+
+CartItem.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    product: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    quantity: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default CartItem;

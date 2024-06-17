@@ -77,6 +77,9 @@ export default function Header() {
                 <Button component={NavLink} to="/user_settings" color="inherit">
                   Mes informations
                 </Button>
+                <Button component={NavLink} to="/cart" color="inherit">
+                  Mon Panier
+                </Button>
                 <Button onClick={handleLogout} color="inherit">
                   Se déconnecter
                 </Button>

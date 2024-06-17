@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { getFormData } from "../app/utils";
+import { getFormData, redirectTo } from "../app/utils";
 import { buildRequestOptions } from "../app/api";
-import { useAtom } from "jotai";
-import { noticeAtom } from "../app/atoms";
+import { useAtom, useAtomValue } from "jotai";
+import { isAuthAtom, noticeAtom } from "../app/atoms";
+import { useEffect } from "react";
 
 // Formulaire mot de passe oublié
 export default function ForgotPassword() {

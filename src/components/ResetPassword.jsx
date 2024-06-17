@@ -1,8 +1,9 @@
 import { buildRequestOptions } from "../app/api";
-import { checkPasswords, getFormData } from "../app/utils";
+import { checkPasswords, getFormData, redirectTo } from "../app/utils";
 import { useSearchParams } from "react-router-dom";
-import { useAtom } from "jotai";
-import { noticeAtom } from "../app/atoms";
+import { useAtom, useAtomValue } from "jotai";
+import { isAuthAtom, noticeAtom } from "../app/atoms";
+import { useEffect } from "react";
 
 export default function ResetPassword() {
   const isLoggedIn = useAtomValue(isAuthAtom);

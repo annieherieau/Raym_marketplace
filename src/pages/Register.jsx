@@ -1,13 +1,11 @@
 import { useAtom, useAtomValue } from "jotai";
 import { isAuthAtom, noticeAtom } from "../app/atoms";
 import { buildRequestOptions, getTokenFromResponse } from "../app/api";
-import { checkPasswords, createCookie, getFormData } from "../app/utils";
-import { Navigate } from "react-router-dom";
+import { checkPasswords, createCookie, getFormData, redirectTo } from "../app/utils";
+import { useEffect } from "react";
 
 export default function Register() {
-  if (useAtomValue(isAuthAtom)) {
-    return <Navigate to="/" />;
-  }
+  const isLoggedIn = useAtomValue(isAuthAtom);
   const [notice, setNotice] = useAtom(noticeAtom);
 
   const handleSubmit = async (event) => {
@@ -52,9 +50,12 @@ export default function Register() {
     }
   };
 
-  if (notice.type == "success") {
-    return <Navigate to="/" />;
-  }
+  useEffect(() => {
+    if (isLoggedIn || notice.type == "success") {
+      redirectTo("/");
+    }
+  }, [isLoggedIn, notice]);
+
   return (
     <section>
       <h1>Créer un compte</h1>

@@ -29,7 +29,7 @@ export default function Login() {
         const { data, status } = await response.json();
         if (status.code == 200) {
           setNotice({ type: "success", message: status.message });
-          
+
           // creéation du cookie
           const cookieData = {
             token: getTokenFromResponse(response),

@@ -4,11 +4,10 @@ import { useAtom, useAtomValue } from "jotai";
 import { isAuthAtom, noticeAtom } from "../app/atoms";
 import { Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Login() {
-  if (useAtomValue(isAuthAtom)) {
-    return <Navigate to="/" />;
-  }
+  const isLoggedIn = useAtomValue(isAuthAtom)
   const [notice, setNotice] = useAtom(noticeAtom);
 
   // soumission formulaire + requete
@@ -51,9 +50,12 @@ export default function Login() {
     }
   };
 
-  if (notice.type == "success") {
-    return <Navigate to="/" />;
-  }
+  useEffect(()=>{
+    if (isLoggedIn || notice.type=='success'){
+      redirectTo('/')
+    }  
+  },[isLoggedIn, notice])
+
   return (
     <section>
       <h1>Connexion</h1>

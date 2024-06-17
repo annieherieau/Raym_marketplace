@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function NoticeModal() {
   const [notice, setNotice] = useAtom(noticeAtom);
-  const [show, setShow] = useState(notice.message ? true : false);
+  const [show, setShow] = useState(notice.type == 'error' ? true : false);
 
   const handleClose = () => {
     setShow(false);
@@ -13,7 +13,7 @@ export default function NoticeModal() {
   };
 
   useEffect(() => {
-    setShow(notice.message ? true : false);
+    setShow(notice.type == 'error' ? true : false);
   }, [notice]);
 
   if (show) {

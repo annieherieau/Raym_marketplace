@@ -9,7 +9,7 @@ const Cart = () => {
     <div>
       <h2>Mon panier</h2>
       {state.items.length > 0 ? (
-        state.items.map(item => <CartItem key={item.id} item={item} />)
+        state.items.map(product => <CartItem key={product.id} item={product.name} />)
       ) : (
         <p>Votre panier est vide.</p>
       )}

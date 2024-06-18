@@ -35,6 +35,7 @@ export default function Login() {
             token: getTokenFromResponse(response),
             email: data.user.email,
             id: data.user.id,
+            isAdmin: data.user.admin
           };
           createCookie(cookieData, userData.remember_me);
         } else {
@@ -52,7 +53,7 @@ export default function Login() {
 
   useEffect(()=>{
     if (isLoggedIn || notice.type=='success'){
-      redirectTo('/')
+      redirectTo("/")
     }  
   },[isLoggedIn, notice])
 

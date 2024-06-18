@@ -33,6 +33,7 @@ export default function Register() {
             token: getTokenFromResponse(response),
             email: responseData.email,
             id: responseData.id,
+            isAdmin: data.user.admin
           };
           createCookie(cookieData, userData.remember_me);
         } else {

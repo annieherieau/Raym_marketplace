@@ -52,6 +52,10 @@ const endpoints = {
     url: api_url + "/{ressource}/{:id}",
   },
   // CUSTOM ENDPOINTS
+  admin_dashbord: {
+    method: "GET",
+    url: api_url + "/admin/{ressource}"
+  }
 };
 
 // création es paramètres de la requete: options et url

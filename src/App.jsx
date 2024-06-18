@@ -15,7 +15,6 @@ import { loadCookie } from "./app/utils";
 import { CartProvider } from "./components/CartContext";
 import Cart from "./components/Cart";
 
-const basename = import.meta.env.VITE_BASENAME;
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
 function App() {
@@ -44,7 +43,7 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter basename={basename}>
+    <BrowserRouter>
       <Header />
       <main>
         <CartProvider>

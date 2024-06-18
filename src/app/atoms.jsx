@@ -5,6 +5,7 @@ export const unknownUser = {
   email: null,
   id: null,
   token: null,
+  isAdmin: false
 };
 export const userAtom = atom(unknownUser);
 export const isAuthAtom = atom((get) =>

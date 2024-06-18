@@ -24,7 +24,7 @@ const endpoints = {
   },
   profile: {
     method: "GET",
-    url: api_url + "/profile",
+    url: api_url + "/my_profile",
   },
   update_user: {
     method: "PUT",

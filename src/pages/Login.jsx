@@ -53,7 +53,7 @@ export default function Login() {
 
   useEffect(()=>{
     if (isLoggedIn || notice.type=='success'){
-      redirectTo('/')
+      redirectTo("/")
     }  
   },[isLoggedIn, notice])
 

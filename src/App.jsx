@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Password from "./pages/Password";
 import NotFound from "./pages/NotFound";
 import UserSettings from "./pages/UserSettings";
+import Dashboard from "./pages/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
@@ -55,6 +56,7 @@ function App() {
             <Route path="/user_settings" element={<UserSettings />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/admin" element={<Dashboard />}/>
           </Routes>
         </CartProvider>
       </main>

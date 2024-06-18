@@ -52,20 +52,26 @@ const endpoints = {
     url: api_url + "/{ressource}/{:id}",
   },
   // CUSTOM ENDPOINTS
-  admin_dashbord: {
+  admin_dashboard: {
     method: "GET",
     url: api_url + "/admin/{ressource}"
   }
 };
 
-// création es paramètres de la requete: options et url
+// création des paramètres de la requête: options et url
 export function buildRequestOptions(
   ressource,
   endpoint,
   data = { id: null, body: null, token: null, isFormData: false }
 ) {
   const { id, body, token, isFormData } = data;
-  const { method, url } = endpoints[endpoint];
+  const endpointConfig = endpoints[endpoint];
+
+  if (!endpointConfig) {
+    throw new Error(`Endpoint ${endpoint} not defined`);
+  }
+
+  const { method, url } = endpointConfig;
   let requestUrl = url.replace("{ressource}", ressource);
   requestUrl = id ? requestUrl.replace("{:id}", id) : requestUrl;
 
@@ -84,6 +90,9 @@ export function buildRequestOptions(
   if (token) {
     options.headers.Authorization = `Bearer ${token}`;
   }
+
+  console.log('Request URL:', requestUrl);
+  console.log('Request Options:', options);
 
   return { url: requestUrl, options: options };
 }

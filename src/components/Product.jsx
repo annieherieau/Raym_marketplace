@@ -6,8 +6,8 @@ const Product = ({ product }) => {
   const { dispatch } = useCart();
 
   const handleAddToCart = () => {
-    const { url, options } = buildRequestOptions('products', 'show', {
-      body: JSON.stringify({ product_id: product.id }),
+    const { url, options } = buildRequestOptions('cart_items', 'create', {
+      body: JSON.stringify({ product_id: product.id, quantity: 1 }),
     });
 
     fetch(url, options)

@@ -60,10 +60,10 @@ const endpoints = {
     method: "GET",
     url: api_url + "/admin/{ressource}"
   },
-  products: { method: "GET", url: api_url + "/products" },
-  create_product: { method: "POST", url: api_url + "/products" },
-  update_product: { method: "PUT", url: api_url + "/products/{:id}" },
-  delete_product: { method: "DELETE", url: api_url + "/products/{:id}" },
+  contact: {
+    method: "POST",
+    url: api_url + "/contact"
+  }
 };
 
 // création des paramètres de la requête: options et url
@@ -99,8 +99,8 @@ export function buildRequestOptions(
     options.headers.Authorization = `Bearer ${token}`;
   }
 
-  console.log('Request URL:', requestUrl);
-  console.log('Request Options:', options);
+  // console.log('Request URL:', requestUrl);
+  // console.log('Request Options:', options);
 
   return { url: requestUrl, options: options };
 }

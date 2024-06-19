@@ -17,6 +17,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { redirectTo, removeCookie } from "../app/utils";
 import { buildRequestOptions } from "../app/api";
 import NoticeModal from "./NoticeModal";
+import { HashLink as Link } from 'react-router-hash-link';
 
 export default function Header() {
   const user = useAtomValue(userAtom);
@@ -60,6 +61,9 @@ export default function Header() {
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <Button component={NavLink} to="/" color="inherit">
                 Accueil
+              </Button>
+              <Button component={Link} to="/#contact" color="inherit">
+                Contact
               </Button>
               {!isLoggedIn && (
                 <div>

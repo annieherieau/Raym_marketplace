@@ -1,28 +1,50 @@
-// src/components/CartItem.jsx
 import PropTypes from 'prop-types';
-import { useCart } from '../components/CartContext';
+import { buildRequestOptions } from '../app/api';
+import { useAtomValue } from 'jotai';
+import { userAtom } from '../app/atoms';
 
-const CartItem = ({ item }) => {
-  const { dispatch } = useCart();
+const CartItem = ({ item, onRemove, onUpdateQuantity }) => {
+  const { token } = useAtomValue(userAtom);
 
   const handleRemove = () => {
-    fetch(`/cart_items/${item.id}`, { method: 'DELETE' })
-      .then(() => dispatch({ type: 'REMOVE_ITEM', payload: item }));
+    const { url, options } = buildRequestOptions('cart_items', 'delete', {
+      id: item.id, 
+      token: token
+    });
+  console.log(url, options);
+    fetch(url, options)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('item not removed');
+        }
+        onRemove(item.id);
+      })
+      .catch(error => console.error('Error:', error));
   };
+  
 
-  const handleChangeQuantity = (quantity) => {
-    fetch(`/cart_items/${item.id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cart_item: { quantity } }),
-    })
-      .then(response => response.json())
-      .then(data => dispatch({ type: 'UPDATE_ITEM', payload: data }));
+  const handleChangeQuantity = (newQuantity) => {
+    const { url, options } = buildRequestOptions('cart_items', 'update', {
+      id: item.id,
+      body: { quantity: newQuantity },
+      token: token
+    });
+  
+    fetch(url, options)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('item not updated');
+        }
+        onUpdateQuantity(newQuantity);
+      })
+      .catch(error => console.error('Error:', error));
   };
+  
 
   return (
     <div>
       <h3>{item.product.name}</h3>
+      <p>{item.id}</p>
       <p>Quantity: {item.quantity}</p>
       <button onClick={() => handleChangeQuantity(item.quantity - 1)}>-</button>
       <button onClick={() => handleChangeQuantity(item.quantity + 1)}>+</button>
@@ -36,9 +58,13 @@ CartItem.propTypes = {
     id: PropTypes.number.isRequired,
     product: PropTypes.shape({
       name: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      id: PropTypes.number.isRequired,
     }).isRequired,
     quantity: PropTypes.number.isRequired,
   }).isRequired,
+  onRemove: PropTypes.func,
+  onUpdateQuantity: PropTypes.func,
 };
 
 export default CartItem;

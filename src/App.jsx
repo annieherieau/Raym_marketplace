@@ -12,7 +12,7 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { unknownUser, userAtom } from "./app/atoms";
 import { loadCookie } from "./app/utils";
-import { CartProvider } from "./components/CartContext";
+// import { CartProvider } from "./components/CartContext";
 import Cart from "./components/Cart";
 
 const basename = import.meta.env.VITE_BASENAME;
@@ -47,7 +47,7 @@ function App() {
     <BrowserRouter basename={basename}>
       <Header />
       <main>
-        <CartProvider>
+        {/* <CartProvider> */}
           <Routes>
             <Route path="/" element={<Home products={products} />} />
             <Route path="/login" element={<Login />} />
@@ -55,9 +55,9 @@ function App() {
             <Route path="/password/:action" element={<Password />} />
             <Route path="/user_settings" element={<UserSettings />} />
             <Route path="*" element={<NotFound />} />
-            <Route path="/cart" element={<Cart />} />
+            <Route path="/cart" element={<Cart/>} />
           </Routes>
-        </CartProvider>
+        {/* </CartProvider> */}
       </main>
       <Footer />
     </BrowserRouter>

@@ -3,7 +3,7 @@ import { buildRequestOptions } from '../app/api';
 import { useAtomValue } from 'jotai';
 import { userAtom } from '../app/atoms';
 
-const CartItem = ({ item, onRemove, onUpdateQuantity }) => {
+const CartItem = ({ item, onRemove, onUpdateQuantity, onActionComplete }) => {
   const { token } = useAtomValue(userAtom);
 
   const handleRemove = () => {
@@ -18,6 +18,7 @@ const CartItem = ({ item, onRemove, onUpdateQuantity }) => {
           throw new Error('item not removed');
         }
         onRemove(item.id);
+        onActionComplete();
       })
       .catch(error => console.error('Error:', error));
   };
@@ -36,6 +37,7 @@ const CartItem = ({ item, onRemove, onUpdateQuantity }) => {
           throw new Error('item not updated');
         }
         onUpdateQuantity(newQuantity);
+        onActionComplete();
       })
       .catch(error => console.error('Error:', error));
   };
@@ -65,6 +67,7 @@ CartItem.propTypes = {
   }).isRequired,
   onRemove: PropTypes.func,
   onUpdateQuantity: PropTypes.func,
+  onActionComplete: PropTypes.func,
 };
 
 export default CartItem;

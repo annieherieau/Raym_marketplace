@@ -4,6 +4,7 @@ import { buildRequestOptions } from '../app/api';
 import { useAtomValue } from "jotai";
 import { userAtom, isAuthAtom } from "../app/atoms";
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
   //const { dispatch } = useCart();
@@ -43,6 +44,7 @@ const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
     <div>
       <h2>{product.name}</h2>
       <p>{product.description}</p>
+      <Link to={`/product/${product.id}`}>View Details</Link>
       {isLoggedIn && !isAdmin && (
         <button onClick={handleAddToCart}>Add to Cart</button>
       )}

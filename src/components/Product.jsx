@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useAtomValue } from "jotai";
 import { userAtom, isAuthAtom } from "../app/atoms";
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
   const { token, isAdmin } = useAtomValue(userAtom);
@@ -46,6 +47,7 @@ const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
       {isLoggedIn && !isAdmin && (
         <button onClick={handleAddToCart}>Add to Cart</button>
       )}
+      <Link to={`/product/${product.id}`}>View Details</Link>
       {isAdmin && (
         <div>
           <button onClick={handleUpdateClick}>Edit</button>

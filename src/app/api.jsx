@@ -59,7 +59,11 @@ const endpoints = {
   admin_dashboard: {
     method: "GET",
     url: api_url + "/admin/{ressource}"
-  }
+  },
+  products: { method: "GET", url: api_url + "/products" },
+  create_product: { method: "POST", url: api_url + "/products" },
+  update_product: { method: "PUT", url: api_url + "/products/{:id}" },
+  delete_product: { method: "DELETE", url: api_url + "/products/{:id}" },
 };
 
 // création des paramètres de la requête: options et url

@@ -15,6 +15,8 @@ import { unknownUser, userAtom } from "./app/atoms";
 import { loadCookie } from "./app/utils";
 // import { CartProvider } from "./components/CartContext";
 import Cart from "./components/Cart";
+import CreateProduct from "./components/CreateProduct";
+import EditProduct from "./components/EditProduct";
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
@@ -57,6 +59,8 @@ function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/admin" element={<Dashboard />}/>
+            <Route path="/products/new" element={<CreateProduct />} />
+            <Route path="/products/:id/edit" element={<EditProduct />} />
           </Routes>
         {/* </CartProvider> */}
       </main>

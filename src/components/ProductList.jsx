@@ -5,12 +5,12 @@ import { useAtomValue } from "jotai";
 import { userAtom } from "../app/atoms";
 
 const ProductList = () => {
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const { token, isAdmin } = useAtomValue(userAtom);
 
   useEffect(() => {
-    const { url, options } = buildRequestOptions('products', 'index');
+    const { url, options } = buildRequestOptions('products', 'index', { token });
     fetch(url, options)
       .then(response => {
         if (!response.ok) {
@@ -23,7 +23,7 @@ const ProductList = () => {
         console.error('Error fetching products:', error);
         setError('Error fetching products. Please try again later.');
       });
-  }, []);
+  }, [token]);
 
   const handleUpdateProduct = async (id, updatedProduct) => {
     const { url, options } = buildRequestOptions('products', 'update', { id, body: updatedProduct, token });
@@ -61,7 +61,7 @@ const ProductList = () => {
   return (
     <div>
       <h2>Products</h2>
-      {products && products.map(product => (
+      {products.map(product => (
         <Product
           key={product.id}
           product={product}

@@ -36,6 +36,11 @@ const Cart = ({ onRemoveItem = () => {}, onUpdateItem = () => {} }) => {
     }
   }, [token]);
 
+
+  const handleActionComplete = () => {
+    fetchCart();
+  };
+
   if (error) {
     return <div>{error}</div>;
   }
@@ -50,6 +55,7 @@ const Cart = ({ onRemoveItem = () => {}, onUpdateItem = () => {} }) => {
             item={item}
             onRemove={() => onRemoveItem(item.id)}
             onUpdateQuantity={(quantity) => onUpdateItem(item.id, quantity)}
+            onActionComplete={handleActionComplete}
           />
         ))
       ) : (
@@ -63,6 +69,7 @@ const Cart = ({ onRemoveItem = () => {}, onUpdateItem = () => {} }) => {
 Cart.propTypes = {
   onRemoveItem: PropTypes.func,
   onUpdateItem: PropTypes.func,
+  onActionComplete: PropTypes.func,
 };
 
 export default Cart;

@@ -17,6 +17,7 @@ import { loadCookie } from "./app/utils";
 import Cart from "./components/Cart";
 import CreateProduct from "./components/CreateProduct";
 import EditProduct from "./components/EditProduct";
+import ProductPage from "./pages/ProductPage";
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
@@ -61,6 +62,7 @@ function App() {
             <Route path="/admin" element={<Dashboard />}/>
             <Route path="/products/new" element={<CreateProduct />} />
             <Route path="/products/:id/edit" element={<EditProduct />} />
+            <Route path="/product/:productId" element={<ProductPage/>} />
           </Routes>
         {/* </CartProvider> */}
       </main>

@@ -9,6 +9,7 @@ const ProductForm = ({ product, onSubmit }) => {
     name: product ? product.name : '',
     description: product ? product.description : '',
     price: product ? product.price : '', // Laisse comme string ici
+    photo: null, // Nouveau champ pour le fichier photo
   });
   const { token } = useAtomValue(userAtom);
 
@@ -17,19 +18,32 @@ const ProductForm = ({ product, onSubmit }) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: files[0] }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const endpoint = product ? 'update' : 'create';
-    const dataToSubmit = {
-      ...formData,
-      price: Number(formData.price) // Convertir en number ici
-    };
+    const dataToSubmit = new FormData();
+    dataToSubmit.append('product[name]', formData.name);
+    dataToSubmit.append('product[description]', formData.description);
+    dataToSubmit.append('product[price]', Number(formData.price));
+    if (formData.photo) {
+      dataToSubmit.append('product[photo]', formData.photo);
+    }
+
     const { url, options } = buildRequestOptions('products', endpoint, {
       id: product ? product.id : undefined,
-      body: dataToSubmit,
       token: token,
     });
+
+    options.body = dataToSubmit;
+    options.headers = {
+      'Authorization': `Bearer ${token}` // Pass the token in the headers
+    };
 
     try {
       const response = await fetch(url, options);
@@ -73,6 +87,14 @@ const ProductForm = ({ product, onSubmit }) => {
           required
         />
       </div>
+      <div>
+        <label>Photo:</label>
+        <input
+          type="file"
+          name="photo"
+          onChange={handleFileChange}
+        />
+      </div>
       <button type="submit">{product ? 'Update' : 'Create'} Product</button>
     </form>
   );
@@ -84,6 +106,7 @@ ProductForm.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
     price: PropTypes.number,
+    photo: PropTypes.object, // Ajout de la prop photo
   }),
   onSubmit: PropTypes.func.isRequired,
 };

@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useAtomValue } from 'jotai';
 import { userAtom, isAuthAtom } from '../app/atoms';
 import { buildRequestOptions } from '../app/api';
+import ProductList from '../components/ProductList';
+import CreateProduct from '../components/CreateProduct';
 
 export default function Dashboard() {
   const user = useAtomValue(userAtom);
@@ -66,6 +68,10 @@ export default function Dashboard() {
           <li key={user.id}>{user.email}</li>
         ))}
       </ul>
+      <h3>Liste des Produits</h3>
+      <ProductList />
+      <h3>Créer un nouveau Produit</h3>
+      <CreateProduct />
     </div>
   );
 }

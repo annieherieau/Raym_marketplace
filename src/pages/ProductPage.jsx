@@ -1,9 +1,14 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAtomValue } from 'jotai';
+import { userAtom, isAuthAtom } from '../app/atoms';
 import { buildRequestOptions } from '../app/api';
+import Comments from '../components/Comments';
 
 const ProductPage = () => {
   const { productId } = useParams();
+  const { token } = useAtomValue(userAtom);
+  const isLoggedIn = useAtomValue(isAuthAtom);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,6 +43,7 @@ const ProductPage = () => {
       {product.photo_url && <img src={product.photo_url} alt={product.name} style={{ width: '300px', height: '300px' }} />}
       <p>{product.description}</p>
       <p>Price: ${product.price}</p>
+      <Comments productId={productId} isLoggedIn={isLoggedIn} token={token} />
     </div>
   );
 };

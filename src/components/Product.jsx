@@ -6,7 +6,7 @@ import { userAtom, isAuthAtom } from "../app/atoms";
 import { useNavigate } from 'react-router-dom';
 
 const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
-  const { dispatch } = useCart();
+  //const { dispatch } = useCart();
   const { token, isAdmin } = useAtomValue(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
   const navigate = useNavigate();
@@ -23,11 +23,11 @@ const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
       .then(response => {
         console.log(response);
         if (response.status !== 201) {
-          throw new Error('Network response was not ok');
+          throw new Error('Item not added to cart');
         }
         return response.json();
       })
-      .then(data => dispatch({ type: 'ADD_ITEM', payload: data }))
+      // .then(data => dispatch({ type: 'ADD_ITEM', payload: data }))
       .catch(error => console.error('Error:', error));
   };
 

@@ -13,7 +13,7 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { unknownUser, userAtom } from "./app/atoms";
 import { loadCookie } from "./app/utils";
-import { CartProvider } from "./components/CartContext";
+// import { CartProvider } from "./components/CartContext";
 import Cart from "./components/Cart";
 import CreateProduct from "./components/CreateProduct";
 import EditProduct from "./components/EditProduct";
@@ -49,7 +49,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <main>
-        <CartProvider>
+        {/* <CartProvider> */}
           <Routes>
             <Route path="/" element={<Home products={products} />} />
             <Route path="/login" element={<Login />} />
@@ -62,7 +62,7 @@ function App() {
             <Route path="/products/new" element={<CreateProduct />} />
             <Route path="/products/:id/edit" element={<EditProduct />} />
           </Routes>
-        </CartProvider>
+        {/* </CartProvider> */}
       </main>
       <Footer />
     </BrowserRouter>

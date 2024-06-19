@@ -1,11 +1,11 @@
-import { useCart } from '../components/CartContext';
+// import { useCart } from '../components/CartContext';
 import PropTypes from 'prop-types';
 import { buildRequestOptions } from '../app/api';
 import { useAtomValue } from "jotai";
 import { userAtom } from "../app/atoms";
 
 const Product = ({ product }) => {
-  const { dispatch } = useCart();
+  // const { dispatch } = useCart();
   const { token } = useAtomValue(userAtom);
 
   const handleAddToCart = () => {
@@ -22,11 +22,11 @@ const Product = ({ product }) => {
       .then(response => {
         console.log(response);
         if (response.status !== 201) {
-          throw new Error('Network response was not ok');
+          throw new Error('Item not added to cart');
         }
         return response.json();
       })
-      .then(data => dispatch({ type: 'ADD_ITEM', payload: data }))
+      // .then(data => dispatch({ type: 'ADD_ITEM', payload: data }))
       .catch(error => console.error('Error:', error));
   };
 

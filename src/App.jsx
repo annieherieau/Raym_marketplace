@@ -13,7 +13,7 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { unknownUser, userAtom } from "./app/atoms";
 import { loadCookie } from "./app/utils";
-import { CartProvider } from "./components/CartContext";
+// import { CartProvider } from "./components/CartContext";
 import Cart from "./components/Cart";
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
@@ -47,7 +47,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <main>
-        <CartProvider>
+        {/* <CartProvider> */}
           <Routes>
             <Route path="/" element={<Home products={products} />} />
             <Route path="/login" element={<Login />} />
@@ -58,7 +58,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/admin" element={<Dashboard />}/>
           </Routes>
-        </CartProvider>
+        {/* </CartProvider> */}
       </main>
       <Footer />
     </BrowserRouter>

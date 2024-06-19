@@ -52,6 +52,10 @@ const endpoints = {
     url: api_url + "/{ressource}/{:id}",
   },
   // CUSTOM ENDPOINTS
+  cart: {
+    method: "GET",
+    url: api_url + "/cart",
+  },
   admin_dashboard: {
     method: "GET",
     url: api_url + "/admin/{ressource}"

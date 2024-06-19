@@ -59,6 +59,10 @@ const endpoints = {
   admin_dashboard: {
     method: "GET",
     url: api_url + "/admin/{ressource}"
+  },
+  contact: {
+    method: "POST",
+    url: api_url + "/contact"
   }
 };
 
@@ -95,8 +99,8 @@ export function buildRequestOptions(
     options.headers.Authorization = `Bearer ${token}`;
   }
 
-  console.log('Request URL:', requestUrl);
-  console.log('Request Options:', options);
+  // console.log('Request URL:', requestUrl);
+  // console.log('Request Options:', options);
 
   return { url: requestUrl, options: options };
 }

@@ -2,12 +2,14 @@
 import PropTypes from 'prop-types';
 import Hero from "../components/Hero";
 import ProductList from "../components/ProductList";
+import Contact from '../components/Contact';
 
 const Home = ({ products }) => {
   return (
     <div>
       <Hero />
       <ProductList products={products} />
+      <Contact />
     </div>
   );
 };

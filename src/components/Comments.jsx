@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { buildRequestOptions } from '../app/api';
 
 const Comments = ({ productId, isLoggedIn, token, currentUser }) => {
@@ -6,6 +7,7 @@ const Comments = ({ productId, isLoggedIn, token, currentUser }) => {
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(1);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -85,6 +87,14 @@ const Comments = ({ productId, isLoggedIn, token, currentUser }) => {
     }
   };
 
+  const handleEditClick = (commentId) => {
+    navigate(`/products/${productId}/comments/${commentId}/edit`);
+  };
+
+  const handleCreateClick = () => {
+    navigate(`/products/${productId}/comments/new`);
+  };
+
   if (error) {
     return <p>{error}</p>;
   }
@@ -100,7 +110,7 @@ const Comments = ({ productId, isLoggedIn, token, currentUser }) => {
             {comment.user && <p>By: {comment.user.email}</p>}
             {isLoggedIn && currentUser && comment.user_id === currentUser.id && (
               <div>
-                <button onClick={() => handleUpdate(comment.id, 'Updated content', 5)}>Edit</button>
+                <button onClick={() => handleEditClick(comment.id)}>Edit</button>
                 <button onClick={() => handleDelete(comment.id)}>Delete</button>
               </div>
             )}
@@ -124,6 +134,7 @@ const Comments = ({ productId, isLoggedIn, token, currentUser }) => {
           <button type="submit">Add Comment</button>
         </form>
       )}
+      {isLoggedIn && <button onClick={handleCreateClick}>Create New Comment</button>}
     </div>
   );
 };

@@ -18,6 +18,8 @@ import Cart from "./components/Cart";
 import CreateProduct from "./components/CreateProduct";
 import EditProduct from "./components/EditProduct";
 import ProductPage from "./pages/ProductPage";
+import EditComment from "./pages/EditComment";
+import CommentForm from "./components/CommentForm";
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
@@ -63,6 +65,7 @@ function App() {
             <Route path="/products/new" element={<CreateProduct />} />
             <Route path="/products/:id/edit" element={<EditProduct />} />
             <Route path="/product/:productId" element={<ProductPage/>} />
+            <Route path="/products/:productId/comments/:commentId/edit" element={<EditComment />} />
           </Routes>
         {/* </CartProvider> */}
       </main>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { buildRequestOptions } from '../app/api';
 
-const Comments = ({ productId, isLoggedIn, token }) => {
+const Comments = ({ productId, isLoggedIn, token, currentUser }) => {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(1);
@@ -49,6 +49,42 @@ const Comments = ({ productId, isLoggedIn, token }) => {
     }
   };
 
+  const handleUpdate = async (commentId, updatedContent, updatedRating) => {
+    const { url, options } = buildRequestOptions('comments', 'update', {
+      id: commentId,
+      body: { content: updatedContent, rating: updatedRating },
+      token,
+    });
+
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error('Failed to update comment');
+      }
+      const updatedComment = await response.json();
+      setComments(comments.map(comment => (comment.id === commentId ? updatedComment : comment)));
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const handleDelete = async (commentId) => {
+    const { url, options } = buildRequestOptions('comments', 'delete', {
+      id: commentId,
+      token,
+    });
+
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error('Failed to delete comment');
+      }
+      setComments(comments.filter(comment => comment.id !== commentId));
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   if (error) {
     return <p>{error}</p>;
   }
@@ -62,6 +98,12 @@ const Comments = ({ productId, isLoggedIn, token }) => {
             <p>{comment.content}</p>
             <p>Rating: {comment.rating}</p>
             {comment.user && <p>By: {comment.user.email}</p>}
+            {isLoggedIn && currentUser && comment.user_id === currentUser.id && (
+              <div>
+                <button onClick={() => handleUpdate(comment.id, 'Updated content', 5)}>Edit</button>
+                <button onClick={() => handleDelete(comment.id)}>Delete</button>
+              </div>
+            )}
           </li>
         ))}
       </ul>

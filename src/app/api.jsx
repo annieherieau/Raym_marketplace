@@ -30,6 +30,10 @@ const endpoints = {
     method: "PUT",
     url: `${api_url}/{ressource}`,
   },
+  current_user: {
+    method: "GET",
+    url: `${api_url}/current_user`,
+  },
   // RESSOURCES ENDPOINTS
   index: {
     method: "GET",

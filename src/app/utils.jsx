@@ -2,8 +2,7 @@ import Cookies from "js-cookie";
 
 // ****** REDIRECTION ******* //
 export function redirectTo(location = "/") {
-  const basename = import.meta.env.VITE_BASENAME;
-  window.location.replace(`${basename}${location}`);
+  window.location.replace(`${location}`);
 }
 
 // ***** FORMULAIRE *****/

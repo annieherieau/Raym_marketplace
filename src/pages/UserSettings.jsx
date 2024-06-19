@@ -8,7 +8,7 @@ import UserForm from "../components/UserForm";
 import { Navigate } from "react-router-dom";
 export default function UserSettings() {
   const [current_user] = useAtom(userAtom);
-  const isAuthenticated = useAtomValue(isAuthAtom);
+  const isLoggedIn = useAtomValue(isAuthAtom);
 
   const [error, setError] = useState(undefined);
   const [userData, setUserData] = useState(undefined);
@@ -40,7 +40,7 @@ export default function UserSettings() {
         .then((response) => handleResponse(response))
         .catch((err) => console.error(err));
     }
-  }, [requestOptions]);
+  }, [requestOptions, updateUser]);
 
   if (userData) {
     return (
@@ -63,14 +63,12 @@ export default function UserSettings() {
         )}
       </section>
     );
-  } else if (isAuthenticated) {
+  } else if (isLoggedIn) {
     return (
       <section>
         <h1>Mes informations</h1>
         {error && <p>{error}</p>}
       </section>
     );
-  } else {
-    return <Navigate to="/login" />;
   }
 }

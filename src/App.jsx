@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Password from "./pages/Password";
 import NotFound from "./pages/NotFound";
 import UserSettings from "./pages/UserSettings";
+import Dashboard from "./pages/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
@@ -15,7 +16,6 @@ import { loadCookie } from "./app/utils";
 // import { CartProvider } from "./components/CartContext";
 import Cart from "./components/Cart";
 
-const basename = import.meta.env.VITE_BASENAME;
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
 function App() {
@@ -44,7 +44,7 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter basename={basename}>
+    <BrowserRouter>
       <Header />
       <main>
         {/* <CartProvider> */}
@@ -55,7 +55,8 @@ function App() {
             <Route path="/password/:action" element={<Password />} />
             <Route path="/user_settings" element={<UserSettings />} />
             <Route path="*" element={<NotFound />} />
-            <Route path="/cart" element={<Cart/>} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/admin" element={<Dashboard />}/>
           </Routes>
         {/* </CartProvider> */}
       </main>

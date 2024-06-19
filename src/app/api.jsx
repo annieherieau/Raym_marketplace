@@ -24,7 +24,7 @@ const endpoints = {
   },
   profile: {
     method: "GET",
-    url: api_url + "/profile",
+    url: api_url + "/my_profile",
   },
   update_user: {
     method: "PUT",
@@ -56,9 +56,13 @@ const endpoints = {
     method: "GET",
     url: api_url + "/cart",
   },
+  admin_dashboard: {
+    method: "GET",
+    url: api_url + "/admin/{ressource}"
+  }
 };
 
-// création es paramètres de la requete: options et url
+// création des paramètres de la requête: options et url
 export function buildRequestOptions(
   ressource,
   endpoint,
@@ -91,8 +95,8 @@ export function buildRequestOptions(
     options.headers.Authorization = `Bearer ${token}`;
   }
 
-  console.log("Request URL:", requestUrl);
-  console.log("Request Options:", options);
+  console.log('Request URL:', requestUrl);
+  console.log('Request Options:', options);
 
   return { url: requestUrl, options: options };
 }

@@ -1,14 +1,14 @@
 import { buildRequestOptions, getTokenFromResponse } from "../app/api";
 import { createCookie, getFormData, redirectTo } from "../app/utils";
 import { useAtom, useAtomValue } from "jotai";
-import { isAuthAtom, noticeAtom } from "../app/atoms";
+import { isAuthAtom, noticeAtom, userAtom } from "../app/atoms"; // Ajout de userAtom
 import { Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function Login() {
-  const isLoggedIn = useAtomValue(isAuthAtom)
+  const isLoggedIn = useAtomValue(isAuthAtom);
   const [notice, setNotice] = useAtom(noticeAtom);
+  const [, setUser] = useAtom(userAtom); // Ajout de setUser
 
   // soumission formulaire + requete
   const handleSubmit = async (event) => {
@@ -27,16 +27,25 @@ export default function Login() {
       const response = await fetch(url, options);
       if (response) {
         const { data, status } = await response.json();
-        if (status.code == 200) {
+        if (status.code === 200) {
           setNotice({ type: "success", message: status.message });
 
-          // creéation du cookie
+          // création du cookie
           const cookieData = {
             token: getTokenFromResponse(response),
             email: data.user.email,
             id: data.user.id,
+            isAdmin: data.user.admin,
           };
           createCookie(cookieData, userData.remember_me);
+
+          // mise à jour de l'atom utilisateur
+          setUser({
+            token: cookieData.token,
+            email: cookieData.email,
+            id: cookieData.id,
+            isAdmin: cookieData.isAdmin,
+          });
         } else {
           setNotice({
             type: "error",
@@ -50,11 +59,11 @@ export default function Login() {
     }
   };
 
-  useEffect(()=>{
-    if (isLoggedIn || notice.type=='success'){
-      redirectTo('/')
-    }  
-  },[isLoggedIn, notice])
+  useEffect(() => {
+    if (isLoggedIn || notice.type === 'success') {
+      redirectTo("/");
+    }
+  }, [isLoggedIn, notice]);
 
   return (
     <section>

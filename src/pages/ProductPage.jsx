@@ -1,6 +1,5 @@
-// src/components/ProductPage.jsx
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; // Assurez-vous que React Router est installé et configuré
+import { useParams } from 'react-router-dom';
 import { buildRequestOptions } from '../app/api';
 
 const ProductPage = () => {
@@ -36,7 +35,7 @@ const ProductPage = () => {
   return (
     <div>
       <h1>{product.name}</h1>
-      <img src={product.imageUrl} alt={product.name} />
+      {product.photo_url && <img src={product.photo_url} alt={product.name} style={{ width: '300px', height: '300px' }} />}
       <p>{product.description}</p>
       <p>Price: ${product.price}</p>
     </div>

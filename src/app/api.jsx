@@ -73,6 +73,23 @@ const endpoints = {
     url: `${api_url}/products/{id}/comments`,
   },
   fetch_comments: { method: "GET", url: `${api_url}/products/{id}/comments` },
+  checkout_create: {
+    method: "POST",
+    url: `${api_url}/checkout/create`,
+  },
+  checkout_create: {
+    method: "POST",
+    url: `${api_url}/checkout/create`,
+  },
+  checkout_success: {
+    method: "GET",
+    url: `${api_url}/checkout/success?session_id={id}`,
+  },
+  checkout_cancel: {
+    method: "GET",
+    url: `${api_url}/checkout/cancel?order_id={id}`,
+  },
+
 };
 
 // création des paramètres de la requête: options et url

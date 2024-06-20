@@ -1,14 +1,16 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react'; // Importez useState ici
+import { useState, useEffect } from 'react';
 import CartItem from './CartItem';
 import { useAtomValue } from 'jotai';
 import { userAtom } from '../app/atoms';
 import { buildRequestOptions } from '../app/api';
+import '../index.css';
 
 const Cart = ({ onRemoveItem = () => {}, onUpdateItem = () => {} }) => {
   const { token } = useAtomValue(userAtom);
-  const [cartItems, setCartItems] = useState([]); // Utilisez useState pour gérer cartItems
-  const [error, setError] = useState(null); // État pour gérer les erreurs
+  const [cartItems, setCartItems] = useState([]);
+  const [error, setError] = useState(null);
+  const [cartAmount, setCartAmount] = useState(0);
 
   const fetchCart = async () => {
     const { url, options } = buildRequestOptions('cart', 'cart', {
@@ -22,23 +24,41 @@ const Cart = ({ onRemoveItem = () => {}, onUpdateItem = () => {} }) => {
       }
       const data = await response.json();
       console.log('Cart fetched:', data);
-      setCartItems(data); // Mettre à jour cartItems avec les données récupérées
+      setCartItems(data.items);
+      setCartAmount(data.amount);
     } catch (error) {
       console.error('Error fetching cart:', error);
-      setError('Error fetching cart. Please try again later.'); // Définir l'erreur d'état en cas de problème de récupération
+      setError('Error fetching cart. Please try again later.');
     }
   };
 
-  // Appeler fetchCart lorsque le composant est monté ou que token change
   useEffect(() => {
-    if (token) {     
+    if (token) {
       fetchCart();
     }
   }, [token]);
 
-
   const handleActionComplete = () => {
     fetchCart();
+  };
+
+  const handleUpdateCart = async () => {
+    const { url, options } = buildRequestOptions('cart', 'cart_update', {
+      token: token,
+      body: {cart: {action: event.target.id}}});
+
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error('Failed to empty cart');
+      }
+      // Si la suppression est réussie côté serveur, mettez à jour l'état local
+      setCartItems([]);
+    } catch (error) {
+      console.error('Error emptying cart:', error);
+      setError('Error emptying cart. Please try again later.');
+    }
+    setCartAmount(0);
   };
 
   if (error) {
@@ -46,7 +66,7 @@ const Cart = ({ onRemoveItem = () => {}, onUpdateItem = () => {} }) => {
   }
 
   return (
-    <div>
+    <div className="cart-container">
       <h2>Mon panier</h2>
       {cartItems.length > 0 ? (
         cartItems.map(item => (
@@ -59,17 +79,18 @@ const Cart = ({ onRemoveItem = () => {}, onUpdateItem = () => {} }) => {
           />
         ))
       ) : (
-      
-        <p>Votre panier est vide.</p>
+        <h4>Votre panier est vide.</h4>
       )}
+      <div>Total : {cartAmount}</div>
+      <button onClick={handleUpdateCart} id='clear'>Vider le panier</button>
+      <button onClick={handleUpdateCart} id='validate'>Valider le panier</button>
     </div>
   );
 };
 
 Cart.propTypes = {
   onRemoveItem: PropTypes.func,
-  onUpdateItem: PropTypes.func,
-  onActionComplete: PropTypes.func,
+  onUpdateItem: PropTypes.func
 };
 
 export default Cart;

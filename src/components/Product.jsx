@@ -3,6 +3,7 @@ import { useAtomValue } from "jotai";
 import { userAtom, isAuthAtom } from "../app/atoms";
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { buildRequestOptions } from "../app/api";
 
 const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
   const { token, isAdmin } = useAtomValue(userAtom);

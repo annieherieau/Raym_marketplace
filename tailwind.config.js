@@ -1,12 +1,32 @@
-/** @type {import('tailwindcss').Config} */
+import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette';
+import forms from '@tailwindcss/forms';
+
+function addVariablesForColors({ addBase, theme }) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+  addBase({ ":root": newVars });
+}
+
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'chakra-petch': ['"Chakra Petch"', 'sans-serif'],
+      },
+      colors: {
+        palegreen: '#98FB98',
+      },
+    },
   },
-  plugins: [],
+  plugins: [
+    addVariablesForColors,
+    forms,
+  ],
 }
-

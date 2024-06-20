@@ -80,6 +80,10 @@ const endpoints = {
     method: "GET", 
     url: `${api_url}/products/{id}/comments` 
   },
+  fetch_additional_products: {
+    method: "GET",
+    url: `${api_url}/products/additional`,
+  },
   checkout_create: {
     method: "POST",
     url: `${api_url}/checkout/create`,

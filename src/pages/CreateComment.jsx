@@ -3,9 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAtomValue } from 'jotai';
 import { userAtom } from '../app/atoms';
 import { buildRequestOptions } from '../app/api';
-import CommentForm from './CommentForm';
+import CommentForm from '../components/CommentForm';
 
-const CreateComment = () => {
+const CreateComment = ({ onCommentCreated }) => {
   const { productId } = useParams();
   const { token } = useAtomValue(userAtom);
   const navigate = useNavigate();
@@ -22,6 +22,8 @@ const CreateComment = () => {
       if (!response.ok) {
         throw new Error('Failed to create comment');
       }
+      await response.json();
+      onCommentCreated(); // Appelle la fonction de rappel pour re-fetch les commentaires
       navigate(`/product/${productId}`);
     } catch (error) {
       console.error('Error creating comment:', error);

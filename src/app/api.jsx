@@ -78,9 +78,8 @@ const endpoints = {
   },
   fetch_comments: { 
     method: "GET", 
-    url: `${api_url}/products/{id}/comments`,
+    url: `${api_url}/products/{id}/comments` 
   },
-
   checkout_create: {
     method: "POST",
     url: `${api_url}/checkout/create`,

@@ -60,6 +60,10 @@ const endpoints = {
     method: "GET",
     url: `${api_url}/cart`,
   },
+  cart_update: { 
+    method: "PUT", 
+    url: api_url + "/cart", },
+
   admin_dashboard: {
     method: "GET",
     url: `${api_url}/admin/{ressource}`,
@@ -72,11 +76,11 @@ const endpoints = {
     method: "POST",
     url: `${api_url}/products/{id}/comments`,
   },
-  fetch_comments: { method: "GET", url: `${api_url}/products/{id}/comments` },
-  checkout_create: {
-    method: "POST",
-    url: `${api_url}/checkout/create`,
+  fetch_comments: { 
+    method: "GET", 
+    url: `${api_url}/products/{id}/comments`,
   },
+
   checkout_create: {
     method: "POST",
     url: `${api_url}/checkout/create`,

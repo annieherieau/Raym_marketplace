@@ -1,4 +1,4 @@
-// src/App.jsx
+import React from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -28,6 +28,8 @@ const api_url = import.meta.env.VITE_BACK_API_URL;
 
 function App() {
   const [, setUser] = useAtom(userAtom);
+  const [token, setToken] = useState(localStorage.getItem('token'));
+
   useEffect(() => {
     setUser(loadCookie() ? loadCookie() : unknownUser);
   }, [setUser]);

@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useAtomValue } from "jotai";
 import { userAtom, isAuthAtom } from "../app/atoms";
@@ -5,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { buildRequestOptions } from "../app/api";
 
-const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
-  const { token, isAdmin } = useAtomValue(userAtom);
+const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
+  const user = useAtomValue(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
   const navigate = useNavigate();
 
@@ -15,7 +16,7 @@ const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
 
     const { url, options } = buildRequestOptions('cart_items', 'create', {
       body: { product_id: product.id, quantity: 1 },
-      token: token
+      token: user.token
     });
     console.log(url, options);
     fetch(url, options)
@@ -66,6 +67,7 @@ Product.propTypes = {
     id: PropTypes.number.isRequired,
     photo_url: PropTypes.string, // Ajout de la prop photo_url
   }).isRequired,
+  isAdmin: PropTypes.bool.isRequired, // Ajout de la prop isAdmin
   onUpdateProduct: PropTypes.func,
   onDeleteProduct: PropTypes.func,
 };

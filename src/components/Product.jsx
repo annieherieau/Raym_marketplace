@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useAtomValue } from "jotai";
 import { userAtom, isAuthAtom } from "../app/atoms";
@@ -6,43 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { buildRequestOptions } from "../app/api";
 
-const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
+const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
   const user = useAtomValue(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
   const navigate = useNavigate();
-  const [isAdmin, setIsAdmin] = useState(false); // Nouvel état pour le statut d'administrateur
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchAdminStatus = async () => {
-      if (!isLoggedIn) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const response = await fetch('http://127.0.0.1:3000/admin_check', {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user.token}` // Utiliser le token de l'utilisateur
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to check admin status');
-        }
-
-        const data = await response.json();
-        setIsAdmin(data.admin);
-      } catch (error) {
-        console.error('Error checking admin status:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAdminStatus();
-  }, [isLoggedIn, user.token]);
 
   const handleAddToCart = () => {
     console.log(product);
@@ -72,10 +39,6 @@ const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
     onDeleteProduct(product.id);
   };
 
-  if (loading) {
-    return <div>Loading...</div>; // Afficher un message de chargement pendant la vérification du statut admin
-  }
-
   return (
     <div>
       <h2>{product.name}</h2>
@@ -104,6 +67,7 @@ Product.propTypes = {
     id: PropTypes.number.isRequired,
     photo_url: PropTypes.string, // Ajout de la prop photo_url
   }).isRequired,
+  isAdmin: PropTypes.bool.isRequired, // Ajout de la prop isAdmin
   onUpdateProduct: PropTypes.func,
   onDeleteProduct: PropTypes.func,
 };

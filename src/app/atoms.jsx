@@ -12,6 +12,7 @@ export const isAuthAtom = atom((get) =>
   get(userAtom).id && get(userAtom).token ? true : false
 );
 
+
 // atom Alertes et erreurs
 export const emptyNotice = { message: null, type: null };
 export const noticeAtom = atom(emptyNotice);

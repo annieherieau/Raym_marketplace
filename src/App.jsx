@@ -13,13 +13,16 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { unknownUser, userAtom } from "./app/atoms";
 import { loadCookie } from "./app/utils";
-// import { CartProvider } from "./components/CartContext";
+
 import Cart from "./components/Cart";
 import CreateProduct from "./components/CreateProduct";
 import EditProduct from "./components/EditProduct";
 import ProductPage from "./pages/ProductPage";
 import EditComment from "./pages/EditComment";
 import CommentForm from "./components/CommentForm";
+import OrderPage from "./pages/OrderPage";
+import CheckoutPage from "./components/Checkout";
+
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
@@ -54,18 +57,19 @@ function App() {
       <main>
         {/* <CartProvider> */}
           <Routes>
+            <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Home products={products} />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/password/:action" element={<Password />} />
             <Route path="/user_settings" element={<UserSettings />} />
-            <Route path="*" element={<NotFound />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/admin" element={<Dashboard />}/>
             <Route path="/products/new" element={<CreateProduct />} />
             <Route path="/products/:id/edit" element={<EditProduct />} />
             <Route path="/product/:productId" element={<ProductPage/>} />
             <Route path="/products/:productId/comments/:commentId/edit" element={<EditComment />} />
+            <Route path="/order/:orderId" element={<OrderPage />} />
           </Routes>
         {/* </CartProvider> */}
       </main>

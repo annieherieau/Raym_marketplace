@@ -14,8 +14,8 @@ export default function OrderPage() {
   const [order, setOrder] = useState(null);
   const [orderAmount, setOrderAmount] = useState(0);
   const [error, setError] = useState(null);
-  const [serchParams] = useSearchParams();
-  const action = serchParams.get("action");
+  const [searchParams] = useSearchParams();
+  const action = searchParams.get("action");
 
   const handleResponse = (response) => {
     setOrder(response.items);
@@ -56,6 +56,7 @@ export default function OrderPage() {
 
   useEffect(() => {
     if (token) {
+      // affichage order
       const { url, options } = buildRequestOptions("orders", "show", {
         id: orderId,
         token: token,
@@ -64,6 +65,23 @@ export default function OrderPage() {
         .then((response) => response.json())
         .then((response) => handleResponse(response))
         .catch((err) => setError(err));
+      // requête checkout : si success => passer order en paid=true
+      if (action == "success") {
+        const session_id = searchParams.get("session_id")
+        const { url, options } = buildRequestOptions(
+          null,
+          "checkout_success",
+          {
+            id: session_id,
+            token: token
+          }
+        );
+        // console.log(url_checkout);
+        fetch(url, options)
+          .then((response) => response.json())
+          .then((response) => console.log(response))
+          .catch((err) => console.error(err));
+      }
     }
   }, [token]);
 
@@ -78,10 +96,12 @@ export default function OrderPage() {
         {order.map((item) => (
           <CartItem key={item.id} item={item} cart={false} />
         ))}
-        {action !='success' && (<div>
-          <button onClick={handleCancel}>Annuler</button>
-          <button onClick={handleCheckout}>Payer</button>
-        </div>)}
+        {action != "success" && (
+          <div>
+            <button onClick={handleCancel}>Annuler</button>
+            <button onClick={handleCheckout}>Payer</button>
+          </div>
+        )}
         <Checkout action={action} />
       </div>
     );

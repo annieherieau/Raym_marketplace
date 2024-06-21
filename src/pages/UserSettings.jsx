@@ -5,11 +5,10 @@ import { buildRequestOptions } from "../app/api";
 import { useEffect } from "react";
 import UserInfos from "../components/UserInfos";
 import UserForm from "../components/UserForm";
-import { Navigate } from "react-router-dom";
+
 export default function UserSettings() {
   const [current_user] = useAtom(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
-
   const [error, setError] = useState(undefined);
   const [userData, setUserData] = useState(undefined);
   const [updateUser, setUpdateUser] = useState(false);

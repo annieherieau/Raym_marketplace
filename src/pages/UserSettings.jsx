@@ -5,12 +5,10 @@ import { buildRequestOptions } from "../app/api";
 import { useEffect } from "react";
 import UserInfos from "../components/UserInfos";
 import UserForm from "../components/UserForm";
-import { useNavigate } from "react-router-dom";
 
 export default function UserSettings() {
   const [current_user] = useAtom(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
-  const navigate = useNavigate(); // Utilisation de useNavigate pour la redirection
   const [error, setError] = useState(undefined);
   const [userData, setUserData] = useState(undefined);
   const [updateUser, setUpdateUser] = useState(false);
@@ -42,12 +40,6 @@ export default function UserSettings() {
         .catch((err) => console.error(err));
     }
   }, [requestOptions, updateUser]);
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/'); // Redirige vers homepage si pas connecté
-    }
-  }, [isLoggedIn]);
 
   if (userData) {
     return (

@@ -21,6 +21,8 @@ import ProductPage from "./pages/ProductPage";
 import EditComment from "./pages/EditComment";
 import CommentForm from "./components/CommentForm";
 import OrderPage from "./pages/OrderPage";
+import CheckoutPage from "./components/Checkout";
+
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 

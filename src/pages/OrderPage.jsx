@@ -1,25 +1,59 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAtomValue } from "jotai";
-import { userAtom, isAuthAtom } from "../app/atoms";
+import { userAtom } from "../app/atoms";
 import { buildRequestOptions } from "../app/api";
 import CartItem from "../components/CartItem";
 import { redirectTo } from "../app/utils";
-import { useNavigate } from "react-router-dom";
+import Checkout from "../components/Checkout";
+import { useSearchParams } from "react-router-dom";
 
 export default function OrderPage() {
   const { orderId } = useParams();
   const { token } = useAtomValue(userAtom);
-  const isLoggedIn = useAtomValue(isAuthAtom);
-  const navigate = useNavigate(); // Utilisation de useNavigate pour la redirection
   const [order, setOrder] = useState(null);
   const [orderAmount, setOrderAmount] = useState(0);
   const [error, setError] = useState(null);
+  const [serchParams] = useSearchParams();
+  const action = serchParams.get("action");
 
   const handleResponse = (response) => {
     setOrder(response.items);
     setOrderAmount(response.amount);
   };
+
+  const handleCancel = (e) => {
+    const { url, options } = buildRequestOptions("orders", "delete", {
+      id: orderId,
+      token: token,
+    });
+    fetch(url, options)
+      .then((response) => response.json())
+      .then((response) => {
+        redirectTo("/cart");
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const handleCheckout = (e) => {
+    const { url, options } = buildRequestOptions(
+      "checkout",
+      "checkout_create",
+      {
+        body: {
+          order_id: orderId,
+        },
+        token: token,
+      }
+    );
+    fetch(url, options)
+      .then((response) => response.json())
+      .then((response) => {
+        window.location.replace(response.url);
+      })
+      .catch((err) => console.error(err));
+  };
+
   useEffect(() => {
     if (token) {
       const { url, options } = buildRequestOptions("orders", "show", {
@@ -33,27 +67,22 @@ export default function OrderPage() {
     }
   }, [token]);
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/'); // Redirige vers homepage si pas connecté
-    }
-  }, [isLoggedIn]);
-
-  console.log(order);
   if (error) return <p>{error}</p>;
 
   if (order) {
     return (
       <div>
         <h1>Commande n° {orderId}</h1>
-        {/* <p>Total {order.amount}</p> */}
+        <p>{error ? error : ""}</p>
+        <p>Total {orderAmount}</p>
         {order.map((item) => (
-          <CartItem
-            key={item.id}
-            item={item}
-            cart={false}
-          />
+          <CartItem key={item.id} item={item} cart={false} />
         ))}
+        {action !='success' && (<div>
+          <button onClick={handleCancel}>Annuler</button>
+          <button onClick={handleCheckout}>Payer</button>
+        </div>)}
+        <Checkout action={action} />
       </div>
     );
   }

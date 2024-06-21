@@ -1,34 +1,36 @@
-import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
-import CartItem from './CartItem';
-import { useAtomValue } from 'jotai';
-import { userAtom } from '../app/atoms';
-import { buildRequestOptions } from '../app/api';
-import '../index.css';
+import PropTypes from "prop-types";
+import { useState, useEffect } from "react";
+import CartItem from "./CartItem";
+import { useAtomValue } from "jotai";
+import { userAtom } from "../app/atoms";
+import { buildRequestOptions } from "../app/api";
+import "../index.css";
+import { useNavigate } from "react-router-dom";
 
 const Cart = ({ onRemoveItem = () => {}, onUpdateItem = () => {} }) => {
   const { token } = useAtomValue(userAtom);
   const [cartItems, setCartItems] = useState([]);
   const [error, setError] = useState(null);
   const [cartAmount, setCartAmount] = useState(0);
+  const navigate = useNavigate();
 
   const fetchCart = async () => {
-    const { url, options } = buildRequestOptions('cart', 'cart', {
-      token: token
+    const { url, options } = buildRequestOptions("cart", "cart", {
+      token: token,
     });
 
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
-        throw new Error('Cart not fetched');
+        throw new Error("Cart not fetched");
       }
       const data = await response.json();
-      console.log('Cart fetched:', data);
+      // console.log("Cart fetched:", data);
       setCartItems(data.items);
       setCartAmount(data.amount);
     } catch (error) {
-      console.error('Error fetching cart:', error);
-      setError('Error fetching cart. Please try again later.');
+      console.error("Error fetching cart:", error);
+      setError("Error fetching cart. Please try again later.");
     }
   };
 
@@ -42,22 +44,24 @@ const Cart = ({ onRemoveItem = () => {}, onUpdateItem = () => {} }) => {
     fetchCart();
   };
 
-  const handleUpdateCart = async () => {
-    const { url, options } = buildRequestOptions('cart', 'cart_update', {
-      token: token,
-      body: {cart: {action: event.target.id}}});
-
-    try {
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error('Failed to empty cart');
-      }
-      // Si la suppression est réussie côté serveur, mettez à jour l'état local
-      setCartItems([]);
-    } catch (error) {
-      console.error('Error emptying cart:', error);
-      setError('Error emptying cart. Please try again later.');
+  const handleResponse = (response, action) => {
+    if (action == "validate") {
+      navigate(`/order/${response.order.id}`);
     }
+  };
+  const handleUpdateCart = (event) => {
+    const action = event.target.id;
+    const { url, options } = buildRequestOptions("cart", "cart_update", {
+      token: token,
+      body: { cart: { action: action } },
+    });
+    fetch(url, options)
+      .then((response) => response.json())
+      .then((response) => handleResponse(response, action))
+      .catch((err) =>
+        setError(`Error occured. Please try again later. ${err}`)
+      );
+    setCartItems([]);
     setCartAmount(0);
   };
 
@@ -69,7 +73,7 @@ const Cart = ({ onRemoveItem = () => {}, onUpdateItem = () => {} }) => {
     <div className="cart-container">
       <h2>Mon panier</h2>
       {cartItems.length > 0 ? (
-        cartItems.map(item => (
+        cartItems.map((item) => (
           <CartItem
             key={item.id}
             item={item}
@@ -82,15 +86,23 @@ const Cart = ({ onRemoveItem = () => {}, onUpdateItem = () => {} }) => {
         <h4>Votre panier est vide.</h4>
       )}
       <div>Total : {cartAmount}</div>
-      <button onClick={handleUpdateCart} id='clear'>Vider le panier</button>
-      <button onClick={handleUpdateCart} id='validate'>Valider le panier</button>
+      {cartAmount && (
+        <div>
+          <button onClick={handleUpdateCart} id="clear">
+            Vider le panier
+          </button>
+          <button onClick={handleUpdateCart} id="validate">
+            Valider le panier
+          </button>
+        </div>
+      )}
     </div>
   );
 };
 
 Cart.propTypes = {
   onRemoveItem: PropTypes.func,
-  onUpdateItem: PropTypes.func
+  onUpdateItem: PropTypes.func,
 };
 
 export default Cart;

@@ -4,11 +4,14 @@ import { useAtomValue } from "jotai";
 import { userAtom, isAuthAtom } from "../app/atoms";
 import { buildRequestOptions } from "../app/api";
 import CartItem from "../components/CartItem";
+import { redirectTo } from "../app/utils";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderPage() {
   const { orderId } = useParams();
   const { token } = useAtomValue(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
+  const navigate = useNavigate(); // Utilisation de useNavigate pour la redirection
   const [order, setOrder] = useState(null);
   const [orderAmount, setOrderAmount] = useState(0);
   const [error, setError] = useState(null);
@@ -29,6 +32,12 @@ export default function OrderPage() {
         .catch((err) => setError(err));
     }
   }, [token]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/'); // Redirige vers homepage si pas connecté
+    }
+  }, [isLoggedIn]);
 
   console.log(order);
   if (error) return <p>{error}</p>;

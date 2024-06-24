@@ -83,4 +83,4 @@ const CartItem = ({
 //   cart: PropTypes.boolean
 // };
 
-export default CartItem;
+// export default CartItem;

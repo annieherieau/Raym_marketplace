@@ -7,7 +7,7 @@ import {
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
 import { faAddressCard } from "@fortawesome/free-regular-svg-icons";
-import ShoppingCart from "../../ShoppingCarts/ShoppingCarts";
+import ShoppingCart from "../../ShoppingCart/ShoppingCart";
 import { useAtomValue } from "jotai";
 import { isAuthAtom, userAtom } from "../../../app/atoms";
 import { redirectTo, removeCookie } from "../../../app/utils";
@@ -249,7 +249,7 @@ const Navbar = () => {
       </div>
       {/* fin DROPDOWN MENU */}
       {/* PANIER (CART) */}
-      {isLoggedIn && (<ShoppingCart isOpen={isCartOpen} onClose={handleCartToggle} />)}
+      {isLoggedIn && !isAdmin && (<ShoppingCart isOpen={isCartOpen} onClose={handleCartToggle} />)}
       {/* fin (CART) */}
       {/* MENU VIDEO */}
       <nav

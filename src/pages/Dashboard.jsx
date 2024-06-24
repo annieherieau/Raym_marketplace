@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { userAtom, isAuthAtom } from "../app/atoms";
 import { buildRequestOptions } from "../app/api";
 import ProductList from "../components/ProductList";
 import CreateProduct from "../components/CreateProduct";
 import OrdersList from "../components/OrdersList";
-import { Navigate } from "react-router-dom";
 
 export default function Dashboard() {
   const user = useAtomValue(userAtom);
@@ -14,7 +12,6 @@ export default function Dashboard() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const effectRan = useRef(false);
-  // const navigate = useNavigate(); // Utilisation de useNavigate pour la redirection
 
   useEffect(() => {
     if (effectRan.current === false && isLoggedIn && user.token) {
@@ -57,12 +54,6 @@ export default function Dashboard() {
       effectRan.current = false;
     };
   }, [isLoggedIn, user.token, user.isAdmin]);
-
-  // useEffect(() => {
-  //   if (!isLoggedIn || !user.isAdmin) {
-  //     navigate('/'); // Redirige vers la page 404 si l'utilisateur n'est pas admin
-  //   }
-  // }, [isLoggedIn, user.isAdmin, navigate]);
 
   if (error) {
     return <div>Error: {error}</div>;

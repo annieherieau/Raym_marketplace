@@ -28,7 +28,7 @@ import NoticeModal from "./components/NoticeModal";
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
 function App() {
-  const [, setUser] = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
@@ -69,7 +69,7 @@ function App() {
             <Route path="/password/:action" element={<Password />} />
             <Route path="/my_account" element={<MyAccount />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/admin" element={<Dashboard />}/>
+            <Route path="/admin" element={<Dashboard isAdmin={user.isAdmin}/>}/>
             <Route path="/products/new" element={<CreateProduct />} />
             <Route path="/products/:id/edit" element={<EditProduct />} />
             <Route path="/product/:productId" element={<ProductPage/>} />

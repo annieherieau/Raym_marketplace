@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import CartItem from "./CartItem";
+import CartItem from "./ShoppingCart/CartItem";
 
 export default function OrderCard({ order, error, details = true }) {
   if (order) {

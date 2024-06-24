@@ -67,7 +67,7 @@ export default function CartItem({
             <h3>
               <a href={`product/${item.product.id}`}>{item.product.name}</a>
             </h3>
-            <p className="ml-4">{item.product.price}&nbsp;€</p>
+            <p className="ml-4">{item.price}&nbsp;€</p>
           </div>
           {/* <p className="mt-1 text-sm text-gray-500">
                                       {item.product.color.name}

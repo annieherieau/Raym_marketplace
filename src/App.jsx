@@ -1,7 +1,5 @@
 import React from "react";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Password from "./pages/Password";
@@ -22,7 +20,7 @@ import EditComment from "./pages/EditComment";
 import CommentForm from "./components/CommentForm";
 import OrderPage from "./pages/OrderPage";
 import Menu from "./components/NavCircle/Menu/Menu"; // Correction du chemin
-import Accueil from "./pages/Accueil/Accueil"; // Ajout de l'importation
+import Accueil from "./pages/Home/Home"; // Ajout de l'importation
 import NoticeModal from "./components/NoticeModal";
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
@@ -63,7 +61,6 @@ function App() {
           <Routes>
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Accueil products={products} />} /> {/* Utilisation de Accueil */}
-            <Route path="/home" element={<Home products={products} />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/password/:action" element={<Password />} />

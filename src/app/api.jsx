@@ -4,66 +4,96 @@ const endpoints = {
   // USERS ENDPOINTS
   sign_up: {
     method: "POST",
-    url: api_url + "/{ressource}",
+    url: `${api_url}/{ressource}`,
   },
   sign_in: {
     method: "POST",
-    url: api_url + "/{ressource}/sign_in",
+    url: `${api_url}/{ressource}/sign_in`,
   },
   sign_out: {
     method: "DELETE",
-    url: api_url + "/{ressource}/sign_out",
+    url: `${api_url}/{ressource}/sign_out`,
   },
   forgot_password: {
     method: "POST",
-    url: api_url + "/{ressource}/password",
+    url: `${api_url}/{ressource}/password`,
   },
   reset_password: {
     method: "PUT",
-    url: api_url + "/{ressource}/password",
+    url: `${api_url}/{ressource}/password`,
   },
   profile: {
     method: "GET",
-    url: api_url + "/my_profile",
+    url: `${api_url}/my_profile`,
   },
   update_user: {
     method: "PUT",
-    url: api_url + "/{ressource}",
+    url: `${api_url}/{ressource}`,
+  },
+  current_user: {
+    method: "GET",
+    url: `${api_url}/current_user`,
   },
   // RESSOURCES ENDPOINTS
   index: {
     method: "GET",
-    url: api_url + "/{ressource}",
+    url: `${api_url}/{ressource}`,
   },
   create: {
     method: "POST",
-    url: api_url + "/{ressource}",
+    url: `${api_url}/{ressource}`,
   },
   show: {
     method: "GET",
-    url: api_url + "/{ressource}/{:id}",
+    url: `${api_url}/{ressource}/{id}`,
   },
   update: {
     method: "PUT",
-    url: api_url + "/{ressource}/{:id}",
+    url: `${api_url}/{ressource}/{id}`,
   },
   delete: {
     method: "DELETE",
-    url: api_url + "/{ressource}/{:id}",
+    url: `${api_url}/{ressource}/{id}`,
   },
   // CUSTOM ENDPOINTS
   cart: {
     method: "GET",
-    url: api_url + "/cart",
+    url: `${api_url}/cart`,
   },
+  cart_update: { 
+    method: "PUT", 
+    url: api_url + "/cart", },
+
   admin_dashboard: {
     method: "GET",
-    url: api_url + "/admin/{ressource}"
+    url: `${api_url}/admin/{ressource}`,
   },
   contact: {
     method: "POST",
-    url: api_url + "/contact"
-  }
+    url: `${api_url}/contact`,
+  },
+  create_comment: {
+    method: "POST",
+    url: `${api_url}/products/{id}/comments`,
+  },
+  fetch_comments: { 
+    method: "GET", 
+    url: `${api_url}/products/{id}/comments`,
+  },
+
+  checkout_create: {
+    method: "POST",
+    url: `${api_url}/checkout/create`,
+  },
+  checkout_success: {
+    method: "GET",
+    url: `${api_url}/checkout/success?session_id={id}`,
+  },
+  checkout_cancel: {
+    method: "GET",
+    url: `${api_url}/checkout/cancel?order_id={id}`,
+  },
+
 };
 
 // création des paramètres de la requête: options et url
@@ -81,7 +111,7 @@ export function buildRequestOptions(
 
   const { method, url } = endpointConfig;
   let requestUrl = url.replace("{ressource}", ressource);
-  requestUrl = id ? requestUrl.replace("{:id}", id) : requestUrl;
+  requestUrl = id ? requestUrl.replace("{id}", id) : requestUrl;
 
   const options = {
     method: method,

@@ -1,4 +1,4 @@
-import jumbotronImage from '/src/assets/Images/jumbotron.png';
+import jumbotronImage from '/src/assets/jumbotron.png';
 
 const Jumbotron = () => {
   return (

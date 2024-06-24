@@ -35,7 +35,7 @@ main {
   display: flex;
   align-items: flex-end; 
   justify-content: center;
-  margin-bottom: 2em; 
+  margin-bottom: 0em; 
   margin-top: 2em;
 }
 .accueil-section:nth-child(odd) {
@@ -45,14 +45,14 @@ main {
   background: #3F51B5;
 }
 .accueil-section:nth-child(2) {
-  background: url('../../Images/offR.png') no-repeat center center;
+  background: url('/src/assets/offR.png') no-repeat center center;
   background-size: cover;
 }
 
 
 /* Marge à gauche de la première section */
 .accueil-section:first-of-type {
-  background: url('../../Images/onR.png') no-repeat center center;
+  background: url('/src/assets/onR.png') no-repeat center center;
   background-size: cover;
   margin-left: 2em; 
   border-top-left-radius: 20px; 
@@ -61,7 +61,7 @@ main {
 
 
 .accueil-section:nth-child(3) {
-  background: url('../../Images/hybE.png') no-repeat center center;
+  background: url('/src/assets/hybE.png') no-repeat center center;
   background-size: cover;
   border-top-right-radius: 20px; 
   border-bottom-right-radius: 20px; 
@@ -188,3 +188,4 @@ main {
     margin-top: 1em; /* Ajoutez de la marge pour espacer les sections */
   }
 }
+

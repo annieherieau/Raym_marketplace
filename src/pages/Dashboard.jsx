@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAtomValue } from 'jotai';
-import { userAtom, isAuthAtom } from '../app/atoms';
-import { buildRequestOptions } from '../app/api';
-import ProductList from '../components/ProductList';
-import CreateProduct from '../components/CreateProduct';
+import React, { useEffect, useState, useRef } from "react";
+import { useAtomValue } from "jotai";
+import { userAtom, isAuthAtom } from "../app/atoms";
+import { buildRequestOptions } from "../app/api";
+import ProductList from "../components/ProductList";
+import CreateProduct from "../components/CreateProduct";
+import OrdersList from "../components/OrdersList";
 
 export default function Dashboard() {
   const user = useAtomValue(userAtom);
@@ -12,21 +12,24 @@ export default function Dashboard() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const effectRan = useRef(false);
-  const navigate = useNavigate(); // Utilisation de useNavigate pour la redirection
 
   useEffect(() => {
     if (effectRan.current === false && isLoggedIn && user.token) {
       const fetchUsers = async () => {
         if (!user.isAdmin) {
-          setError('Unauthorized: Must be an Admin user.');
+          setError("Unauthorized: Must be an Admin user.");
           return;
         }
 
-        const { url, options } = buildRequestOptions('users', 'admin_dashboard', {
-          token: user.token
-        });
+        const { url, options } = buildRequestOptions(
+          "users",
+          "admin_dashboard",
+          {
+            token: user.token,
+          }
+        );
 
-        console.log('Fetching users with options:', options);
+        console.log("Fetching users with options:", options);
 
         try {
           const response = await fetch(url, options);
@@ -35,11 +38,11 @@ export default function Dashboard() {
             setUsers(data.data);
           } else {
             setError(`Failed to fetch users: ${data.status.message}`);
-            console.error('Failed to fetch users', data);
+            console.error("Failed to fetch users", data);
           }
         } catch (error) {
-          setError('Error fetching users');
-          console.error('Error fetching users', error);
+          setError("Error fetching users");
+          console.error("Error fetching users", error);
         }
       };
 
@@ -52,12 +55,6 @@ export default function Dashboard() {
     };
   }, [isLoggedIn, user.token, user.isAdmin]);
 
-  useEffect(() => {
-    if (!isLoggedIn || !user.isAdmin) {
-      navigate('/'); // Redirige vers la page 404 si l'utilisateur n'est pas admin
-    }
-  }, [isLoggedIn, user.isAdmin, navigate]);
-
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -65,21 +62,24 @@ export default function Dashboard() {
   if (!Array.isArray(users)) {
     return <div>Unexpected response format</div>;
   }
-
-  return (
-    <div>
-      <h1>Admin Dashboard</h1>
-      <h2>Bienvenue, {user.email}!</h2>
-      <h3>Liste des utilisateurs</h3>
-      <ul>
-        {users.map(user => (
-          <li key={user.id}>{user.email}</li>
-        ))}
-      </ul>
-      <h3>Liste des Produits</h3>
-      <ProductList />
-      <h3>Créer un nouveau Produit</h3>
-      <CreateProduct />
-    </div>
-  );
+  if (user.isAdmin) {
+    return (
+      <div>
+        <h1>Admin Dashboard</h1>
+        <h2>Bienvenue, {user.email}!</h2>
+        <h3>Liste des utilisateurs</h3>
+        <ul>
+          {users.map((user) => (
+            <li key={user.id}>{user.email}</li>
+          ))}
+        </ul>
+        <h3>Liste des Produits</h3>
+        <ProductList />
+        <h3>Créer un nouveau Produit</h3>
+        <CreateProduct />
+        <h3>Liste des commandes</h3>
+        <OrdersList />
+      </div>
+    );
+  }
 }

@@ -49,3 +49,4 @@ export function updateCookie(email) {
 export function removeCookie() {
   Cookies.remove(cookie_name);
 }
+

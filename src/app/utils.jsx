@@ -36,12 +36,12 @@ export function loadCookie() {
   return Cookies.get(cookie_name) ? JSON.parse(Cookies.get(cookie_name)) : null;
 }
 
-export function updateCookie(email) {
-  const data = { ...loadCookie(), email };
+export function updateCookie(value, field = "email") {
+  const data = { ...loadCookie() };
+  data[field] = value;
   Cookies.set(cookie_name, JSON.stringify(data));
 }
 
 export function removeCookie() {
   Cookies.remove(cookie_name);
 }
-

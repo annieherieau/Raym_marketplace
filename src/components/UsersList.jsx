@@ -5,19 +5,26 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 export default function UsersList() {
-  const user = useAtomValue(userAtom);
+  const {token} = useAtomValue(userAtom);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
 
+  const handleResponse =(response)=>{
+    if(response.data){
+      setUsers(response.data)
+    }else{
+      setError(response.status.message)
+    }
+  }
   useEffect(() => {
-    const { url, options } = buildRequestOptions("users", "admin_dashboard", {
-      token: user.token,
+    if(token){const { url, options } = buildRequestOptions("users", "admin_dashboard", {
+      token: token,
     });
     fetch(url, options)
       .then((response) => response.json())
-      .then((response) => setUsers(response.data))
-      .catch((err) => setError(err));
-  }, [user]);
+      .then((response) => handleResponse(response))
+      .catch((err) => setError(err));}
+  }, [token]);
 
   if (!Array.isArray(users)) {
     setError("Unexpected response format");

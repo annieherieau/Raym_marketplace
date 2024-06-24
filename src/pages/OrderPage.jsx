@@ -8,6 +8,7 @@ import { redirectTo } from "../app/utils";
 import Checkout from "../components/Checkout";
 import { useSearchParams } from "react-router-dom";
 import OrderCard from "../components/OrderCard";
+import { Navigate } from "react-router-dom";
 
 export default function OrderPage() {
   const { orderId } = useParams();

@@ -6,15 +6,15 @@ import { useEffect } from "react";
 import UserInfos from "../components/UserInfos";
 import UserForm from "../components/UserForm";
 import OrdersList from "../components/OrdersList";
+import { Navigate } from "react-router-dom";
 
-export default function UserSettings() {
+export default function MyAccount() {
   const [current_user] = useAtom(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [error, setError] = useState(undefined);
   const [userData, setUserData] = useState(undefined);
   const [updateUser, setUpdateUser] = useState(false);
   const [requestOptions, setRequestOptions] = useState(undefined);
-
 
   useEffect(() => {
     // créer les options de la requeste
@@ -62,8 +62,12 @@ export default function UserSettings() {
         {updateUser && (
           <UserForm user={userData} onUpdate={() => setUpdateUser(false)} />
         )}
-        <h1>Mes Commandes</h1>
-        <OrdersList />
+        {!current_user.isAdmin &&
+          <>
+            <h1>Mes Commandes</h1>
+            <OrdersList />
+          </>
+        }
       </section>
     );
   } else if (isLoggedIn) {
@@ -71,13 +75,8 @@ export default function UserSettings() {
       <section>
         <h1>Mes informations</h1>
         {error && <p>{error}</p>}
-        <OrdersList/>
+        <OrdersList />
       </section>
-
     );
-  }else{
-    return(
-      <p>Veuillez vous connecter</p>
-    )
   }
 }

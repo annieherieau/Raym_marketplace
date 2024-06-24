@@ -6,7 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Password from "./pages/Password";
 import NotFound from "./pages/NotFound";
-import UserSettings from "./pages/UserSettings";
+import MyAccount from "./pages/MyAccount";
 import Dashboard from "./pages/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAtom } from "jotai";
@@ -21,9 +21,9 @@ import ProductPage from "./pages/ProductPage";
 import EditComment from "./pages/EditComment";
 import CommentForm from "./components/CommentForm";
 import OrderPage from "./pages/OrderPage";
-import CheckoutPage from "./components/Checkout";
 import Menu from "./components/NavCircle/Menu/Menu"; // Correction du chemin
 import Accueil from "./pages/Accueil/Accueil"; // Ajout de l'importation
+import NoticeModal from "./components/NoticeModal";
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
@@ -56,10 +56,10 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header />
+      {/* <Header /> */}
       <Menu /> {/* Utilisation de NavCircle */}
+      <NoticeModal />
       <main>
-        {/* <CartProvider> */}
           <Routes>
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Accueil products={products} />} /> {/* Utilisation de Accueil */}
@@ -67,7 +67,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/password/:action" element={<Password />} />
-            <Route path="/user_settings" element={<UserSettings />} />
+            <Route path="/my_account" element={<MyAccount />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/admin" element={<Dashboard />}/>
             <Route path="/products/new" element={<CreateProduct />} />
@@ -76,7 +76,6 @@ function App() {
             <Route path="/products/:productId/comments/:commentId/edit" element={<EditComment />} />
             <Route path="/order/:orderId" element={<OrderPage />} />
           </Routes>
-        {/* </CartProvider> */}
       </main>
       <Footer />
     </BrowserRouter>

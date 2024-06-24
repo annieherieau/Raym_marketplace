@@ -202,7 +202,7 @@ const Navbar = () => {
           <li className="header__menu-item"><a href="#">Boutique</a></li>
           <li className="header__menu-item"><a href="#">Configurateur</a></li>
           <li className="header__menu-item"><a href="#">Entretien</a></li>
-          <li className="header__menu-item"><a href="/#contact">Contacts</a></li>
+          <li className="header__menu-item"><a href="/contacts">Contacts</a></li>
         </ul>
       </nav>
     </div>

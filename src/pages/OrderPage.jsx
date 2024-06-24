@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { userAtom } from "../app/atoms";
 import { buildRequestOptions } from "../app/api";
-import CartItem from "../components/CartItem";
 import { redirectTo } from "../app/utils";
 import Checkout from "../components/Checkout";
 import { useSearchParams } from "react-router-dom";

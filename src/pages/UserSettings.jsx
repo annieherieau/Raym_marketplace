@@ -5,6 +5,7 @@ import { buildRequestOptions } from "../app/api";
 import { useEffect } from "react";
 import UserInfos from "../components/UserInfos";
 import UserForm from "../components/UserForm";
+import OrdersList from "../components/OrdersList";
 
 export default function UserSettings() {
   const [current_user] = useAtom(userAtom);
@@ -13,6 +14,7 @@ export default function UserSettings() {
   const [userData, setUserData] = useState(undefined);
   const [updateUser, setUpdateUser] = useState(false);
   const [requestOptions, setRequestOptions] = useState(undefined);
+
 
   useEffect(() => {
     // créer les options de la requeste
@@ -60,6 +62,8 @@ export default function UserSettings() {
         {updateUser && (
           <UserForm user={userData} onUpdate={() => setUpdateUser(false)} />
         )}
+        <h1>Mes Commandes</h1>
+        <OrdersList />
       </section>
     );
   } else if (isLoggedIn) {
@@ -67,7 +71,13 @@ export default function UserSettings() {
       <section>
         <h1>Mes informations</h1>
         {error && <p>{error}</p>}
+        <OrdersList/>
       </section>
+
     );
+  }else{
+    return(
+      <p>Veuillez vous connecter</p>
+    )
   }
 }

@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
 /* ###### Circle Menu ###### */
 
 :root {
@@ -5,8 +8,6 @@
   --clip-x: 50%;
   --clip-y: 50%;
 }
-
-
 
 header {
   position: relative;
@@ -102,11 +103,11 @@ header {
 }
 
 .header__nav[data-active='true'] {
-  animation: reveal 0.7s ease-out forwards;
+  animation: reveal 0.5s ease-out forwards;
 }
 
 .header__nav[data-active='false'] {
-  animation: hide 1.4s ease-out forwards; 
+  animation: hide 0.5s ease-out forwards; 
 }
 
 .header__menu {
@@ -128,15 +129,19 @@ header {
 }
 
 .header__menu-item a {
-  color: rgb(255, 224, 192);
+  color: rgb(74, 255, 170);
   text-decoration: none;
-  font-family: "Chakra Petch", sans-serif;
+  font-family: 'Roboto', sans-serif !important;
   font-weight: 300;
   font-style: normal;
 }
 
 .header__menu-item a:hover {
   font-style: italic;
+}
+
+.no-hover a:hover {
+  font-style: normal; 
 }
 
 * {
@@ -201,7 +206,7 @@ video {
   font-size: 35em;
   line-height: 1;
   font-weight: 900;
-  font-family: 'Archivo Black', sans-serif; 
+  font-family: 'Archivo Black', sans-serif !important; 
   letter-spacing: 0.02em; 
 }
 
@@ -307,7 +312,7 @@ video {
   }
 }
 
-.user-icon:hover {
+.user-icon:hover, .cart-icon:hover {
   animation: zoomBounce 0.3s ease-in-out;
   color: rgba(0, 0, 0, 0.7); 
 }
@@ -327,8 +332,8 @@ video {
   position: absolute;
   top: 72px; 
   right: 14em; 
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
   border: none; 
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -338,6 +343,7 @@ video {
   transform: translateY(-10px);
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
   padding: 0 20px; 
+  font-family: 'Roboto', sans-serif !important;
 }
 
 .dropdown-menu li:first-child {
@@ -348,10 +354,6 @@ video {
   margin-bottom: 10px; 
 }
 
-.dropdown-menu li a {
-  color: white;
-  font-size: 1.5rem;
-}
 
 .dropdown-menu li a:hover {
   background-color: transparent; 
@@ -396,8 +398,9 @@ video {
 
 .dropdown-menu li a {
   text-decoration: none;
-  color: white;
-  font-size: 1.5rem;
+  color: black; 
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif !important;
 }
 
 .dropdown-menu li a:hover {
@@ -412,7 +415,9 @@ video {
 }
 
 .icon-spacing {
+  color: black; /* Couleur des icônes noir */
   margin-right: 8px; 
 }
 
 /* ###### End Navbar ###### */
+

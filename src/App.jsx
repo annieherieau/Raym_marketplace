@@ -21,6 +21,7 @@ import CommentForm from "./components/CommentForm";
 import OrderPage from "./pages/OrderPage";
 import Menu from "./components/NavCircle/Menu/Menu"; // Correction du chemin
 import Accueil from "./pages/Home/Home"; // Ajout de l'importation
+import Contacts from "./pages/Contacts/Contacts"; // Correction de l'importation
 import NoticeModal from "./components/NoticeModal";
 import LegalMentions from "./pages/LegalMentions";
 
@@ -74,6 +75,7 @@ function App() {
             <Route path="/products/:productId/comments/:commentId/edit" element={<EditComment />} />
             <Route path="/order/:orderId" element={<OrderPage />} />
             <Route path="/mentions-legales" element={<LegalMentions />} />
+            <Route path="/contacts" element={<Contacts />} /> {/* Added route for Contacts component */}
           </Routes>
       </main>
       <Footer />

@@ -22,7 +22,8 @@ import EditComment from "./pages/EditComment";
 import CommentForm from "./components/CommentForm";
 import OrderPage from "./pages/OrderPage";
 import CheckoutPage from "./components/Checkout";
-
+import Menu from "./components/NavCircle/Menu/Menu"; // Correction du chemin
+import Accueil from "./pages/Accueil/Accueil"; // Ajout de l'importation
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
@@ -56,11 +57,13 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
+      <Menu /> {/* Utilisation de NavCircle */}
       <main>
         {/* <CartProvider> */}
           <Routes>
             <Route path="*" element={<NotFound />} />
-            <Route path="/" element={<Home products={products} />} />
+            <Route path="/" element={<Accueil products={products} />} /> {/* Utilisation de Accueil */}
+            <Route path="/home" element={<Home products={products} />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/password/:action" element={<Password />} />

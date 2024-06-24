@@ -12,56 +12,14 @@ export default function Dashboard() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const effectRan = useRef(false);
-
-  useEffect(() => {
-    if (effectRan.current === false && isLoggedIn && user.token) {
-      const fetchUsers = async () => {
-        if (!user.isAdmin) {
-          setError("Unauthorized: Must be an Admin user.");
-          return;
-        }
-
-        const { url, options } = buildRequestOptions(
-          "users",
-          "admin_dashboard",
-          {
-            token: user.token,
-          }
-        );
-
-        console.log("Fetching users with options:", options);
-
-        try {
-          const response = await fetch(url, options);
-          const data = await response.json();
-          if (response.ok) {
-            setUsers(data.data);
-          } else {
-            setError(`Failed to fetch users: ${data.status.message}`);
-            console.error("Failed to fetch users", data);
-          }
-        } catch (error) {
-          setError("Error fetching users");
-          console.error("Error fetching users", error);
-        }
-      };
-
-      fetchUsers();
-      effectRan.current = true;
-    }
-
-    return () => {
-      effectRan.current = false;
-    };
-  }, [isLoggedIn, user.token, user.isAdmin]);
+  if (!Array.isArray(users)) {
+    setError("Unexpected response format");
+  }
 
   if (error) {
     return <div>Error: {error}</div>;
   }
 
-  if (!Array.isArray(users)) {
-    return <div>Unexpected response format</div>;
-  }
   if (user.isAdmin) {
     return (
       <div>

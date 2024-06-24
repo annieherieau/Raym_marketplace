@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { useNavigate } from "react-router-dom";
+import { loadCookie } from "./utils";
 // Atom utilisateur
 export const unknownUser = {
   email: null,
@@ -7,7 +7,7 @@ export const unknownUser = {
   token: null,
   isAdmin: false
 };
-export const userAtom = atom(unknownUser);
+export const userAtom = atom(loadCookie() ? loadCookie() : unknownUser);
 export const isAuthAtom = atom((get) =>
   get(userAtom).id && get(userAtom).token ? true : false
 );

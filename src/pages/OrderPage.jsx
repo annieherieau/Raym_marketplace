@@ -3,30 +3,32 @@ import { useParams } from "react-router-dom";
 import { useAtomValue } from "jotai";
 import { userAtom } from "../app/atoms";
 import { buildRequestOptions } from "../app/api";
-import { redirectTo } from "../app/utils";
 import Checkout from "../components/Checkout";
 import { useSearchParams } from "react-router-dom";
 import OrderCard from "../components/OrderCard";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderPage() {
   const { orderId } = useParams();
   const { token, isAdmin } = useAtomValue(userAtom);
   const [order, setOrder] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const action = searchParams.get("action");
 
+  const handleCancelResponse = (response)=>{
+    console.log(response);
+  }
   // Requête d'annulation de le commande (suppression commande et renvoi des produits dans le panier)
   const handleCancel = (e) => {
-    const { url, options } = buildRequestOptions("orders", "delete", {
+    const { url, options } = buildRequestOptions("orders", "destroy", {
       id: orderId,
       token: token,
     });
     fetch(url, options)
       .then((response) => response.json())
-      .then((response) => {
-        redirectTo("/cart");
-      })
+      .then((response) => handleCancelResponse(response))
       .catch((err) => console.error(err));
   };
 

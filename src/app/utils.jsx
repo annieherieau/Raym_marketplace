@@ -1,10 +1,5 @@
 import Cookies from "js-cookie";
 
-// ****** REDIRECTION ******* //
-export function redirectTo(location = "/") {
-  window.location.replace(`${location}`);
-}
-
 // ***** FORMULAIRE *****/
 // récupérer les données d'un formulaire
 export function getFormData(form) {

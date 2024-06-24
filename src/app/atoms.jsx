@@ -13,6 +13,8 @@ export const isAuthAtom = atom((get) =>
 );
 
 export const updateCartAtom = atom(false)
+export const openCartAtom = atom(false)
+
 // atom Alertes et erreurs
 export const emptyNotice = { message: null, type: null };
 export const noticeAtom = atom(emptyNotice);

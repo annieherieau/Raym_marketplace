@@ -8,8 +8,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faAddressCard } from "@fortawesome/free-regular-svg-icons";
 import ShoppingCart from "../../ShoppingCart/ShoppingCart";
-import { useAtomValue } from "jotai";
-import { isAuthAtom, userAtom } from "../../../app/atoms";
+import { useAtom, useAtomValue } from "jotai";
+import { isAuthAtom, openCartAtom, userAtom } from "../../../app/atoms";
 import { removeCookie } from "../../../app/utils";
 import { buildRequestOptions } from "../../../app/api";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,7 @@ const Navbar = () => {
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [isRevealed, setIsRevealed] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useAtom(openCartAtom);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();

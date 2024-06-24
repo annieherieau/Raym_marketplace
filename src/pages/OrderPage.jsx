@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAtomValue } from "jotai";
-import { userAtom } from "../app/atoms";
+import { useAtom, useAtomValue } from "jotai";
+import { openCartAtom, updateCartAtom, userAtom } from "../app/atoms";
 import { buildRequestOptions } from "../app/api";
 import Checkout from "../components/Checkout";
 import { useSearchParams } from "react-router-dom";
@@ -12,17 +12,24 @@ export default function OrderPage() {
   const { orderId } = useParams();
   const { token, isAdmin } = useAtomValue(userAtom);
   const [order, setOrder] = useState(null);
-  const [error, setError] = useState(null);
+  const [, setOpenCart] = useAtom(openCartAtom);
+  const [, setUpdateCart] = useAtom(updateCartAtom);
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
   const [searchParams] = useSearchParams();
   const action = searchParams.get("action");
+  const [paid, setPaid] = useState(false);
 
-  const handleCancelResponse = (response)=>{
+  // traitement de la requete d'annulation
+  const handleCancelResponse = (response) => {
     console.log(response);
-  }
-  // Requête d'annulation de le commande (suppression commande et renvoi des produits dans le panier)
+    setUpdateCart(true);
+    setOpenCart(true);
+    navigate("/my_account");
+  };
+  // Requête d'annulation de la commande (suppression commande et renvoi des produits dans le panier)
   const handleCancel = (e) => {
-    const { url, options } = buildRequestOptions("orders", "destroy", {
+    const { url, options } = buildRequestOptions("orders", "delete", {
       id: orderId,
       token: token,
     });
@@ -57,21 +64,24 @@ export default function OrderPage() {
     } else {
       // console.log(response);
       setOrder(response);
+      setPaid(response.paid)
     }
+  };
+
+  const fetchOrder = async () => {
+    // requête d'affichage de la commande (order)
+    const { url, options } = buildRequestOptions("orders", "show", {
+      id: orderId,
+      token: token,
+    });
+    fetch(url, options)
+      .then((response) => response.json())
+      .then((response) => handleResponse(response))
+      .catch((err) => setError(err));
   };
   useEffect(() => {
     if (token) {
-      // requête d'affichage de la commande (order)
-      const { url, options } = buildRequestOptions("orders", "show", {
-        id: orderId,
-        token: token,
-      });
-      fetch(url, options)
-        .then((response) => response.json())
-        .then((response) => handleResponse(response))
-        .catch((err) => setError(err));
-
-      // requête checkout : si success => passer order en paid=true
+      fetchOrder();
       if (action == "success") {
         const session_id = searchParams.get("session_id");
         const { url, options } = buildRequestOptions(null, "checkout_success", {
@@ -80,7 +90,7 @@ export default function OrderPage() {
         });
         fetch(url, options)
           .then((response) => response.json())
-          .then((response) => console.log(response))
+          .then((response) => setPaid(true))
           .catch((err) => console.error(err));
       }
     }
@@ -91,8 +101,12 @@ export default function OrderPage() {
   if (order) {
     return (
       <div>
-        <OrderCard order={order} error={error} />
-        {!order.paid && !isAdmin && (
+        <OrderCard
+          order={order}
+          paid={paid}
+          error={error}
+        />
+        {!paid && !isAdmin && (
           <div>
             <button onClick={handleCancel}>Annuler</button>
             <button onClick={handleCheckout}>Payer</button>

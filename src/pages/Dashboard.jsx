@@ -5,6 +5,7 @@ import { userAtom, isAuthAtom } from '../app/atoms';
 import { buildRequestOptions } from '../app/api';
 import ProductList from '../components/ProductList';
 import CreateProduct from '../components/CreateProduct';
+import OrdersList from '../components/OrdersList';
 
 export default function Dashboard() {
   const user = useAtomValue(userAtom);
@@ -80,6 +81,8 @@ export default function Dashboard() {
       <ProductList />
       <h3>Créer un nouveau Produit</h3>
       <CreateProduct />
+      <h3>Liste des commandes</h3>
+      <OrdersList />
     </div>
   );
 }

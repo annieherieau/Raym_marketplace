@@ -7,21 +7,17 @@ import CartItem from "../components/CartItem";
 import { redirectTo } from "../app/utils";
 import Checkout from "../components/Checkout";
 import { useSearchParams } from "react-router-dom";
+import OrderCard from "../components/OrderCard";
 
 export default function OrderPage() {
   const { orderId } = useParams();
-  const { token } = useAtomValue(userAtom);
+  const { token, isAdmin } = useAtomValue(userAtom);
   const [order, setOrder] = useState(null);
-  const [orderAmount, setOrderAmount] = useState(0);
   const [error, setError] = useState(null);
   const [searchParams] = useSearchParams();
   const action = searchParams.get("action");
 
-  const handleResponse = (response) => {
-    setOrder(response.items);
-    setOrderAmount(response.amount);
-  };
-
+  // Requête d'annulation de le commande (suppression commande et renvoi des produits dans le panier)
   const handleCancel = (e) => {
     const { url, options } = buildRequestOptions("orders", "delete", {
       id: orderId,
@@ -35,6 +31,7 @@ export default function OrderPage() {
       .catch((err) => console.error(err));
   };
 
+  // requête pour créer le checkout Stripe (page de paiement sécurisée)
   const handleCheckout = (e) => {
     const { url, options } = buildRequestOptions(
       "checkout",
@@ -53,10 +50,17 @@ export default function OrderPage() {
       })
       .catch((err) => console.error(err));
   };
-
+  const handleResponse = (response) => {
+    if (response.error) {
+      setError(response.error);
+    } else {
+      // console.log(response);
+      setOrder(response);
+    }
+  };
   useEffect(() => {
     if (token) {
-      // affichage order
+      // requête d'affichage de la commande (order)
       const { url, options } = buildRequestOptions("orders", "show", {
         id: orderId,
         token: token,
@@ -65,18 +69,14 @@ export default function OrderPage() {
         .then((response) => response.json())
         .then((response) => handleResponse(response))
         .catch((err) => setError(err));
+
       // requête checkout : si success => passer order en paid=true
       if (action == "success") {
-        const session_id = searchParams.get("session_id")
-        const { url, options } = buildRequestOptions(
-          null,
-          "checkout_success",
-          {
-            id: session_id,
-            token: token
-          }
-        );
-        // console.log(url_checkout);
+        const session_id = searchParams.get("session_id");
+        const { url, options } = buildRequestOptions(null, "checkout_success", {
+          id: session_id,
+          token: token,
+        });
         fetch(url, options)
           .then((response) => response.json())
           .then((response) => console.log(response))
@@ -90,13 +90,8 @@ export default function OrderPage() {
   if (order) {
     return (
       <div>
-        <h1>Commande n° {orderId}</h1>
-        <p>{error ? error : ""}</p>
-        <p>Total {orderAmount}</p>
-        {order.map((item) => (
-          <CartItem key={item.id} item={item} cart={false} />
-        ))}
-        {action != "success" && (
+        <OrderCard order={order} error={error} />
+        {!order.paid && !isAdmin && (
           <div>
             <button onClick={handleCancel}>Annuler</button>
             <button onClick={handleCheckout}>Payer</button>

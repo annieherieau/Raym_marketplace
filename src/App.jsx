@@ -24,6 +24,7 @@ import OrderPage from "./pages/OrderPage";
 import CheckoutPage from "./components/Checkout";
 import Menu from "./components/NavCircle/Menu/Menu"; // Correction du chemin
 import Accueil from "./pages/Accueil/Accueil"; // Ajout de l'importation
+import LegalMentions from "./pages/LegalMentions";
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
@@ -75,6 +76,7 @@ function App() {
             <Route path="/product/:productId" element={<ProductPage/>} />
             <Route path="/products/:productId/comments/:commentId/edit" element={<EditComment />} />
             <Route path="/order/:orderId" element={<OrderPage />} />
+            <Route path="/mentions-legales" element={<LegalMentions />} />
           </Routes>
         {/* </CartProvider> */}
       </main>

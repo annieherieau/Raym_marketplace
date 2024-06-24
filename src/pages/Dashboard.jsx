@@ -77,10 +77,10 @@ export default function Dashboard() {
           <li key={user.id}>{user.email}</li>
         ))}
       </ul>
-      {/* <h3>Liste des Produits</h3>
+      <h3>Liste des Produits</h3>
       <ProductList />
       <h3>Créer un nouveau Produit</h3>
-      <CreateProduct /> */}
+      <CreateProduct />
       <h3>Liste des commandes</h3>
       <OrdersList />
     </div>

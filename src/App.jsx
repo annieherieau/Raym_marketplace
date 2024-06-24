@@ -1,12 +1,10 @@
 import React from "react";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Password from "./pages/Password";
 import NotFound from "./pages/NotFound";
-import UserSettings from "./pages/UserSettings";
+import MyAccount from "./pages/MyAccount";
 import Dashboard from "./pages/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAtom } from "jotai";
@@ -21,15 +19,15 @@ import ProductPage from "./pages/ProductPage";
 import EditComment from "./pages/EditComment";
 import CommentForm from "./components/CommentForm";
 import OrderPage from "./pages/OrderPage";
-import CheckoutPage from "./components/Checkout";
 import Menu from "./components/NavCircle/Menu/Menu"; // Correction du chemin
-import Accueil from "./pages/Accueil/Accueil"; // Ajout de l'importation
+import Accueil from "./pages/Home/Home"; // Ajout de l'importation
+import NoticeModal from "./components/NoticeModal";
 import LegalMentions from "./pages/LegalMentions";
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
 function App() {
-  const [, setUser] = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
@@ -57,20 +55,19 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header />
+      {/* <Header /> */}
       <Menu /> {/* Utilisation de NavCircle */}
+      <NoticeModal />
       <main>
-        {/* <CartProvider> */}
           <Routes>
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Accueil products={products} />} /> {/* Utilisation de Accueil */}
-            <Route path="/home" element={<Home products={products} />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/password/:action" element={<Password />} />
-            <Route path="/user_settings" element={<UserSettings />} />
+            <Route path="/my_account" element={<MyAccount />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/admin" element={<Dashboard />}/>
+            <Route path="/admin" element={<Dashboard isAdmin={user.isAdmin}/>}/>
             <Route path="/products/new" element={<CreateProduct />} />
             <Route path="/products/:id/edit" element={<EditProduct />} />
             <Route path="/product/:productId" element={<ProductPage/>} />
@@ -78,7 +75,6 @@ function App() {
             <Route path="/order/:orderId" element={<OrderPage />} />
             <Route path="/mentions-legales" element={<LegalMentions />} />
           </Routes>
-        {/* </CartProvider> */}
       </main>
       <Footer />
     </BrowserRouter>

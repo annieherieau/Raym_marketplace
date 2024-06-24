@@ -1,0 +1,190 @@
+/* ### Hero Categories ### */
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  overflow: auto; 
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-rows: 80px 1fr;
+  
+  
+}
+
+
+main {
+  width: 100vw;
+  display: -webkit-box;
+  display: flex;
+  overflow: auto; 
+}
+
+.accueil-section {
+  width: 33.33vw; 
+  height: 100vh; 
+  background-size: contain;
+  background-position: center;
+  display: flex;
+  align-items: flex-end; 
+  justify-content: center;
+  margin-bottom: 2em; 
+  margin-top: 2em;
+}
+.accueil-section:nth-child(odd) {
+  background: #e91e63;
+}
+.accueil-section:nth-child(even) {
+  background: #3F51B5;
+}
+.accueil-section:nth-child(2) {
+  background: url('../../Images/offR.png') no-repeat center center;
+  background-size: cover;
+}
+
+
+/* Marge à gauche de la première section */
+.accueil-section:first-of-type {
+  background: url('../../Images/onR.png') no-repeat center center;
+  background-size: cover;
+  margin-left: 2em; 
+  border-top-left-radius: 20px; 
+  border-bottom-left-radius: 20px; 
+}
+
+
+.accueil-section:nth-child(3) {
+  background: url('../../Images/hybE.png') no-repeat center center;
+  background-size: cover;
+  border-top-right-radius: 20px; 
+  border-bottom-right-radius: 20px; 
+}
+
+/* Marge à droite de la dernière section */
+.accueil-section:last-of-type {
+  margin-right: 2em; 
+}
+
+
+
+@media screen and (min-width: 981px) {
+  .accueil-section {
+    -webkit-transition: all 0.4s cubic-bezier(0.61, -0.44, 0.33, 1.39);
+    transition: all 0.4s cubic-bezier(0.61, -0.44, 0.33, 1.39);
+  }
+  .accueil-section:nth-child(1):hover {
+    width: 50vw;
+  }
+  .accueil-section:nth-child(1):hover .content,
+  .accueil-section:nth-child(2):hover .content,
+  .accueil-section:nth-child(3):hover .content,
+  .accueil-section:nth-child(4):hover .content {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  .accueil-section:nth-child(2):hover,
+  .accueil-section:nth-child(3):hover,
+  .accueil-section:nth-child(4):hover {
+    width: 50vw;
+  }
+  .accueil-section .content {
+    -webkit-transition: all 0.4s cubic-bezier(0.61, -0.44, 0.33, 1.39);
+    transition: all 0.4s cubic-bezier(0.61, -0.44, 0.33, 1.39);
+  }
+}
+@media screen and (max-width: 980px) {
+  main {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 20px; /* Réduisez cette valeur pour moins d'espace */
+  }
+  main .accueil-section {
+    width: 100%; /* Ajustez la largeur pour les petits écrans */
+    height: auto;
+    min-height: 50vh;
+    margin-bottom: 0.2em; /* Réduisez cette valeur pour moins d'espace */
+  }
+  main .accueil-section .content button {
+    width: 80%;
+    font-size: 1.5rem; 
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap; 
+  }
+}
+@media screen and (max-width: 480px) {
+  main .accueil-section {
+    width: 100%; /* Ajustez la largeur pour les petits écrans */
+    height: auto;
+    min-height: 50vh;
+    margin-bottom: 0.2em; /* Réduisez cette valeur pour moins d'espace */
+  }
+  main .accueil-section .content button {
+    width: 100%;
+    font-size: 1.2rem; 
+    padding: 0.8em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap; 
+  }
+}
+
+@media screen and (min-width: 3840px) {
+  .accueil-section {
+    height: 80vh; 
+  }
+}
+
+@media screen and (max-width: 1920px) {
+  .accueil-section {
+    height: 70vh; 
+  }
+}
+
+.section-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.button-hover {
+  font-family: 'Roboto', sans-serif !important;
+}
+
+.button-hover:hover {
+  background: linear-gradient(to right, palegreen, skyblue);
+  border-color: transparent; 
+  color: black; 
+  font-family: 'Roboto', sans-serif !important;
+}
+
+/* ### Hero Categories END### */
+
+@media screen and (max-width: 1024px) {
+  .jumbotron {
+    margin-top: 1em; /* Ajoutez de la marge pour espacer les sections */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .jumbotron {
+    margin-top: 1em; /* Ajoutez de la marge pour espacer les sections */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .jumbotron {
+    margin-top: 1em; /* Ajoutez de la marge pour espacer les sections */
+  }
+}

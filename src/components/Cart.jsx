@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
-import CartItem from "./CartItem";
 import { useAtomValue } from "jotai";
 import { userAtom } from "../app/atoms";
 import { buildRequestOptions } from "../app/api";
 import "../index.css";
 import { useNavigate } from "react-router-dom";
+import CartItem from "./ShoppingCart/CartItem";
 
-const Cart = ({ onRemoveItem = () => {}, onUpdateItem = () => {} }) => {
+export default function Cart({ onRemoveItem = () => {}, onUpdateItem = () => {}, isOpen, onClose}){
   const { token } = useAtomValue(userAtom);
   const [cartItems, setCartItems] = useState([]);
   const [error, setError] = useState(null);
@@ -105,4 +105,3 @@ Cart.propTypes = {
   onUpdateItem: PropTypes.func,
 };
 
-export default Cart;

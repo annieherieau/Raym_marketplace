@@ -8,19 +8,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faAddressCard } from "@fortawesome/free-regular-svg-icons";
 import ShoppingCart from "../../ShoppingCart/ShoppingCart";
-import { useAtomValue } from "jotai";
-import { isAuthAtom, userAtom } from "../../../app/atoms";
-import { redirectTo, removeCookie } from "../../../app/utils";
+import { useAtom, useAtomValue } from "jotai";
+import { isAuthAtom, openCartAtom, userAtom } from "../../../app/atoms";
+import { removeCookie } from "../../../app/utils";
 import { buildRequestOptions } from "../../../app/api";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const user = useAtomValue(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [isRevealed, setIsRevealed] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useAtom(openCartAtom);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const buttonRef = useRef(null);
   const navRef = useRef(null);
   const userIconRef = useRef(null);
@@ -62,7 +64,7 @@ const Navbar = () => {
   const handleResponse = (response) => {
     if (response.status.code === 200) {
       removeCookie();
-      redirectTo();
+      navigate('/');
     }
   };
 
@@ -296,7 +298,7 @@ const Navbar = () => {
             <a href="#">Entretien</a>
           </li>
           <li className="header__menu-item">
-            <a href="/#contact">Contacts</a>
+            <a href="/contacts">Contacts</a>
           </li>
         </ul>
         {/* fin LIENS MENU VIDEO */}

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import CartItem from "./ShoppingCart/CartItem";
 
-export default function OrderCard({ order, error, details = true }) {
+export default function OrderCard({ order, paid, error, details = true }) {
   if (order) {
     return (
       <div>
@@ -9,7 +9,7 @@ export default function OrderCard({ order, error, details = true }) {
         <p>Client: {order.user_email}</p>
         <p>{error ? error : ""}</p>
         <p>Total: {order.amount}</p>
-        <p>{order.paid ? "Payé" : "En attente de paiement"}</p>
+        <p>{paid ? "Payé" : "En attente de paiement"}</p>
         {details &&
           order.items.map((item) => (
             <CartItem key={item.id} item={item} cart={false} />

@@ -1,14 +1,19 @@
 import { buildRequestOptions, getTokenFromResponse } from "../app/api";
-import { createCookie, getFormData, redirectTo } from "../app/utils";
+import { createCookie, getFormData } from "../app/utils";
 import { useAtom, useAtomValue } from "jotai";
 import { isAuthAtom, noticeAtom, userAtom } from "../app/atoms"; // Ajout de userAtom
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const isLoggedIn = useAtomValue(isAuthAtom);
     const [notice, setNotice] = useAtom(noticeAtom);
     const [, setUser] = useAtom(userAtom); // Ajout de setUser
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const redirect = searchParams.get("redirect") || '';
 
     // soumission formulaire + requete
     const handleSubmit = async (event) => {
@@ -61,7 +66,7 @@ export default function Login() {
 
     useEffect(() => {
         if (isLoggedIn || notice.type === 'success') {
-            redirectTo("/");
+            navigate(`/${redirect}`);
         }
     }, [isLoggedIn, notice]);
 

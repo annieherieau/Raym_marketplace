@@ -1,13 +1,15 @@
 import { useAtom, useAtomValue } from "jotai";
 import { isAuthAtom, noticeAtom } from "../app/atoms";
 import { buildRequestOptions, getTokenFromResponse } from "../app/api";
-import { checkPasswords, createCookie, getFormData, redirectTo } from "../app/utils";
+import { checkPasswords, createCookie, getFormData } from "../app/utils";
 import { useEffect } from "react";
 import { Link } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [notice, setNotice] = useAtom(noticeAtom);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -54,7 +56,7 @@ export default function Register() {
 
   useEffect(() => {
     if (isLoggedIn || notice.type == "success") {
-      redirectTo("/");
+      navigate("/");
     }
   }, [isLoggedIn, notice]);
 

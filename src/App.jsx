@@ -29,8 +29,8 @@ import Configurator from "./pages/Configurator/Configurator";
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
 function App() {
+  const isLoggedIn = useAtomValue(isAuthAtom);
   const [user, setUser] = useAtom(userAtom);
-  // const [token, setToken] = useState(localStorage.getItem('token')); // Supprimé car non utilisé
 
   useEffect(() => {
     setUser(loadCookie() ? loadCookie() : unknownUser);
@@ -89,11 +89,11 @@ function App() {
           />
           <Route
             path="/admin/*"
-            element={wrapPrivateRoute(<Dashboard />, "admin")}
+            element={wrapPrivateRoute(<Dashboard />, "admin", isLoggedIn)}
           />
            <Route
             path="/order/:orderId"
-            element={wrapPrivateRoute(<OrderPage />, "my_account")}
+            element={wrapPrivateRoute(<OrderPage />, "my_account", isLoggedIn)}
           />
           <Route path="/products/:id/edit" element={<EditProduct />} />
           <Route path="/product/:productId" element={<ProductPage />} />

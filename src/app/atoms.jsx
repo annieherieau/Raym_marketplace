@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { loadCookie } from "./utils";
+import { fetchProducts, loadCookie } from "./utils";
 // Atom utilisateur
 export const unknownUser = {
   email: null,
@@ -11,7 +11,7 @@ export const userAtom = atom(loadCookie() ? loadCookie() : unknownUser);
 export const isAuthAtom = atom((get) =>
   get(userAtom).id && get(userAtom).token ? true : false
 );
-
+export const productsAtom = atom(fetchProducts());
 export const updateCartAtom = atom(false)
 export const openCartAtom = atom(false)
 

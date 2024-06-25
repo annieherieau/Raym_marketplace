@@ -1,4 +1,7 @@
 import Cookies from "js-cookie";
+import { buildRequestOptions } from "./api";
+import { useAtom } from "jotai";
+import { noticeAtom } from "./atoms";
 
 // ***** FORMULAIRE *****/
 // récupérer les données d'un formulaire
@@ -24,7 +27,8 @@ export function checkPasswords() {
 }
 
 // ****** COOKIES ******* //
-export const cookie_name = import.meta.env.VITE_COOKIE_NAME;
+export function cookie_name(){
+  return import.meta.env.VITE_COOKIE_NAME;}
 
 export function createCookie(data, remember_me = false) {
   Cookies.set(cookie_name, JSON.stringify(data), {
@@ -44,4 +48,21 @@ export function updateCookie(value, field = "email") {
 
 export function removeCookie() {
   Cookies.remove(cookie_name);
+}
+
+export function fetchProducts(){
+const {url, options} = buildRequestOptions('products', 'index')
+  fetch(url, options)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  })
+  .then((data) => {
+    return(data);
+  })
+  .catch((error) => {
+    console.error("Error fetching products:", error);
+  });
 }

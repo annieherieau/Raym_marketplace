@@ -8,16 +8,14 @@ import MyAccount from "./pages/MyAccount";
 import Dashboard from "./pages/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAtom, useAtomValue } from "jotai";
-import { useEffect, useState } from "react";
-import { isAuthAtom, unknownUser, userAtom } from "./app/atoms";
-import { loadCookie } from "./app/utils";
-import CreateProduct from "./components/CreateProduct";
+import { useEffect} from "react";
+import { isAuthAtom, productsAtom, unknownUser, userAtom } from "./app/atoms";
 import EditProduct from "./components/EditProduct";
 import ProductPage from "./pages/ProductPage";
 import EditComment from "./pages/EditComment";
 import OrderPage from "./pages/OrderPage";
 import Menu from "./components/NavCircle/Menu/Menu"; // Correction du chemin
-import Accueil from "./pages/Home/Home"; // Ajout de l'importation
+import Home from "./pages/Home/Home"; // Ajout de l'importation
 import Contacts from "./pages/Contacts/Contacts"; // Correction de l'importation
 import NoticeModal from "./components/NoticeModal";
 import PrivateRoute from "./components/PrivateRoute";
@@ -32,24 +30,23 @@ const api_url = import.meta.env.VITE_BACK_API_URL;
 function App() {
   const [, setUser] = useAtom(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useAtom(productsAtom);
   // Récupérer les produits depuis l'API
   useEffect(() => {
-    fetch(`${api_url}/products`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setProducts(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching products:", error);
-      });
+    // fetch(`${api_url}/products`)
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error("Network response was not ok");
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     setProducts(data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching products:", error);
+    //   });
   }, [isLoggedIn]);
-
   // Routes pour user connecté
   function wrapPrivateRoute(element, redirect, isAuth) {
     return (
@@ -67,7 +64,7 @@ function App() {
         <Routes>
           {/* ROUTES PUBLIQUES */}
           <Route path="*" element={<NotFound />} />
-          <Route path="/" element={<Accueil products={products} />} />
+          <Route path="/" element={<Home products={products} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/password/:action" element={<Password />} />
@@ -75,7 +72,7 @@ function App() {
           <Route path="/brand" element={<Brand />} />
           <Route path="/maintenance" element={<Maintenance />} />
           <Route path="/legal_mentions" element={<LegalMentions />} />
-          <Route path="/configurator" element={<Configurator />} />
+          <Route path="/configurator" element={<Configurator allProducts={products} />} />
 
           {/* ROUTES PRIVÉES */}
           <Route

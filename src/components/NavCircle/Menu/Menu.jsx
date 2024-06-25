@@ -286,16 +286,16 @@ const Navbar = () => {
             <a href="/">Accueil</a>
           </li>
           <li className="header__menu-item">
-            <a href="#">La marque</a>
+            <a href="/brand">La marque</a>
           </li>
           <li className="header__menu-item">
             <a href="#">Boutique</a>
           </li>
           <li className="header__menu-item">
-            <a href="#">Configurateur</a>
+            <a href="/configurator">Configurateur</a>
           </li>
           <li className="header__menu-item">
-            <a href="#">Entretien</a>
+            <a href="/maintenance">Entretien</a>
           </li>
           <li className="header__menu-item">
             <a href="/contacts">Contacts</a>

@@ -48,13 +48,13 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="h-full bg-gray-100">
       <div className="flex">
         {/* Sidebar */}
-        <aside className="w-64 bg-gray-800 text-white">
+        <aside className="w-64 bg-gray-900 text-white">
           <div className="p-6">
-            <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
-            <p>Bienvenue, {user.email}!</p>
+            <h1 className="text-2xl font-semibold">Dashboard Admin</h1>
+            <p>Bienvenue, {user.email}</p>
           </div>
           <nav className="mt-6">
             <ul>

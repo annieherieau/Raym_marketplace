@@ -1,4 +1,3 @@
-import React from "react";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -17,7 +16,6 @@ import CreateProduct from "./components/CreateProduct";
 import EditProduct from "./components/EditProduct";
 import ProductPage from "./pages/ProductPage";
 import EditComment from "./pages/EditComment";
-import CommentForm from "./components/CommentForm";
 import OrderPage from "./pages/OrderPage";
 import Menu from "./components/NavCircle/Menu/Menu"; // Correction du chemin
 import Accueil from "./pages/Home/Home"; // Ajout de l'importation
@@ -28,7 +26,7 @@ const api_url = import.meta.env.VITE_BACK_API_URL;
 
 function App() {
   const [user, setUser] = useAtom(userAtom);
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  // const [token, setToken] = useState(localStorage.getItem('token')); // Supprimé car non utilisé
 
   useEffect(() => {
     setUser(loadCookie() ? loadCookie() : unknownUser);

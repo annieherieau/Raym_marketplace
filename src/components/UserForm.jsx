@@ -3,6 +3,7 @@ import { checkPasswords, getFormData} from "../app/utils";
 import { buildRequestOptions } from "../app/api";
 import { useAtomValue } from "jotai";
 import { userAtom } from "../app/atoms";
+import PropTypes from 'prop-types';
 
 export default function UserForm({ user, onUpdate }) {
   const { id, token } = useAtomValue(userAtom);
@@ -36,7 +37,6 @@ export default function UserForm({ user, onUpdate }) {
       if (response) {
         const responseData = await response.json();
         if (response.status == 200) {
-          const { data, status } = responseData;
           onUpdate();
         } else {
           console.log(response);
@@ -121,3 +121,8 @@ export default function UserForm({ user, onUpdate }) {
     </section>
   );
 }
+
+UserForm.propTypes = {
+  user: PropTypes.object.isRequired,
+  onUpdate: PropTypes.func.isRequired,
+};

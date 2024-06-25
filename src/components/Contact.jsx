@@ -1,6 +1,6 @@
-import { useAtom, useAtomValue } from "jotai";
-import { noticeAtom, userAtom } from "../app/atoms";
-import { getFormData, redirectTo } from "../app/utils";
+import { useAtom } from "jotai";
+import { noticeAtom } from "../app/atoms";
+import { getFormData } from "../app/utils";
 import { buildRequestOptions } from "../app/api";
 import { useEffect } from "react";
 
@@ -9,18 +9,15 @@ export default function Contact() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // récupérer les données du formulaire
     const visitorData = getFormData(event.target);
-    // créer la requête
     const { url, options } = buildRequestOptions("static_pages", "contact", {
       body: { static_pages: visitorData },
     });
 
-    // Executer la requête
     try {
       const response = await fetch(url, options);
       if (response) {
-        const { data, status } = await response.json();
+        const { status } = await response.json();
         if (status.code === 200) {
           setNotice({ type: "success", message: status.message });
         } else {
@@ -71,7 +68,7 @@ export default function Contact() {
         </div>
         <div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
           <h2 className="text-gray-900 text-3xl mb-1 font-bold title-font">Contactez-nous</h2>
-          <p className="leading-relaxed mb-5 text-gray-600">Nous sommes toujours là pour vous aider ! Si vous avez des questions, des suggestions ou besoin d'assistance, n'hésitez pas à nous contacter. Notre équipe se fera un plaisir de vous répondre dans les plus brefs délais.</p>
+          <p className="leading-relaxed mb-5 text-gray-600">Nous sommes toujours là pour vous aider ! Si vous avez des questions, des suggestions ou besoin d&apos;assistance, n&apos;hésitez pas à nous contacter. Notre équipe se fera un plaisir de vous répondre dans les plus brefs délais.</p>
           <form
             name="contact-form"
             id="contact-form"
@@ -99,4 +96,6 @@ export default function Contact() {
     </section>
   );
 }
+
+
 

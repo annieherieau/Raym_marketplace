@@ -1,14 +1,16 @@
 import { buildRequestOptions } from "../app/api";
-import { checkPasswords, getFormData, redirectTo } from "../app/utils";
+import { checkPasswords, getFormData } from "../app/utils";
 import { useSearchParams } from "react-router-dom";
 import { useAtom, useAtomValue } from "jotai";
 import { isAuthAtom, noticeAtom } from "../app/atoms";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function ResetPassword() {
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [notice, setNotice] = useAtom(noticeAtom);
+  const navigate = useNavigate();
   // récupérer le reset_passord_token
   const [searchParams] = useSearchParams();
   const reset_password_token = searchParams.get("reset_password_token");
@@ -46,7 +48,7 @@ export default function ResetPassword() {
 
   useEffect(() => {
     if (isLoggedIn || notice.type == "success") {
-      redirectTo("/");
+      navigate("/");
     }
   }, [isLoggedIn, notice]);
   return (

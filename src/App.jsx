@@ -22,6 +22,9 @@ import Contacts from "./pages/Contacts/Contacts"; // Correction de l'importation
 import NoticeModal from "./components/NoticeModal";
 import PrivateRoute from "./components/PrivateRoute";
 import LegalMentions from "./pages/LegalMentions";
+import Brand from "./pages/Brand/Brand";
+import Maintenance from "./pages/Maintenance/Maintenance";
+import Configurator from "./pages/Configurator/Configurator";
 
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
@@ -69,6 +72,10 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/password/:action" element={<Password />} />
           <Route path="/contacts" element={<Contacts />} />
+          <Route path="/brand" element={<Brand />} />
+          <Route path="/maintenance" element={<Maintenance />} />
+          <Route path="/legal_mentions" element={<LegalMentions />} />
+          <Route path="/configurator" element={<Configurator />} />
 
           {/* ROUTES PRIVÉES */}
           <Route

@@ -32,6 +32,9 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",
     "react-router-hash-link": "^2.4.3",
+    "react-slick": "^0.30.2",
+    "react-responsive-carousel": "^3.2.23",
+    "slick-carousel": "^1.8.1",
     "revealer": "^2.1.6",
     "sass": "^1.77.4"
   },

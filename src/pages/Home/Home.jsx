@@ -10,8 +10,8 @@ export default function Home({products}) {
         <div>
             <Banner />
             <Hero />
-            <Jumbotron />
             <ProductList products={products} />
+            <Jumbotron />
         </div>
     );
 }

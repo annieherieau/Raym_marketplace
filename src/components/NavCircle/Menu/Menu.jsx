@@ -9,19 +9,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faAddressCard } from "@fortawesome/free-regular-svg-icons";
 import ShoppingCart from "../../ShoppingCart/ShoppingCart";
-import { useAtomValue } from "jotai";
-import { isAuthAtom, userAtom } from "../../../app/atoms";
-import { redirectTo, removeCookie } from "../../../app/utils";
+import { useAtom, useAtomValue } from "jotai";
+import { isAuthAtom, openCartAtom, userAtom } from "../../../app/atoms";
+import { removeCookie } from "../../../app/utils";
 import { buildRequestOptions } from "../../../app/api";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const user = useAtomValue(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [isRevealed, setIsRevealed] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useAtom(openCartAtom);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const buttonRef = useRef(null);
   const navRef = useRef(null);
@@ -66,7 +68,7 @@ const Navbar = () => {
   const handleResponse = (response) => {
     if (response.status.code === 200) {
       removeCookie();
-      redirectTo();
+      navigate('/');
     }
   };
 
@@ -295,18 +297,22 @@ const Navbar = () => {
             <a href="/" onClick={(e) => handleMenuItemClick(e, "/")}>Accueil</a>
           </li>
           <li className="header__menu-item">
+            <a href="/brand">La marque</a>
             <a href="#" onClick={(e) => handleMenuItemClick(e, "#")}>La marque</a>
           </li>
           <li className="header__menu-item">
             <a href="#" onClick={(e) => handleMenuItemClick(e, "#")}>Boutique</a>
           </li>
           <li className="header__menu-item">
+            <a href="/configurator">Configurateur</a>
             <a href="#" onClick={(e) => handleMenuItemClick(e, "#")}>Configurateur</a>
           </li>
           <li className="header__menu-item">
+            <a href="/maintenance">Entretien</a>
             <a href="#" onClick={(e) => handleMenuItemClick(e, "#")}>Entretien</a>
           </li>
           <li className="header__menu-item">
+            <a href="/contacts">Contacts</a>
             <a href="/contacts" onClick={(e) => handleMenuItemClick(e, "/contacts")}>Contacts</a>
           </li>
         </ul>

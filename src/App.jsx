@@ -11,7 +11,6 @@ import { useAtom, useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
 import { isAuthAtom, unknownUser, userAtom } from "./app/atoms";
 import { loadCookie } from "./app/utils";
-
 import CreateProduct from "./components/CreateProduct";
 import EditProduct from "./components/EditProduct";
 import ProductPage from "./pages/ProductPage";
@@ -22,6 +21,8 @@ import Accueil from "./pages/Home/Home"; // Ajout de l'importation
 import Contacts from "./pages/Contacts/Contacts"; // Correction de l'importation
 import NoticeModal from "./components/NoticeModal";
 import PrivateRoute from "./components/PrivateRoute";
+import LegalMentions from "./pages/LegalMentions";
+
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 

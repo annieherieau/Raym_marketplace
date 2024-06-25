@@ -1,3 +1,4 @@
+// src/components/ProductForm.jsx
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { buildRequestOptions } from '../app/api';
@@ -58,44 +59,53 @@ const ProductForm = ({ product, onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label>Name:</label>
+        <label className="block text-sm font-medium text-gray-700">Name</label>
         <input
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
           required
+          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
       </div>
       <div>
-        <label>Description:</label>
+        <label className="block text-sm font-medium text-gray-700">Description</label>
         <textarea
           name="description"
           value={formData.description}
           onChange={handleChange}
+          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
       </div>
       <div>
-        <label>Price:</label>
+        <label className="block text-sm font-medium text-gray-700">Price</label>
         <input
           type="number"
           name="price"
           value={formData.price}
           onChange={handleChange}
           required
+          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
       </div>
       <div>
-        <label>Photo:</label>
+        <label className="block text-sm font-medium text-gray-700">Photo</label>
         <input
           type="file"
           name="photo"
           onChange={handleFileChange}
+          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
       </div>
-      <button type="submit">{product ? 'Update' : 'Create'} Product</button>
+      <button
+        type="submit"
+        className="w-full bg-indigo-600 text-white px-4 py-2 rounded-md shadow hover:bg-indigo-700 transition duration-300"
+      >
+        {product ? 'Update' : 'Create'} Product
+      </button>
     </form>
   );
 };

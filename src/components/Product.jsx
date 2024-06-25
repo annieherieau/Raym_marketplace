@@ -1,3 +1,4 @@
+// src/components/Product.jsx
 import React from "react";
 import PropTypes from "prop-types";
 import { useAtom, useAtomValue } from "jotai";
@@ -38,26 +39,48 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
   };
 
   return (
-    <div>
-      <h2>{product.name}</h2>
-      <p>{product.description}</p>
-      {product.photo_url && (
-        <img
-          src={product.photo_url}
-          alt={product.name}
-          style={{ width: "100px", height: "100px" }}
-        />
-      )}
-      {isLoggedIn && !isAdmin && (
-        <button onClick={handleAddToCart}>Add to Cart</button>
-      )}
-      <Link to={`/product/${product.id}`}>View Details</Link>
-      {isAdmin && (
-        <div>
-          <button onClick={handleUpdateClick}>Edit</button>
-          <button onClick={handleDeleteClick}>Delete</button>
-        </div>
-      )}
+    <div className="bg-white shadow-md rounded-lg overflow-hidden mb-6">
+      <div className="p-4">
+        <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
+        <p className="text-gray-700 mb-4">{product.description}</p>
+        {product.photo_url && (
+          <img
+            src={product.photo_url}
+            alt={product.name}
+            className="w-full h-64 object-cover mb-4"
+          />
+        )}
+        {isLoggedIn && !isAdmin && (
+          <button
+            onClick={handleAddToCart}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300"
+          >
+            Add to Cart
+          </button>
+        )}
+        <Link
+          to={`/product/${product.id}`}
+          className="text-blue-500 hover:underline ml-4"
+        >
+          View Details
+        </Link>
+        {isAdmin && (
+          <div className="mt-4 flex space-x-2">
+            <button
+              onClick={handleUpdateClick}
+              className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300"
+            >
+              Edit
+            </button>
+            <button
+              onClick={handleDeleteClick}
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300"
+            >
+              Delete
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

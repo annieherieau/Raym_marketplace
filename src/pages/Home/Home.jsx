@@ -4,13 +4,13 @@ import Banner from '../../components/Banner/Banner';
 import Hero from '../../components/Hero/Hero';
 import ProductList from '../../components/ProductList';
 
-export default function ({products}) {
+export default function Home ({products}) {
     return (
         <div>
             <Banner />
             <Hero />
-            <Jumbotron />
             <ProductList products={products} />
+            <Jumbotron />
         </div>
     );
 };

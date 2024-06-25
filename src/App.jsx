@@ -23,6 +23,7 @@ import Menu from "./components/NavCircle/Menu/Menu"; // Correction du chemin
 import Accueil from "./pages/Home/Home"; // Ajout de l'importation
 import Contacts from "./pages/Contacts/Contacts"; // Correction de l'importation
 import NoticeModal from "./components/NoticeModal";
+import LegalMentions from "./pages/LegalMentions";
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
@@ -73,6 +74,7 @@ function App() {
             <Route path="/product/:productId" element={<ProductPage/>} />
             <Route path="/products/:productId/comments/:commentId/edit" element={<EditComment />} />
             <Route path="/order/:orderId" element={<OrderPage />} />
+            <Route path="/mentions-legales" element={<LegalMentions />} />
             <Route path="/contacts" element={<Contacts />} /> {/* Added route for Contacts component */}
           </Routes>
       </main>

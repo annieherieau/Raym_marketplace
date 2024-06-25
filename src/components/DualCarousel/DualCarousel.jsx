@@ -43,10 +43,10 @@ const DualCarousel = () => {
 
     const products = {
         'On Road': [
-            { id: 1, name: 'On Road - Velo1', price: 100, image: 'src/assets/RAYM_on_road-Raym.png' },
-            { id: 2, name: 'On Road - Velo2', price: 150, image: 'src/assets/RAYM_on_road-Annie.png' },
-            { id: 3, name: 'On Road - Velo3', price: 200, image: 'src/assets/RAYM_on_road-Robena.png' },
-            { id: 4, name: 'On Road - Velo4', price: 200, image: 'src/assets/RAYM_on_road-Malo.png' }
+            { id: 1, name: 'On Road - Velo1', price: 100, image: 'src/assets/OnRoad-Raym.png' },
+            { id: 2, name: 'On Road - Velo2', price: 150, image: 'src/assets/OnRoad-Annie.png' },
+            { id: 3, name: 'On Road - Velo3', price: 200, image: 'src/assets/OnRoad-Robena.png' },
+            { id: 4, name: 'On Road - Velo4', price: 200, image: 'src/assets/OnRoad-Malo.png' }
         ],
         'Off Road': [
             { id: 5, name: 'Off Road - Velo1', price: 120, image: 'src/assets/VELO6RAPTOR-Raym.png' },

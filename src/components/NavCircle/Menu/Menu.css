@@ -1,6 +1,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 
+/* ###### Logo ###### */
+
+.logo {
+  width: 100px; 
+  height: auto;
+  margin-right: auto; 
+  margin-left: 1em;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.logo-container {
+  position: relative;
+  display: inline-block;
+  padding: 15px;
+}
+
+#logo-content {
+  fill: #000000; /* Couleur par défaut */
+  transition: fill 0.3s ease-in-out;
+  position: relative; /* Ajouté pour le positionnement du pseudo-élément */
+  overflow: hidden;   /* Masque les débordements */
+  width: 200px;       /* Assure-toi que les dimensions sont correctes */
+  height: 200px;
+}
+
+#logo-content:after {
+  content: "";
+  position: absolute;
+  top: -110%;
+  left: -210%;
+  width: 200%;
+  height: 200%;
+  opacity: 0;
+  transform: rotate(30deg);
+  background: rgba(255, 255, 255, 0.13);
+  background: linear-gradient(
+      to right, 
+      rgba(255, 255, 255, 0.13) 0%,
+      rgba(255, 255, 255, 0.13) 77%,
+      rgba(255, 255, 255, 0.5) 92%,
+      rgba(255, 255, 255, 0.0) 100%
+  );
+  transition: opacity 0.3s ease-in-out;
+}
+
+#logo-content:hover:after {
+  opacity: 1;
+  top: -30%;
+  left: -30%;
+  transition-property: left, top, opacity;
+  transition-duration: 0.7s, 0.7s, 0.15s;
+  transition-timing-function: ease;
+}
+
+#logo-content:active:after {
+  opacity: 0;
+}
+
 /* ###### Circle Menu ###### */
 
 :root {
@@ -17,14 +76,7 @@ header {
 }
 
 /* Taille Logo */
-.logo {
-  width: 100px; 
-  height: auto;
-  margin-right: auto; 
-  margin-left: 1em;
-  margin-top: 2em;
-  margin-bottom: 2em;
-}
+
 
 /* Bouton menu rond */
 .header__button {

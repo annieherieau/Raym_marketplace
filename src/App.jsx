@@ -25,7 +25,7 @@ import Configurator from "./pages/Configurator/Configurator";
 import { useState } from "react";
 import { loadCookie } from "./app/utils";
 import { unknownUser } from "./app/atoms";
-
+import AccessibilityIcon from "./components/acessibility/AccessibilityIcon";
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
@@ -104,6 +104,7 @@ function App() {
          
         </Routes>
       </main>
+      <AccessibilityIcon />
       <Footer />
     </BrowserRouter>
   );

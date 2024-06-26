@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Product from "./Product";
 import { buildRequestOptions } from "../app/api";
 import { useAtomValue } from "jotai";
@@ -9,9 +9,8 @@ const ProductList = () => {
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false); // Nouvel état pour le statut d'administrateur
+  const [isAdmin, setIsAdmin] = useState(false); 
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     const fetchAdminStatus = async () => {
@@ -111,17 +110,19 @@ const ProductList = () => {
   }
 
   return (
-    <div>
-      <h2>Products</h2>
-      {products.map((product) => (
-        <Product
-          key={product.id}
-          product={product}
-          isAdmin={isAdmin}
-          onUpdateProduct={isAdmin ? handleUpdateProduct : null}
-          onDeleteProduct={isAdmin ? handleDeleteProduct : null}
-        />
-      ))}
+    <div className="w-full max-w-full px-4 py-6 bg-white mb-8 mx-8 rounded-[20px]">
+      <h2 className="text-3xl font-bold mb-6 ml-5">Nos Best Sellers</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        {products.slice(0, 8).map((product) => (
+          <Product
+            key={product.id}
+            product={product}
+            isAdmin={isAdmin}
+            onUpdateProduct={isAdmin ? handleUpdateProduct : null}
+            onDeleteProduct={isAdmin ? handleDeleteProduct : null}
+          />
+        ))}
+      </div>
     </div>
   );
 };

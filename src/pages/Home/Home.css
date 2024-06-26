@@ -35,7 +35,6 @@ main {
   display: flex;
   align-items: flex-end; 
   justify-content: center;
-  margin-bottom: 0em; 
   margin-top: 2em;
 }
 .accueil-section:nth-child(odd) {

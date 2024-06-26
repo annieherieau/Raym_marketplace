@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { useAtom, useAtomValue } from "jotai";
 import { userAtom, isAuthAtom, updateCartAtom } from "../app/atoms";
@@ -24,13 +23,12 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
         }
         return response.json();
       })
-      // .then(data => dispatch({ type: 'ADD_ITEM', payload: data }))
       .catch((error) => console.error("Error:", error));
     setUpdateCart(true);
   };
 
   const handleUpdateClick = () => {
-    navigate(`/products/${product.id}/edit`); // Navigue vers la page d'édition
+    navigate(`/products/${product.id}/edit`);
   };
 
   const handleDeleteClick = () => {
@@ -38,26 +36,56 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
   };
 
   return (
-    <div>
-      <h2>{product.name}</h2>
-      <p>{product.description}</p>
-      {product.photo_url && (
-        <img
-          src={product.photo_url}
-          alt={product.name}
-          style={{ width: "100px", height: "100px" }}
-        />
-      )}
-      {isLoggedIn && !isAdmin && (
-        <button onClick={handleAddToCart}>Add to Cart</button>
-      )}
-      <Link to={`/product/${product.id}`}>View Details</Link>
-      {isAdmin && (
-        <div>
-          <button onClick={handleUpdateClick}>Edit</button>
-          <button onClick={handleDeleteClick}>Delete</button>
+    <div className="p-4 w-full">
+      <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-2xl overflow-hidden">
+        <a className="block relative h-48 rounded-t-2xl overflow-hidden">
+          <img
+            alt={product.name}
+            className="object-cover object-center w-full h-full block"
+            src={product.photo_url || "https://dummyimage.com/420x260"}
+          />
+        </a>
+        <div className="p-6">
+          <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
+            {product.category || "CATEGORY"}
+          </h3>
+          <h2 className="text-gray-900 title-font text-lg font-medium">
+            {product.name}
+          </h2>
+          <p className="mt-1">{product.price ? `$${product.price}` : "$0.00"}</p>
+          <p className="mt-1">{product.description}</p>
+          {isLoggedIn && !isAdmin && (
+            <button
+              onClick={handleAddToCart}
+              className="mt-2 text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded"
+            >
+              Add to Cart
+            </button>
+          )}
+          <Link
+            to={`/product/${product.id}`}
+            className="mt-2 text-indigo-500 inline-flex items-center"
+          >
+            View Details
+          </Link>
+          {isAdmin && (
+            <div className="mt-2">
+              <button
+                onClick={handleUpdateClick}
+                className="text-white bg-yellow-500 border-0 py-2 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-2"
+              >
+                Edit
+              </button>
+              <button
+                onClick={handleDeleteClick}
+                className="text-white bg-red-500 border-0 py-2 px-4 focus:outline-none hover:bg-red-600 rounded"
+              >
+                Delete
+              </button>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
@@ -67,9 +95,11 @@ Product.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string,
     id: PropTypes.number.isRequired,
-    photo_url: PropTypes.string, // Ajout de la prop photo_url
+    photo_url: PropTypes.string,
+    category: PropTypes.string,
+    price: PropTypes.number,
   }).isRequired,
-  isAdmin: PropTypes.bool.isRequired, // Ajout de la prop isAdmin
+  isAdmin: PropTypes.bool.isRequired,
   onUpdateProduct: PropTypes.func,
   onDeleteProduct: PropTypes.func,
 };

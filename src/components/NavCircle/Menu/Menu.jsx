@@ -295,19 +295,19 @@ const Navbar = () => {
             <a href="/" onClick={(e) => handleMenuItemClick(e, "/")}>Accueil</a>
           </li>
           <li className="header__menu-item">
-            <a href="/brand" onClick={(e) => handleMenuItemClick(e, "#")}>La marque</a>
+            <a href="/brand" onClick={(e) => handleMenuItemClick(e, "/brand")}>La marque</a>
           </li>
           <li className="header__menu-item">
             <a href="#" onClick={(e) => handleMenuItemClick(e, "#")}>Boutique</a>
           </li>
           <li className="header__menu-item">
-            <a href="/configurator" onClick={(e) => handleMenuItemClick(e, "#")}>Configurateur</a>
+            <a href="/configurator" onClick={(e) => handleMenuItemClick(e, "/configurateur")}>Configurateur</a>
           </li>
           <li className="header__menu-item">
-            <a href="/maintenance" onClick={(e) => handleMenuItemClick(e, "#")}>Entretien</a>
+            <a href="/maintenance" onClick={(e) => handleMenuItemClick(e, "/maintenance")}>Entretien</a>
           </li>
           <li className="header__menu-item">
-            <a href="/contacts" onClick={(e) => handleMenuItemClick(e, "/contacts")}>Contacts</a>
+            <a href="/contact" onClick={(e) => handleMenuItemClick(e, "/contact")}>Contact</a>
           </li>
         </ul>
         {/* fin LIENS MENU VIDEO */}

@@ -2,9 +2,9 @@ import DualCarousel from "../../components/DualCarousel/DualCarousel.jsx";
 
 const Configurator= ({allProducts}) => {
     return (
-        <div>
+        <section>
             <DualCarousel allProducts={allProducts} />
-        </div>
+        </section>
     );
 };
 

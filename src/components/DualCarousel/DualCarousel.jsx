@@ -113,7 +113,7 @@ const DualCarousel = () => {
 
   if (products) {
     return (
-      <section
+      <div
         className="relative m-6 overflow-hidden text-gray-800 bg-gray-100 shadow-lg sm:m-12"
         style={{
           height: "55vh",
@@ -132,7 +132,7 @@ const DualCarousel = () => {
         <div className="flex h-full">
           {/* Sidebar */}
           <aside
-            className="flex-col items-center justify-center hidden w-20 p-4 bg-gray-800 sm:flex sm:w-32"
+            className="flex-col items-center justify-center hidden w-20 p-2 bg-gray-800 sm:flex sm:w-32"
             style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}
           >
             <nav className="flex flex-col items-center justify-center h-full space-y-6 text-xs sm:text-sm">
@@ -151,7 +151,7 @@ const DualCarousel = () => {
                   </a>
                   {showBikeOptions && (
                     <div className="flex flex-col items-center space-y-2">
-                      {bikeCategories.map (category=><CategoryButton onClick={handleBikeOptionClick} category={category}/>)}
+                      {bikeCategories.map ((category, i)=><CategoryButton key={category+i} onClick={handleBikeOptionClick} category={category}/>)}
                     </div>
                   )}
                 </div>
@@ -171,7 +171,7 @@ const DualCarousel = () => {
                   </a>
                   {showClothingOptions && (
                     <div className="flex flex-col items-center space-y-2">
-                      {clothingCategories.map (category=><CategoryButton onClick={handleClothingOptionClick} category={category}/>)}
+                      {clothingCategories.map (category=><CategoryButton key={category+i} onClick={handleClothingOptionClick} category={category}/>)}
                     </div>
                   )}
                 </div>
@@ -266,7 +266,7 @@ const DualCarousel = () => {
             </div>
           </div>
         </div>
-      </section>
+      </div>
     );
   } else {
     <p>Erreur: pas de produits</p>;

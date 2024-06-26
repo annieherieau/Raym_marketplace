@@ -8,22 +8,41 @@ import "slick-carousel/slick/slick-theme.css";
 import "../../index.css"; // Import des styles CSS personnalisés
 import { buildRequestOptions } from "../../app/api";
 import { useEffect } from "react";
+import CategoryButton from "./CategoryButton";
 
 const DualCarousel = () => {
   const [products, setProducts] = useState(null);
-  const [selectedBikeCategory, setSelectedBikeCategory] = useState("Off Road");
+  const [bikeCategories, setBikeCategories] = useState(null);
+  const [clothingCategories, setClothingCategories] = useState(null);
+  const [selectedBikeCategory, setSelectedBikeCategory] = useState(null);
   const [selectedClothingCategory, setSelectedClothingCategory] =
-    useState("Homme");
+    useState(null);
   const [showBikeOptions, setShowBikeOptions] = useState(false);
   const [showClothingOptions, setShowClothingOptions] = useState(false);
   const [cart, setCart] = useState([]);
   const [selectedBikeProduct, setSelectedBikeProduct] = useState(null);
   const [selectedClothingProduct, setSelectedClothingProduct] = useState(null);
 
-  function handleResponse(response){
-      setProducts(response);
-  };
+  function handleResponse(response) {
+    // liste des produits par catégories
+    setProducts(response);
 
+    // Catégories bike
+    const bikeCats = Object.entries(response).filter((entry) => 
+      entry[1].type.bike
+    ).map((entry)=> entry[0])
+    setBikeCategories(bikeCats);
+    setSelectedBikeCategory(bikeCats[0])
+   
+    // Catégories clothing
+    const clothingCats = Object.entries(response).filter((entry) => 
+      entry[1].type.clothing
+    ).map(entry=> entry[0])
+    setClothingCategories(clothingCats);
+    setSelectedClothingCategory(clothingCats[0])
+  }
+
+  // Fetching products by catégories
   useEffect(() => {
     if (!products) {
       const { url, options } = buildRequestOptions(null, "configurator");
@@ -34,27 +53,31 @@ const DualCarousel = () => {
     }
   }, [products]);
 
-  console.log(products);
+  // toggle sur l'icone vélo
   const handleBikeIconClick = () => {
     setShowBikeOptions(!showBikeOptions);
     setShowClothingOptions(false);
   };
 
+  // toggle sur l'icone vêtements
   const handleClothingIconClick = () => {
     setShowClothingOptions(!showClothingOptions);
     setShowBikeOptions(false);
   };
 
+   // click sur l'option vélo
   const handleBikeOptionClick = (category) => {
     setSelectedBikeCategory(category);
     setShowBikeOptions(false);
   };
 
+  // click sur l'option vêtements
   const handleClothingOptionClick = (category) => {
     setSelectedClothingCategory(category);
     setShowClothingOptions(false);
   };
 
+  // TODO: ajouter au panier > si connecté sinon alert 'veuillez-vous connecter'
   const handleAddToCart = (product) => {
     setCart([...cart, product]);
     alert(`${product.name} ajouté au panier`);
@@ -97,7 +120,7 @@ const DualCarousel = () => {
           backgroundImage: `url(${offRoadConfig})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          borderRadius: "40px",
+          borderRadius: "20px",
         }}
       >
         <h1
@@ -128,24 +151,7 @@ const DualCarousel = () => {
                   </a>
                   {showBikeOptions && (
                     <div className="flex flex-col items-center space-y-2">
-                      <button
-                        className="text-xs text-white hover:text-gray-300 sm:text-sm"
-                        onClick={() => handleBikeOptionClick("On Road")}
-                      >
-                        On Road
-                      </button>
-                      <button
-                        className="text-xs text-white hover:text-gray-300 sm:text-sm"
-                        onClick={() => handleBikeOptionClick("Off Road")}
-                      >
-                        Off Road
-                      </button>
-                      <button
-                        className="text-xs text-white hover:text-gray-300 sm:text-sm"
-                        onClick={() => handleBikeOptionClick("Hybride")}
-                      >
-                        Hybride
-                      </button>
+                      {bikeCategories.map (category=><CategoryButton onClick={handleBikeOptionClick} category={category}/>)}
                     </div>
                   )}
                 </div>
@@ -165,18 +171,7 @@ const DualCarousel = () => {
                   </a>
                   {showClothingOptions && (
                     <div className="flex flex-col items-center space-y-2">
-                      <button
-                        className="text-xs text-white hover:text-gray-300 sm:text-sm"
-                        onClick={() => handleClothingOptionClick("Homme")}
-                      >
-                        Homme
-                      </button>
-                      <button
-                        className="text-xs text-white hover:text-gray-300 sm:text-sm"
-                        onClick={() => handleClothingOptionClick("Femmes")}
-                      >
-                        Femmes
-                      </button>
+                      {clothingCategories.map (category=><CategoryButton onClick={handleClothingOptionClick} category={category}/>)}
                     </div>
                   )}
                 </div>
@@ -192,7 +187,7 @@ const DualCarousel = () => {
                 {selectedBikeCategory && (
                   <>
                     <Slider {...sliderSettings}>
-                      {products[selectedBikeCategory].map((product) => (
+                      {products[selectedBikeCategory].products.map((product) => (
                         <div
                           key={product.id}
                           className="flex flex-col justify-center"
@@ -232,7 +227,7 @@ const DualCarousel = () => {
                 {selectedClothingCategory && (
                   <>
                     <Slider {...sliderSettings}>
-                      {products[selectedClothingCategory].map((product) => (
+                      {products[selectedClothingCategory].products.map((product) => (
                         <div
                           key={product.id}
                           className="flex flex-col justify-center"
@@ -273,6 +268,12 @@ const DualCarousel = () => {
         </div>
       </section>
     );
+  } else {
+    <p>Erreur: pas de produits</p>;
+  }
+
+  function newFunction() {
+    
   }
 };
 

@@ -11,7 +11,6 @@ export const userAtom = atom(loadCookie() ? loadCookie() : unknownUser);
 export const isAuthAtom = atom((get) =>
   get(userAtom).id && get(userAtom).token ? true : false
 );
-
 export const updateCartAtom = atom(false)
 export const openCartAtom = atom(false)
 

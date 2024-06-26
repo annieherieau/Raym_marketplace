@@ -1,7 +1,6 @@
 // src/components/Footer.jsx
-import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../assets/raymW.png'; // Importez votre logo
+import logo from '../assets/raymW.png'; 
 
 const Footer = () => {
   return (
@@ -12,14 +11,14 @@ const Footer = () => {
         </a>
         <p className="text-sm text-gray-400 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
           © 2024 Team RAYM —
-          <a href="https://www.thehackingproject.org/" className="text-gray-400 ml-1 hover:text-white" rel="noopener noreferrer" target="_blank">@The Hacking Project 
-          </a>
-          <Link to="/contacts" className='hover:text-white'> / Robena / Annie / Yann / Malo /</Link>
+          <Link to="/contacts" className='hover:text-white'> Robena / Annie / Yann / Malo —</Link>
+          <a href="https://www.thehackingproject.org/" className="text-gray-400 ml-1 hover:text-white" rel="noopener noreferrer" target="_blank">@The Hacking Project</a>         
         </p>
-        <Link to="/mentions-legales" className="text-gray-400 text-sm hover:text-white">
-          - Mentions légales
-        </Link>
+       
         <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+        <Link to="/mentions-legales" className="text-gray-400 text-sm hover:text-white mr-5">
+          Mentions légales
+        </Link>
           <a className="text-gray-400 hover:text-blue-500 hover:scale-110 transition-transform duration-300" href="https://www.facebook.com">
             <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
               <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>

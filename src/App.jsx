@@ -1,4 +1,3 @@
-import React from "react";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -30,6 +29,13 @@ const api_url = import.meta.env.VITE_BACK_API_URL;
 
 function App() {
   const isLoggedIn = useAtomValue(isAuthAtom);
+  const [user, setUser] = useAtom(userAtom);
+
+  useEffect(() => {
+    setUser(loadCookie() ? loadCookie() : unknownUser);
+  }, [setUser]);
+
+  // Récupérer les produits depuis l'API
   const [products, setProducts] = useState([]);
   // Récupérer les produits depuis l'API
   useEffect(() => {
@@ -81,11 +87,11 @@ function App() {
           />
           <Route
             path="/admin/*"
-            element={wrapPrivateRoute(<Dashboard />, "admin")}
+            element={wrapPrivateRoute(<Dashboard />, "admin", isLoggedIn)}
           />
            <Route
             path="/order/:orderId"
-            element={wrapPrivateRoute(<OrderPage />, "my_account")}
+            element={wrapPrivateRoute(<OrderPage />, "my_account", isLoggedIn)}
           />
           <Route path="/products/:id/edit" element={<EditProduct />} />
           <Route path="/product/:productId" element={<ProductPage />} />

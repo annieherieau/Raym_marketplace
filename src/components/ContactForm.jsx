@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { noticeAtom } from "../app/atoms";
 import { getFormData } from "../app/utils";
 import { buildRequestOptions } from "../app/api";
 import ReCAPTCHA from "react-google-recaptcha";
+import '../../src/index.css'
 
 const RECAPTCHA_KEY =import.meta.env.VITE_RECAPTCHA_KEY;
 
@@ -95,11 +96,11 @@ export default function ContactForm() {
             </div>
           </div>
         </div>
-        <div className="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
-          <h2 className="text-gray-900 text-3xl mb-1 font-bold title-font">
+        <div className="lg:w-1/3 md:w-1/2 bg-gray-900 flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
+          <h2 className="text-green-400 text-3xl mb-1 font-bold title-font" style={{fontFamily: 'Chakra Petch'}}>
             Contactez-nous
           </h2>
-          <p className="leading-relaxed mb-5 text-gray-600">
+          <p className="leading-relaxed mb-5 text-gray-300">
             Nous sommes toujours là pour vous aider ! Si vous avez des questions,
             des suggestions ou besoin d'assistance, n'hésitez pas à nous contacter.
             Notre équipe se fera un plaisir de vous répondre dans les plus brefs
@@ -112,7 +113,7 @@ export default function ContactForm() {
             onSubmit={handleSubmit}
           >
             <div className="relative mb-4">
-              <label htmlFor="name" className="leading-7 text-sm text-gray-600">
+              <label htmlFor="name" className="leading-7 text-sm text-gray-300">
                 Nom complet
               </label>
               <input
@@ -120,11 +121,11 @@ export default function ContactForm() {
                 id="name"
                 name="name"
                 required
-                className="w-full bg-white rounded border border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                className="w-full rounded-lg bg-gray-800 rounded focus:border-green-500 focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
             <div className="relative mb-4">
-              <label htmlFor="email" className="leading-7 text-sm text-gray-600">
+              <label htmlFor="email" className="leading-7 text-sm text-gray-300">
                 Email
               </label>
               <input
@@ -133,13 +134,13 @@ export default function ContactForm() {
                 name="email"
                 required
                 autoComplete="email"
-                className="w-full bg-white rounded border border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                className="w-full rounded-lg bg-gray-800 focus:border-green-500 focus:ring-2 focus:ring-green-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
             <div className="relative mb-4">
               <label
                 htmlFor="message"
-                className="leading-7 text-sm text-gray-600"
+                className="leading-7 text-sm text-gray-300"
               >
                 Message
               </label>
@@ -147,7 +148,7 @@ export default function ContactForm() {
                 id="message"
                 name="message"
                 required
-                className="w-full bg-white rounded border border-gray-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                className="w-full rounded-lg bg-gray-800 focus:border-green-500 focus:ring-2 focus:ring-green-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
               ></textarea>
             </div>
             <ReCAPTCHA

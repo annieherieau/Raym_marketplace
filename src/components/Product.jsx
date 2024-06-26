@@ -104,4 +104,5 @@ Product.propTypes = {
   onDeleteProduct: PropTypes.func,
 };
 
+
 export default Product;

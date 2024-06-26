@@ -25,7 +25,8 @@ import Configurator from "./pages/Configurator/Configurator";
 import { useState } from "react";
 import { loadCookie } from "./app/utils";
 import { unknownUser } from "./app/atoms";
-import AccessibilityIcon from "./components/acessibility/AccessibilityIcon";
+import CreateProduct from "./components/CreateProduct";
+
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
@@ -96,6 +97,7 @@ function App() {
             element={wrapPrivateRoute(<OrderPage />, "my_account", isLoggedIn)}
           />
           <Route path="/products/:id/edit" element={<EditProduct />} />
+          <Route path="/products/new" element={<CreateProduct />} />
           <Route path="/product/:productId" element={<ProductPage />} />
           <Route
             path="/products/:productId/comments/:commentId/edit"

@@ -30,7 +30,7 @@ const Navbar = () => {
   const closeTimeoutRef = useRef(null);
   const location = useLocation();
 
-  // vérification du status admin
+  // vérification du statut admin
   useEffect(() => {
     const fetchAdminStatus = async () => {
       if (!isLoggedIn) {
@@ -62,13 +62,6 @@ const Navbar = () => {
     fetchAdminStatus();
   }, [isLoggedIn, user.token]);
 
-  // réponse déconnexion
-  const handleResponse = (response) => {
-    if (response.status.code === 200) {
-      removeCookie();
-      navigate('/');
-    }
-  };
 
   // requête déconnexion
   const handleLogout = () => {
@@ -80,19 +73,26 @@ const Navbar = () => {
       .then((response) => handleResponse(response))
       .catch((err) => console.error(err));
   };
-
-  // click sur icon User > toggle du dropdown
+  
+  // réponse déconnexion
+  const handleResponse = (response) => {
+    if (response.status.code === 200) {
+      removeCookie();
+      navigate('/');
+    }
+  };
+  // click sur icône User > toggle du dropdown
   const handleUserIconClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  // hover sur icon User > affichage du dropdown
+  // hover sur icône User > affichage du dropdown
   const handleUserIconHover = () => {
     clearTimeout(closeTimeoutRef.current);
     setIsDropdownOpen(true);
   };
 
-  // Leave icon du User > disparition du dropdown
+  // leave icône User > disparition du dropdown
   const handleUserIconLeave = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setIsDropdownOpen(false);
@@ -105,7 +105,7 @@ const Navbar = () => {
     setIsDropdownOpen(true);
   };
 
-  // Leave dropdown > disparition du dropdown
+  // leave dropdown > disparition du dropdown
   const handleDropdownLeave = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setIsDropdownOpen(false);
@@ -117,7 +117,7 @@ const Navbar = () => {
     setIsRevealed(!isRevealed);
   };
 
-  // Toggle du volet panier
+  // toggle du volet panier
   const handleCartToggle = () => {
     setIsCartOpen(!isCartOpen);
   };
@@ -140,14 +140,14 @@ const Navbar = () => {
     navRef.current.style.setProperty("--clip-y", `${clipY}%`);
   };
 
-  // Gestion du clic sur un élément du menu
+  // gestion du clic sur un élément du menu
   const handleMenuItemClick = (event, href) => {
     event.preventDefault();
     setIsLoading(true);
     navigate(href);
   };
 
-  // Fermer le menu une fois la nouvelle page chargée
+  // fermer le menu une fois la nouvelle page chargée
   useEffect(() => {
     if (isLoading) {
       setIsRevealed(false);
@@ -208,7 +208,7 @@ const Navbar = () => {
                     icon={faArrowRightToBracket}
                     className="icon-spacing"
                   />{" "}
-                  Connection
+                  Connexion
                 </a>
               </li>
               <li className="header__menu-item">
@@ -259,7 +259,7 @@ const Navbar = () => {
                   icon={faArrowRightToBracket}
                   className="inverted-icon icon-spacing"
                 />{" "}
-                Deconnection
+                Deconnexion
               </a>
             </li>
           )}
@@ -302,19 +302,19 @@ const Navbar = () => {
             <a href="/" onClick={(e) => handleMenuItemClick(e, "/")}>Accueil</a>
           </li>
           <li className="header__menu-item">
-            <a href="/brand" onClick={(e) => handleMenuItemClick(e, "#")}>La marque</a>
+            <a href="/brand" onClick={(e) => handleMenuItemClick(e, "/brand")}>La marque</a>
           </li>
           <li className="header__menu-item">
             <a href="#" onClick={(e) => handleMenuItemClick(e, "#")}>Boutique</a>
           </li>
           <li className="header__menu-item">
-            <a href="/configurator" onClick={(e) => handleMenuItemClick(e, "#")}>Configurateur</a>
+            <a href="/configurator" onClick={(e) => handleMenuItemClick(e, "/configurator")}>Configurateur</a>
           </li>
           <li className="header__menu-item">
-            <a href="/maintenance" onClick={(e) => handleMenuItemClick(e, "#")}>Entretien</a>
+            <a href="/maintenance" onClick={(e) => handleMenuItemClick(e, "/maintenance")}>Entretien</a>
           </li>
           <li className="header__menu-item">
-            <a href="/contacts" onClick={(e) => handleMenuItemClick(e, "/contacts")}>Contacts</a>
+            <a href="/contact" onClick={(e) => handleMenuItemClick(e, "/contact")}>Contact</a>
           </li>
         </ul>
         {/* fin LIENS MENU VIDEO */}
@@ -325,4 +325,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

@@ -1,15 +1,16 @@
-// src/components/ProductForm.jsx
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { buildRequestOptions } from '../app/api';
-import { useAtomValue } from "jotai";
-import { userAtom } from "../app/atoms";
+import { useAtomValue } from 'jotai';
+import { userAtom } from '../app/atoms';
 
-const ProductForm = ({ product, onSubmit }) => {
+const ProductForm = ({ product, categories, colors, onSubmit }) => {
   const [formData, setFormData] = useState({
     name: product ? product.name : '',
     description: product ? product.description : '',
     price: product ? product.price : '', // Laisse comme string ici
+    category: product ? product.category_id : '', // Nouveau champ pour la catégorie
+    color: product ? product.color_id : '', // Nouveau champ pour la couleur
     photo: null, // Nouveau champ pour le fichier photo
   });
   const { token } = useAtomValue(userAtom);
@@ -32,6 +33,8 @@ const ProductForm = ({ product, onSubmit }) => {
     dataToSubmit.append('product[name]', formData.name);
     dataToSubmit.append('product[description]', formData.description);
     dataToSubmit.append('product[price]', Number(formData.price));
+    dataToSubmit.append('product[category_id]', formData.category); // Ajoute la catégorie
+    dataToSubmit.append('product[color_id]', formData.color); // Ajoute la couleur
     if (formData.photo) {
       dataToSubmit.append('product[photo]', formData.photo);
     }
@@ -43,7 +46,7 @@ const ProductForm = ({ product, onSubmit }) => {
 
     options.body = dataToSubmit;
     options.headers = {
-      'Authorization': `Bearer ${token}` // Pass the token in the headers
+      Authorization: `Bearer ${token}`, // Pass the token in the headers
     };
 
     try {
@@ -92,6 +95,40 @@ const ProductForm = ({ product, onSubmit }) => {
         />
       </div>
       <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">Category:</label>
+        <select
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          required
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        >
+          <option value="">Select a category</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">Color:</label>
+        <select
+          name="color"
+          value={formData.color}
+          onChange={handleChange}
+          required
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        >
+          <option value="">Select a color</option>
+          {colors.map((color) => (
+            <option key={color.id} value={color.id}>
+              {color.name}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">Photo:</label>
         <input
           type="file"
@@ -113,8 +150,12 @@ ProductForm.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
     price: PropTypes.number,
+    category_id: PropTypes.number, // Ajout de la prop category
+    color_id: PropTypes.number, // Ajout de la prop color
     photo: PropTypes.object, // Ajout de la prop photo
   }),
+  categories: PropTypes.array.isRequired, // Ajout des catégories
+  colors: PropTypes.array.isRequired, // Ajout des couleurs
   onSubmit: PropTypes.func.isRequired,
 };
 

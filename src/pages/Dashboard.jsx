@@ -101,8 +101,7 @@ export default function Dashboard() {
             </section>
           )}
           {activeTab === 'create-product' && (
-            <section className="bg-white p-6 rounded-lg shadow-md mb-12">
-              <h2 className="text-2xl font-semibold mb-4">Créer un nouveau Produit</h2>
+            <section >
               <CreateProduct />
             </section>
           )}

@@ -1,14 +1,15 @@
 import { useState } from "react";
 import Slider from "react-slick";
 import offRoadConfig from "../../assets/offRoad-config.png";
-import veloIcon from "../../assets/veloIcon.png";
-import tshirtIcon from "../../assets/tshirtIcon.png";
+// import veloIcon from "../../assets/veloIcon.png";
+// import tshirtIcon from "../../assets/tshirtIcon.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../../index.css"; // Import des styles CSS personnalisés
 import { buildRequestOptions } from "../../app/api";
 import { useEffect } from "react";
-import CategoryButton from "./CategoryButton";
+// import CategoryButton from "./CategoryButton";
+import Nav from "./Nav";
 
 const DualCarousel = () => {
   const [products, setProducts] = useState(null);
@@ -17,8 +18,6 @@ const DualCarousel = () => {
   const [selectedBikeCategory, setSelectedBikeCategory] = useState(null);
   const [selectedClothingCategory, setSelectedClothingCategory] =
     useState(null);
-  const [showBikeOptions, setShowBikeOptions] = useState(false);
-  const [showClothingOptions, setShowClothingOptions] = useState(false);
   const [cart, setCart] = useState([]);
   const [selectedBikeProduct, setSelectedBikeProduct] = useState(null);
   const [selectedClothingProduct, setSelectedClothingProduct] = useState(null);
@@ -52,30 +51,6 @@ const DualCarousel = () => {
         .catch((err) => console.error(err));
     }
   }, [products]);
-
-  // toggle sur l'icone vélo
-  const handleBikeIconClick = () => {
-    setShowBikeOptions(!showBikeOptions);
-    // setShowClothingOptions(false);
-  };
-
-  // toggle sur l'icone vêtements
-  const handleClothingIconClick = () => {
-    setShowClothingOptions(!showClothingOptions);
-    // setShowBikeOptions(false);
-  };
-
-  // click sur l'option vélo
-  const handleBikeOptionClick = (category) => {
-    setSelectedBikeCategory(category);
-    // setShowBikeOptions(false);
-  };
-
-  // click sur l'option vêtements
-  const handleClothingOptionClick = (category) => {
-    setSelectedClothingCategory(category);
-    // setShowClothingOptions(false);
-  };
 
   // TODO: ajouter au panier > si connecté sinon alert 'veuillez-vous connecter'
   const handleAddToCart = (product) => {
@@ -123,6 +98,7 @@ const DualCarousel = () => {
           borderRadius: "20px",
         }}
       >
+        {/* TITLE + NAV */}
         <div className=" bg-gray-800">
           <h1
             className="p-3 text-2xl text-center font-semibold tracking-widest text-white uppercase  bg-gray-800 rounded-t-lg left-1/2 sm:text-3xl"
@@ -130,76 +106,19 @@ const DualCarousel = () => {
           >
             CONFIGURATEUR
           </h1>
-
-          {/* Sidebar */}
-          <div
-            //  className="flex-col items-center justify-center hidden w-20 p-2 bg-gray-800 sm:flex sm:w-32"
-            className=" bg-gray-800"
-            style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}
-          >
-            {/* <nav className="flex flex-col items-center justify-center h-full space-y-6 text-xs sm:text-sm"> */}
-            <nav className="flex flex-row items-center justify-center h-full space-x-4 text-xs sm:text-sm">
-              <div className="space-y-2 mb-2">
-                <div className="flex flex-row space-x-3">
-                  {showBikeOptions && (
-                    <div className="flex flex-col items-center space-x-2">
-                      {bikeCategories.map((category, i) => (
-                        <CategoryButton
-                          key={category + i}
-                          onClick={handleBikeOptionClick}
-                          category={category}
-                        />
-                      ))}
-                    </div>
-                  )}
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    onClick={handleBikeIconClick}
-                  >
-                    <img
-                      src={veloIcon}
-                      alt="Velo Icon"
-                      className="w-10 h-10 sm:w-16 sm:h-16"
-                    />
-                  </a>
-                </div>
-              </div>
-              <div className="space-y-2 mb-2">
-                <div className="flex flex-row space-x-3">
-                  <a
-                    rel="noopener noreferrer"
-                    href="#"
-                    onClick={handleClothingIconClick}
-                  >
-                    <img
-                      src={tshirtIcon}
-                      alt="T-Shirt Icon"
-                      className="w-10 h-10 sm:w-14 sm:h-14"
-                    />
-                  </a>
-                  {showClothingOptions && (
-                    <div className="flex flex-col items-center space-y-2">
-                      {clothingCategories.map((category, i) => (
-                        <CategoryButton
-                          key={category + i}
-                          onClick={handleClothingOptionClick}
-                          category={category}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </nav>
-          </div>
+          <Nav
+            bikeCategories={bikeCategories}
+            clothingCategories={clothingCategories}
+            setSelectedClothingCategory={setSelectedClothingCategory}
+            setSelectedBikeCategory={setSelectedBikeCategory}
+          />
         </div>
-        {/* fin Sidebar */}
-        <div className="flex h-full">
-          {/* Carousels */}
+        {/* fin TITLE + NAV */}
+        {/* Carousels */}
+        {/* <div className="flex h-full"> */}
           <div className="flex items-center w-full p-6 sm:p-12 bg-custom-image overflow-x-hidden">
             <div className="flex flex-row items-end justify-center h-full space-x-4">
-              {/* Premier carrousel */}
+              {/*  carrousel BIKE */}
               <div className=" md:mr-6 lg:mr-6 sm:w-4/12 sm:mr-4">
                 {selectedBikeCategory && (
                   <>
@@ -240,8 +159,8 @@ const DualCarousel = () => {
                   </>
                 )}
               </div>
-
-              {/* Deuxième carrousel */}
+              {/* fin  carrousel BIKE */}
+              {/* carrousel VETEMENTS */}
               <div className=" md:mr-6 lg:mr-6 sm:w-4/12 sm:mr-4">
                 {selectedClothingCategory && (
                   <>
@@ -284,9 +203,10 @@ const DualCarousel = () => {
                   </>
                 )}
               </div>
+              {/* fin carrousel VETEMENTS */}
             </div>
           </div>
-        </div>
+        {/* </div> */}
       </div>
     );
   } else {

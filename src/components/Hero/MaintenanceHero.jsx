@@ -4,7 +4,7 @@ import '../../index.css';
 const MaitenanceHero = () => {
     return (
         <>
-            <div className="h-screen bg-black bg-custom-image">
+            <div className=" bg-black bg-custom-image">
                 <div className="px-6 py-24 mx-auto max-w-7xl sm:py-32 lg:px-8">
                     <div className="text-center">
                         <h1 className="text-6xl font-bold tracking-tight text-white sm:text-7xl lg:text-8xl">
@@ -18,10 +18,8 @@ const MaitenanceHero = () => {
             <section className="text-2xl text-black body-font">
                 <div className="container px-5 py-24 mx-auto">
                     <div className="flex flex-col items-center pb-10 mx-auto mb-10 border-b border-gray-200 lg:w-3/5 sm:flex-row">
-                        <div className="inline-flex items-center justify-center flex-shrink-0 w-20 h-20 text-indigo-500 bg-indigo-100 rounded-full sm:w-32 sm:h-32 sm:mr-10">
-                            <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-10 h-10 sm:w-16 sm:h-16" viewBox="0 0 24 24">
-                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                            </svg>
+                        <div className="inline-flex items-center justify-center flex-shrink-0 w-20 h-20 text-brown-500  rounded-full sm:w-32 sm:h-32 sm:mr-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-tool"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
                         </div>
                         <div className="flex-grow mt-6 text-center sm:text-left sm:mt-0">
                             <h2 className="mb-2 text-3xl font-medium text-gray-900 title-font">CHAQUE SORTIE</h2>
@@ -58,15 +56,15 @@ const MaitenanceHero = () => {
                                 </svg>
                             </a>
                         </div>
-                        <div className="inline-flex items-center justify-center flex-shrink-0 order-first w-20 h-20 text-indigo-500 bg-indigo-100 rounded-full sm:w-32 sm:order-none sm:h-32 sm:ml-10">
-                            <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-10 h-10 sm:w-16 sm:h-16" viewBox="0 0 24 24">
-                                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
+                        <div className="inline-flex items-center justify-center flex-shrink-0 order-first w-20 h-20 text-brown-500  rounded-full sm:w-32 sm:order-none sm:h-32 sm:ml-10">
+                        <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-10 h-10 sm:w-16 sm:h-16" width="72" height="72" viewBox="0 0 24 24">
+                            <path d="M20.94 12.87a8.14 8.14 0 0 0 0-1.74l2.11-1.65a.5.5 0 0 0 .12-.66l-2-3.46a.5.5 0 0 0-.61-.22l-2.49 1a7.83 7.83 0 0 0-1.5-.87l-.38-2.65A.5.5 0 0 0 14.5 2h-4a.5.5 0 0 0-.5.42l-.38 2.65a7.83 7.83 0 0 0-1.5.87l-2.49-1a.5.5 0 0 0-.61.22l-2 3.46a.5.5 0 0 0 .12.66l2.11 1.65a8.14 8.14 0 0 0 0 1.74l-2.11 1.65a.5.5 0 0 0-.12.66l2 3.46a.5.5 0 0 0 .61.22l2.49-1a7.83 7.83 0 0 0 1.5.87l.38 2.65a.5.5 0 0 0 .5.42h4a.5.5 0 0 0 .5-.42l.38-2.65a7.83 7.83 0 0 0 1.5-.87l2.49 1a.5.5 0 0 0 .61-.22l2-3.46a.5.5 0 0 0-.12-.66l-2.11-1.65zM12 15a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
+                        </svg>
+
                         </div>
                     </div>
                     <div className="flex flex-col items-center pb-10 mx-auto mb-10 border-b border-gray-200 lg:w-3/5 sm:flex-row">
-                        <div className="inline-flex items-center justify-center flex-shrink-0 w-20 h-20 text-indigo-500 bg-indigo-100 rounded-full sm:w-32 sm:h-32 sm:mr-10">
+                        <div className="inline-flex items-center justify-center flex-shrink-0 w-20 h-20 text-brown-500 rounded-full sm:w-32 sm:h-32 sm:mr-10">
                             <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-10 h-10 sm:w-16 sm:h-16" viewBox="0 0 24 24">
                                 <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                             </svg>
@@ -91,7 +89,6 @@ const MaitenanceHero = () => {
                             </a>
                         </div>
                     </div>
-                    <button className="flex mx-auto mt-20 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Button</button>
                 </div>
             </section>
         </>

@@ -96,6 +96,7 @@ function App() {
             element={wrapPrivateRoute(<OrderPage />, "my_account", isLoggedIn)}
           />
           <Route path="/products/:id/edit" element={<EditProduct />} />
+          <Route path="/products/new" element={<CreateProduct />} />
           <Route path="/product/:productId" element={<ProductPage />} />
           <Route
             path="/products/:productId/comments/:commentId/edit"

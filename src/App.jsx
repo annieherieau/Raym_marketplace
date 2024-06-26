@@ -15,7 +15,7 @@ import EditComment from "./pages/EditComment";
 import OrderPage from "./pages/OrderPage";
 import Menu from "./components/NavCircle/Menu/Menu"; // Correction du chemin
 import Home from "./pages/Home/Home"; // Ajout de l'importation
-import Contacts from "./pages/Contacts/Contacts"; // Correction de l'importation
+import Contact from "./pages/Contact/Contact"; // Correction de l'importation
 import NoticeModal from "./components/NoticeModal";
 import PrivateRoute from "./components/PrivateRoute";
 import LegalMentions from "./pages/LegalMentions";
@@ -76,10 +76,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/password/:action" element={<Password />} />
-          <Route path="/contacts" element={<Contacts />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/brand" element={<Brand />} />
           <Route path="/maintenance" element={<Maintenance />} />
-          <Route path="/legal_mentions" element={<LegalMentions />} />
+          <Route path="/mentions-legales" element={<LegalMentions />} />
           <Route path="/configurator" element={<Configurator allProducts={products} />} />
 
           {/* ROUTES PRIVÉES */}

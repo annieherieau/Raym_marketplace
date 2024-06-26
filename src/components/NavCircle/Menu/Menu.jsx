@@ -307,7 +307,7 @@ const Navbar = () => {
             <a href="/maintenance" onClick={(e) => handleMenuItemClick(e, "/maintenance")}>Entretien</a>
           </li>
           <li className="header__menu-item">
-            <a href="/contacts" onClick={(e) => handleMenuItemClick(e, "/contacts")}>Contacts</a>
+            <a href="/contact" onClick={(e) => handleMenuItemClick(e, "/contact")}>Contact</a>
           </li>
         </ul>
         {/* fin LIENS MENU VIDEO */}

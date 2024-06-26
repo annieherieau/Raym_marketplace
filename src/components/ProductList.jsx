@@ -1,3 +1,4 @@
+// src/components/ProductList.jsx
 import React, { useState, useEffect } from "react";
 import Product from "./Product";
 import { buildRequestOptions } from "../app/api";
@@ -11,7 +12,6 @@ const ProductList = () => {
   const [error, setError] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false); // Nouvel état pour le statut d'administrateur
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     const fetchAdminStatus = async () => {
@@ -103,25 +103,27 @@ const ProductList = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Afficher un message de chargement pendant la vérification du statut admin
+    return <div className="text-center py-6">Loading...</div>; // Afficher un message de chargement pendant la vérification du statut admin
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="text-red-500">{error}</div>;
   }
 
   return (
-    <div>
-      <h2>Products</h2>
-      {products.map((product) => (
-        <Product
-          key={product.id}
-          product={product}
-          isAdmin={isAdmin}
-          onUpdateProduct={isAdmin ? handleUpdateProduct : null}
-          onDeleteProduct={isAdmin ? handleDeleteProduct : null}
-        />
-      ))}
+    <div className="container mx-auto px-4 py-8">
+      <h2 className="text-2xl font-semibold mb-4">Products</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {products.map((product) => (
+          <Product
+            key={product.id}
+            product={product}
+            isAdmin={isAdmin}
+            onUpdateProduct={isAdmin ? handleUpdateProduct : null}
+            onDeleteProduct={isAdmin ? handleDeleteProduct : null}
+          />
+        ))}
+      </div>
     </div>
   );
 };

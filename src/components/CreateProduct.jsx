@@ -1,3 +1,4 @@
+// src/components/CreateProduct.jsx
 import { useNavigate } from 'react-router-dom';
 import ProductForm from './ProductForm';
 
@@ -9,9 +10,11 @@ const CreateProduct = () => {
   };
 
   return (
-    <div>
-      <h2>Create Product</h2>
-      <ProductForm onSubmit={handleCreateProduct} />
+    <div className="container mx-auto px-4 py-8">
+      <h2 className="text-2xl font-semibold mb-4">Create Product</h2>
+      <div className="bg-white p-6 rounded shadow">
+        <ProductForm onSubmit={handleCreateProduct} />
+      </div>
     </div>
   );
 };

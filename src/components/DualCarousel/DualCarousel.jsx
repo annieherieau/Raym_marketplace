@@ -28,18 +28,18 @@ const DualCarousel = () => {
     setProducts(response);
 
     // Catégories bike
-    const bikeCats = Object.entries(response).filter((entry) => 
-      entry[1].type.bike
-    ).map((entry)=> entry[0])
+    const bikeCats = Object.entries(response)
+      .filter((entry) => entry[1].type.bike)
+      .map((entry) => entry[0]);
     setBikeCategories(bikeCats);
-    setSelectedBikeCategory(bikeCats[0])
-   
+    setSelectedBikeCategory(bikeCats[0]);
+
     // Catégories clothing
-    const clothingCats = Object.entries(response).filter((entry) => 
-      entry[1].type.clothing
-    ).map(entry=> entry[0])
+    const clothingCats = Object.entries(response)
+      .filter((entry) => entry[1].type.clothing)
+      .map((entry) => entry[0]);
     setClothingCategories(clothingCats);
-    setSelectedClothingCategory(clothingCats[0])
+    setSelectedClothingCategory(clothingCats[0]);
   }
 
   // Fetching products by catégories
@@ -56,25 +56,25 @@ const DualCarousel = () => {
   // toggle sur l'icone vélo
   const handleBikeIconClick = () => {
     setShowBikeOptions(!showBikeOptions);
-    setShowClothingOptions(false);
+    // setShowClothingOptions(false);
   };
 
   // toggle sur l'icone vêtements
   const handleClothingIconClick = () => {
     setShowClothingOptions(!showClothingOptions);
-    setShowBikeOptions(false);
+    // setShowBikeOptions(false);
   };
 
-   // click sur l'option vélo
+  // click sur l'option vélo
   const handleBikeOptionClick = (category) => {
     setSelectedBikeCategory(category);
-    setShowBikeOptions(false);
+    // setShowBikeOptions(false);
   };
 
   // click sur l'option vêtements
   const handleClothingOptionClick = (category) => {
     setSelectedClothingCategory(category);
-    setShowClothingOptions(false);
+    // setShowClothingOptions(false);
   };
 
   // TODO: ajouter au panier > si connecté sinon alert 'veuillez-vous connecter'
@@ -116,28 +116,42 @@ const DualCarousel = () => {
       <div
         className="relative m-6 overflow-hidden text-gray-800 bg-gray-100 shadow-lg sm:m-12"
         style={{
-          height: "55vh",
+          height: "65vh",
           backgroundImage: `url(${offRoadConfig})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           borderRadius: "20px",
         }}
       >
-        <h1
-          className="absolute top-0 p-2 text-2xl font-semibold tracking-widest text-white uppercase transform -translate-x-1/2 bg-gray-800 rounded-t-lg left-1/2 sm:text-3xl"
-          style={{ fontFamily: '"Chakra Petch", sans-serif' }}
-        >
-          CONFIGURATEUR
-        </h1>
-        <div className="flex h-full">
+        <div className=" bg-gray-800">
+          <h1
+            className="p-3 text-2xl text-center font-semibold tracking-widest text-white uppercase  bg-gray-800 rounded-t-lg left-1/2 sm:text-3xl"
+            style={{ fontFamily: '"Chakra Petch", sans-serif' }}
+          >
+            CONFIGURATEUR
+          </h1>
+
           {/* Sidebar */}
-          <aside
-            className="flex-col items-center justify-center hidden w-20 p-2 bg-gray-800 sm:flex sm:w-32"
+          <div
+            //  className="flex-col items-center justify-center hidden w-20 p-2 bg-gray-800 sm:flex sm:w-32"
+            className=" bg-gray-800"
             style={{ backgroundColor: "rgba(255, 255, 255, 0)" }}
           >
-            <nav className="flex flex-col items-center justify-center h-full space-y-6 text-xs sm:text-sm">
-              <div className="space-y-2">
-                <div className="flex flex-col mt-24 mb-0 space-y-2">
+            {/* <nav className="flex flex-col items-center justify-center h-full space-y-6 text-xs sm:text-sm"> */}
+            <nav className="flex flex-row items-center justify-center h-full space-x-4 text-xs sm:text-sm">
+              <div className="space-y-2 mb-2">
+                <div className="flex flex-row space-x-3">
+                  {showBikeOptions && (
+                    <div className="flex flex-col items-center space-x-2">
+                      {bikeCategories.map((category, i) => (
+                        <CategoryButton
+                          key={category + i}
+                          onClick={handleBikeOptionClick}
+                          category={category}
+                        />
+                      ))}
+                    </div>
+                  )}
                   <a
                     rel="noopener noreferrer"
                     href="#"
@@ -146,18 +160,13 @@ const DualCarousel = () => {
                     <img
                       src={veloIcon}
                       alt="Velo Icon"
-                      className="w-10 h-10 sm:w-14 sm:h-14"
+                      className="w-10 h-10 sm:w-16 sm:h-16"
                     />
                   </a>
-                  {showBikeOptions && (
-                    <div className="flex flex-col items-center space-y-2">
-                      {bikeCategories.map ((category, i)=><CategoryButton key={category+i} onClick={handleBikeOptionClick} category={category}/>)}
-                    </div>
-                  )}
                 </div>
               </div>
-              <div className="space-y-2">
-                <div className="flex flex-col mb-16 space-y-2">
+              <div className="space-y-2 mb-2">
+                <div className="flex flex-row space-x-3">
                   <a
                     rel="noopener noreferrer"
                     href="#"
@@ -171,14 +180,22 @@ const DualCarousel = () => {
                   </a>
                   {showClothingOptions && (
                     <div className="flex flex-col items-center space-y-2">
-                      {clothingCategories.map (category=><CategoryButton key={category+i} onClick={handleClothingOptionClick} category={category}/>)}
+                      {clothingCategories.map((category, i) => (
+                        <CategoryButton
+                          key={category + i}
+                          onClick={handleClothingOptionClick}
+                          category={category}
+                        />
+                      ))}
                     </div>
                   )}
                 </div>
               </div>
             </nav>
-          </aside>
-
+          </div>
+        </div>
+        {/* fin Sidebar */}
+        <div className="flex h-full">
           {/* Carousels */}
           <div className="flex items-center w-full p-6 sm:p-12 bg-custom-image overflow-x-hidden">
             <div className="flex flex-row items-end justify-center h-full space-x-4">
@@ -187,26 +204,28 @@ const DualCarousel = () => {
                 {selectedBikeCategory && (
                   <>
                     <Slider {...sliderSettings}>
-                      {products[selectedBikeCategory].products.map((product) => (
-                        <div
-                          key={product.id}
-                          className="flex flex-col justify-center"
-                        >
-                          <div className="flex flex-row justify-center">
-                            <img
-                              src={product.image}
-                              alt={product.name}
-                              className="h-auto max-w-full rounded-lg sm:max-h-80"
-                            />
+                      {products[selectedBikeCategory].products.map(
+                        (product) => (
+                          <div
+                            key={product.id}
+                            className="flex flex-col justify-center"
+                          >
+                            <div className="flex flex-row justify-center">
+                              <img
+                                src={product.image}
+                                alt={product.name}
+                                className="h-auto max-w-full rounded-lg sm:max-h-80"
+                              />
+                            </div>
+                            <div className="mt-3 text-center">
+                              <h3 className="text-base font-semibold text-white sm:text-lg">
+                                {product.name}
+                              </h3>
+                              <p className="text-white">{product.price} €</p>
+                            </div>
                           </div>
-                          <div className="mt-3 text-center">
-                            <h3 className="text-base font-semibold text-white sm:text-lg">
-                              {product.name}
-                            </h3>
-                            <p className="text-white">{product.price} €</p>
-                          </div>
-                        </div>
-                      ))}
+                        )
+                      )}
                     </Slider>
                     {selectedBikeProduct && (
                       <div className="flex flex-col justify-center">
@@ -227,26 +246,28 @@ const DualCarousel = () => {
                 {selectedClothingCategory && (
                   <>
                     <Slider {...sliderSettings}>
-                      {products[selectedClothingCategory].products.map((product) => (
-                        <div
-                          key={product.id}
-                          className="flex flex-col justify-center"
-                        >
-                          <div className="flex flex-row justify-center">
-                            <img
-                              src={product.image}
-                              alt={product.name}
-                              className="h-auto max-w-full rounded-lg sm:max-h-80"
-                            />
+                      {products[selectedClothingCategory].products.map(
+                        (product) => (
+                          <div
+                            key={product.id}
+                            className="flex flex-col justify-center"
+                          >
+                            <div className="flex flex-row justify-center">
+                              <img
+                                src={product.image}
+                                alt={product.name}
+                                className="h-auto max-w-full rounded-lg sm:max-h-80"
+                              />
+                            </div>
+                            <div className="mt-3 text-center">
+                              <h3 className="text-base font-semibold text-white sm:text-lg">
+                                {product.name}
+                              </h3>
+                              <p className="text-white">{product.price} €</p>
+                            </div>
                           </div>
-                          <div className="mt-3 text-center">
-                            <h3 className="text-base font-semibold text-white sm:text-lg">
-                              {product.name}
-                            </h3>
-                            <p className="text-white">{product.price} €</p>
-                          </div>
-                        </div>
-                      ))}
+                        )
+                      )}
                     </Slider>
                     {selectedClothingProduct && (
                       <div className="flex flex-col justify-center">
@@ -272,9 +293,7 @@ const DualCarousel = () => {
     <p>Erreur: pas de produits</p>;
   }
 
-  function newFunction() {
-    
-  }
+  function newFunction() {}
 };
 
 export default DualCarousel;

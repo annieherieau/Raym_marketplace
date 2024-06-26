@@ -49,20 +49,3 @@ export function updateCookie(value, field = "email") {
 export function removeCookie() {
   Cookies.remove(cookie_name);
 }
-
-export function fetchProducts(){
-const {url, options} = buildRequestOptions('products', 'index')
-  fetch(url, options)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    return response.json();
-  })
-  .then((data) => {
-    return(data);
-  })
-  .catch((error) => {
-    console.error("Error fetching products:", error);
-  });
-}

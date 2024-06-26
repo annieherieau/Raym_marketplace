@@ -9,7 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAtom, useAtomValue } from "jotai";
 import { useEffect} from "react";
-import { isAuthAtom, productsAtom, unknownUser, userAtom } from "./app/atoms";
+import { isAuthAtom, userAtom } from "./app/atoms";
 import EditProduct from "./components/EditProduct";
 import ProductPage from "./pages/ProductPage";
 import EditComment from "./pages/EditComment";
@@ -23,29 +23,29 @@ import LegalMentions from "./pages/LegalMentions";
 import Brand from "./pages/Brand/Brand";
 import Maintenance from "./pages/Maintenance/Maintenance";
 import Configurator from "./pages/Configurator/Configurator";
+import { useState } from "react";
 
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
 function App() {
-  const [, setUser] = useAtom(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
-  const [products, setProducts] = useAtom(productsAtom);
+  const [products, setProducts] = useState([]);
   // Récupérer les produits depuis l'API
   useEffect(() => {
-    // fetch(`${api_url}/products`)
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error("Network response was not ok");
-    //     }
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     setProducts(data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching products:", error);
-    //   });
+    fetch(`${api_url}/products`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setProducts(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      });
   }, [isLoggedIn]);
   // Routes pour user connecté
   function wrapPrivateRoute(element, redirect, isAuth) {

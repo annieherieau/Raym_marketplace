@@ -1,5 +1,6 @@
 import "./Menu.css";
 import { useEffect, useState, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../../../assets/raymB.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,7 +13,6 @@ import { useAtom, useAtomValue } from "jotai";
 import { isAuthAtom, openCartAtom, userAtom } from "../../../app/atoms";
 import { removeCookie } from "../../../app/utils";
 import { buildRequestOptions } from "../../../app/api";
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const user = useAtomValue(userAtom);
@@ -23,10 +23,12 @@ const Navbar = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const buttonRef = useRef(null);
   const navRef = useRef(null);
   const userIconRef = useRef(null);
   const closeTimeoutRef = useRef(null);
+  const location = useLocation();
 
   // vérification du status admin
   useEffect(() => {
@@ -97,13 +99,13 @@ const Navbar = () => {
     }, 300);
   };
 
-   // hover sur dropdown > affichage du dropdown
+  // hover sur dropdown > affichage du dropdown
   const handleDropdownHover = () => {
     clearTimeout(closeTimeoutRef.current);
     setIsDropdownOpen(true);
   };
 
-   //Leave dropdown > disparition du dropdown
+  // Leave dropdown > disparition du dropdown
   const handleDropdownLeave = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setIsDropdownOpen(false);
@@ -138,13 +140,20 @@ const Navbar = () => {
     navRef.current.style.setProperty("--clip-y", `${clipY}%`);
   };
 
-  useEffect(() => {
-    updateClipPath();
-  }, [isRevealed]);
+  // Gestion du clic sur un élément du menu
+  const handleMenuItemClick = (event, href) => {
+    event.preventDefault();
+    setIsLoading(true);
+    navigate(href);
+  };
 
+  // Fermer le menu une fois la nouvelle page chargée
   useEffect(() => {
-    updateClipPath();
-  }, []);
+    if (isLoading) {
+      setIsRevealed(false);
+      setIsLoading(false);
+    }
+  }, [location]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -187,7 +196,7 @@ const Navbar = () => {
           {!isLoggedIn && (
             <>
               <li className="header__menu-item">
-                <a href="/login">
+                <a href="/login" onClick={(e) => handleMenuItemClick(e, "/login")}>
                   <FontAwesomeIcon
                     icon={faArrowRightToBracket}
                     className="icon-spacing"
@@ -196,7 +205,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li className="header__menu-item">
-                <a href="/register">
+                <a href="/register" onClick={(e) => handleMenuItemClick(e, "/register")}>
                   <FontAwesomeIcon
                     icon={faArrowRightToBracket}
                     className="icon-spacing"
@@ -214,7 +223,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li className="header__menu-item">
-                <a href="/my_account">
+                <a href="/my_account" onClick={(e) => handleMenuItemClick(e, "/my_account")}>
                   <FontAwesomeIcon
                     icon={faAddressCard}
                     className="icon-spacing"
@@ -226,7 +235,7 @@ const Navbar = () => {
           )}
           {isAdmin && (
             <li className="header__menu-item">
-              <a href="/admin">
+              <a href="/admin" onClick={(e) => handleMenuItemClick(e, "/admin")}>
                 <FontAwesomeIcon
                   icon={faAddressCard}
                   className="icon-spacing"
@@ -283,22 +292,22 @@ const Navbar = () => {
         {/* LIENS MENU VIDEO */}
         <ul className="header__menu">
           <li className="header__menu-item">
-            <a href="/">Accueil</a>
+            <a href="/" onClick={(e) => handleMenuItemClick(e, "/")}>Accueil</a>
           </li>
           <li className="header__menu-item">
-            <a href="/brand">La marque</a>
+            <a href="/brand" onClick={(e) => handleMenuItemClick(e, "#")}>La marque</a>
           </li>
           <li className="header__menu-item">
-            <a href="#">Boutique</a>
+            <a href="#" onClick={(e) => handleMenuItemClick(e, "#")}>Boutique</a>
           </li>
           <li className="header__menu-item">
-            <a href="/configurator">Configurateur</a>
+            <a href="/configurator" onClick={(e) => handleMenuItemClick(e, "#")}>Configurateur</a>
           </li>
           <li className="header__menu-item">
-            <a href="/maintenance">Entretien</a>
+            <a href="/maintenance" onClick={(e) => handleMenuItemClick(e, "#")}>Entretien</a>
           </li>
           <li className="header__menu-item">
-            <a href="/contacts">Contacts</a>
+            <a href="/contacts" onClick={(e) => handleMenuItemClick(e, "/contacts")}>Contacts</a>
           </li>
         </ul>
         {/* fin LIENS MENU VIDEO */}
@@ -309,3 +318,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

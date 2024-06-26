@@ -39,7 +39,7 @@ header {
   margin-top: 0em;
   margin-right: 1em;
   outline: none;
-  animation-duration: 300ms;
+  animation-duration: 300ms; 
   animation-timing-function: ease;
 }
 
@@ -55,6 +55,7 @@ header {
 .header__button.open {
   background-color: rgb(255, 224, 192);
   animation-name: scale;
+  animation-duration: 300ms; 
 }
 
 @keyframes scale {

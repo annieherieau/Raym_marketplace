@@ -46,9 +46,9 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
           />
         </a>
         <div className="p-6">
-          <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
+          {/* <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
             {product.category || "CATEGORY"}
-          </h3>
+          </h3> */}
           <h2 className="text-gray-900 title-font text-lg font-medium">
             {product.name}
           </h2>
@@ -96,12 +96,13 @@ Product.propTypes = {
     description: PropTypes.string,
     id: PropTypes.number.isRequired,
     photo_url: PropTypes.string,
-    category: PropTypes.string,
+    // category: PropTypes.string,
     price: PropTypes.number,
   }).isRequired,
   isAdmin: PropTypes.bool.isRequired,
   onUpdateProduct: PropTypes.func,
   onDeleteProduct: PropTypes.func,
 };
+
 
 export default Product;

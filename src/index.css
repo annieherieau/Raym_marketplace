@@ -14,7 +14,8 @@ body {
 
 main {
   flex: 1;
-  padding-bottom: 50px; 
+  padding-bottom: 50px;
+  justify-content: center; 
 }
 
 .footer-fixed {
@@ -40,10 +41,38 @@ body {
 
 /* Custom Hero Image */
 .bg-custom-image {
+  position: relative;
+  background-image: url('/src/assets/repair.jpeg');
   background-size: cover;
   background-position: center;
   border-radius: 25px;
+  overflow: hidden; /* Pour cacher le dépassement du pseudo-élément */
 }
+
+.bg-custom-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(79, 77, 77, 0.6); /* Couleur de fond semi-transparente */
+  filter: blur(8px); /* Applique un flou à l'image de fond */
+}
+
+/* Styles supplémentaires pour le texte */
+
+.bg-custom-image > div {
+  position: relative;
+  z-index: 1; /* Pour placer le texte au-dessus du pseudo-élément flou */
+}
+
+.bg-custom-image h1,
+.bg-custom-image h3,
+.bg-custom-image p {
+  color: white; /* Couleur du texte */
+}
+
 
 .fade-up {
   opacity: 0;

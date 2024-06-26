@@ -1,3 +1,4 @@
+// src/components/ProductForm.jsx
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { buildRequestOptions } from '../app/api';

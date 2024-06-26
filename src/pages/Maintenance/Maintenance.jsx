@@ -1,7 +1,7 @@
 import MaitenanceHero from "../../components/Hero/MaintenanceHero"
 const Maintenance = () => {
     return (
-        <div>
+        <div >
             <MaitenanceHero />
         </div>
     )

@@ -7,7 +7,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 const RECAPTCHA_KEY =import.meta.env.VITE_RECAPTCHA_KEY;
 
-export default function Contact() {
+export default function ContactForm() {
   const [notice, setNotice] = useAtom(noticeAtom);
   const [captchaValue, setCaptchaValue] = useState(null);
 

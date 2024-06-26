@@ -5,7 +5,7 @@ import bike3 from '../../assets/Hybrid-Raym.png';
 
 const Brand = () => {
     return (
-        <div className="bg-black text-white rounded-xl" style={{ fontFamily: 'Roboto' }}>
+        <div className="bg-black text-white rounded-[40px]" style={{ fontFamily: 'Roboto' }}>
             {/* Section d'en-tête */}
             <section className="text-white body-font">
                 <div className="container mx-auto flex px-5 py-24 md:flex-row justify-center items-center">

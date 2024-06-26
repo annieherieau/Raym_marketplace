@@ -3,7 +3,6 @@ import Product from "./Product";
 import { buildRequestOptions } from "../app/api";
 import { useAtomValue } from "jotai";
 import { userAtom, isAuthAtom } from "../app/atoms";
-import onRoadRobenaImage from '/src/assets/OnRoad-Robena.png';
 
 const ProductList = () => {
   const user = useAtomValue(userAtom);
@@ -55,7 +54,14 @@ const ProductList = () => {
         }
         return response.json();
       })
-      .then((data) => setProducts(data))
+      .then((data) => {
+        // Convertir le prix en nombre
+        const productsWithNumericPrice = data.map(product => ({
+          ...product,
+          price: parseFloat(product.price)
+        }));
+        setProducts(productsWithNumericPrice);
+      })
       .catch((error) => {
         console.error("Error fetching products:", error);
         setError("Error fetching products. Please try again later.");
@@ -110,105 +116,83 @@ const ProductList = () => {
     return <div>{error}</div>;
   }
 
-
-
-  
   return (
-    <section className="text-gray-600 body-font bg-white mx-8 rounded-[20px] mb-12">
-      <div className="container px-5 py-24 mx-auto flex flex-wrap">
-        <div className="flex w-full mb-20 flex-wrap">
-          <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 lg:w-1/3 lg:mb-0 mb-4">Nos Best Seller</h1>
-          <p className="lg:pl-6 lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them man bun deep jianbing selfies heirloom.</p>
-        </div>
-        
-        <div className="flex flex-wrap md:-m-2 -m-1">
-          <div className="flex flex-wrap w-1/2">
-            {products[0] && (
-              <div className="md:p-2 p-1 w-1/2">
-                <Product
-                  key={products[0].id}
-                  product={{ ...products[0], price: Number(products[0].price), image: onRoadRobenaImage }}
-                  isAdmin={isAdmin}
-                  onUpdateProduct={isAdmin ? handleUpdateProduct : null}
-                  onDeleteProduct={isAdmin ? handleDeleteProduct : null}
-                />
-              </div>
-            )}
-
-            {products[1] && (
-              <div className="md:p-2 p-1 w-1/2">
-                <Product
-                  key={products[1].id}
-                  product={{ ...products[1], price: Number(products[1].price), image: onRoadRobenaImage }}
-                  isAdmin={isAdmin}
-                  onUpdateProduct={isAdmin ? handleUpdateProduct : null}
-                  onDeleteProduct={isAdmin ? handleDeleteProduct : null}
-                />
-              </div>
-            )}
-
-            {products[2] && (
-              <div className="md:p-2 p-1 w-full">
-                <Product
-                  key={products[2].id}
-                  product={{ ...products[2], price: Number(products[2].price), image: onRoadRobenaImage }}
-                  isAdmin={isAdmin}
-                  onUpdateProduct={isAdmin ? handleUpdateProduct : null}
-                  onDeleteProduct={isAdmin ? handleDeleteProduct : null}
-                />
-              </div>
-            )}
+    <>
+      <section className="text-gray-600 body-font mr-8 ml-8 mb-8" style={{ borderRadius: '20px' }}>
+        <div className="w-full bg-white px-8 py-10 mx-auto">
+          <div className="flex w-full mb-20 flex-wrap">
+            <h1 className="sm:text-4xl text-3xl font-bold title-font text-gray-900 lg:w-1/3 lg:mb-0 mb-4">Nos best sellers :</h1>
           </div>
-
-          <div className="flex flex-wrap w-1/2">
-            {products[3] && (
-              <div className="md:p-2 p-1 w-full">
-                <Product
-                  key={products[3].id}
-                  product={{ ...products[3], price: Number(products[3].price), image: onRoadRobenaImage }}
-                  isAdmin={isAdmin}
-                  onUpdateProduct={isAdmin ? handleUpdateProduct : null}
-                  onDeleteProduct={isAdmin ? handleDeleteProduct : null}
-                />
+          <div className="flex flex-wrap md:-m-2 -m-1">
+            <div className="flex flex-wrap w-1/2">
+              <div className="md:p-2 p-1 w-1/2 bg-white">
+                {products[0] && (
+                  <Product
+                    product={products.sort((a, b) => b.rating - a.rating)[0]}
+                    isAdmin={isAdmin}
+                    onUpdateProduct={isAdmin ? handleUpdateProduct : null}
+                    onDeleteProduct={isAdmin ? handleDeleteProduct : null}
+                  />
+                )}
               </div>
-            )}
-
-            {products[4] && (
-              <div className="md:p-2 p-1 w-1/2">
-                <Product
-                  key={products[4].id}
-                  product={{ ...products[4], price: Number(products[4].price), image: onRoadRobenaImage }}
-                  isAdmin={isAdmin}
-                  onUpdateProduct={isAdmin ? handleUpdateProduct : null}
-                  onDeleteProduct={isAdmin ? handleDeleteProduct : null}
-                />
+              <div className="md:p-2 p-1 w-1/2 bg-white">
+                {products[1] && (
+                  <Product
+                    product={products.sort((a, b) => b.rating - a.rating)[1]}
+                    isAdmin={isAdmin}
+                    onUpdateProduct={isAdmin ? handleUpdateProduct : null}
+                    onDeleteProduct={isAdmin ? handleDeleteProduct : null}
+                  />
+                )}
               </div>
-            )}
-            
-            {products[5] && (
-              <div className="md:p-2 p-1 w-1/2">
-                <Product
-                  key={products[5].id}
-                  product={{ ...products[5], price: Number(products[5].price), image: onRoadRobenaImage }}
-                  isAdmin={isAdmin}
-                  onUpdateProduct={isAdmin ? handleUpdateProduct : null}
-                  onDeleteProduct={isAdmin ? handleDeleteProduct : null}
-                />
+              <div className="md:p-2 p-1 w-full bg-white">
+                {products[2] && (
+                  <Product
+                    product={products.sort((a, b) => b.rating - a.rating)[2]}
+                    isAdmin={isAdmin}
+                    onUpdateProduct={isAdmin ? handleUpdateProduct : null}
+                    onDeleteProduct={isAdmin ? handleDeleteProduct : null}
+                  />
+                )}
               </div>
-            )}
+            </div>
+            <div className="flex flex-wrap w-1/2">
+              <div className="md:p-2 p-1 w-full bg-white">
+                {products[3] && (
+                  <Product
+                    product={products.sort((a, b) => b.rating - a.rating)[3]}
+                    isAdmin={isAdmin}
+                    onUpdateProduct={isAdmin ? handleUpdateProduct : null}
+                    onDeleteProduct={isAdmin ? handleDeleteProduct : null}
+                  />
+                )}
+              </div>
+              <div className="md:p-2 p-1 w-1/2 bg-white">
+                {products[4] && (
+                  <Product
+                    product={products.sort((a, b) => b.rating - a.rating)[4]}
+                    isAdmin={isAdmin}
+                    onUpdateProduct={isAdmin ? handleUpdateProduct : null}
+                    onDeleteProduct={isAdmin ? handleDeleteProduct : null}
+                  />
+                )}
+              </div>
+              <div className="md:p-2 p-1 w-1/2 bg-white">
+                {products[5] && (
+                  <Product
+                    product={products.sort((a, b) => b.rating - a.rating)[5]}
+                    isAdmin={isAdmin}
+                    onUpdateProduct={isAdmin ? handleUpdateProduct : null}
+                    onDeleteProduct={isAdmin ? handleDeleteProduct : null}
+                  />
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>  
+    </>
   );
 };
- 
- 
 
 export default ProductList;
-
-
-
-
-
-

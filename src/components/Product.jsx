@@ -57,16 +57,16 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
           {isLoggedIn && !isAdmin && (
             <button
               onClick={handleAddToCart}
-              className="mt-2 text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded"
+              className="mt-2 text-black font-bold bg-palegreen-500 border-0 py-2 px-4 focus:outline-none hover:bg-palegreen-600 rounded"
             >
-              Add to Cart
+              Ajouter au panier
             </button>
           )}
           <Link
             to={`/product/${product.id}`}
-            className="mt-2 text-indigo-500 inline-flex items-center"
+            className="mt-2 text-indigo-500 inline-flex items-center ml-4"
           >
-            View Details
+            Voir l'article
           </Link>
           {isAdmin && (
             <div className="mt-2">
@@ -74,13 +74,13 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
                 onClick={handleUpdateClick}
                 className="text-white bg-yellow-500 border-0 py-2 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-2"
               >
-                Edit
+                Modifier
               </button>
               <button
                 onClick={handleDeleteClick}
                 className="text-white bg-red-500 border-0 py-2 px-4 focus:outline-none hover:bg-red-600 rounded"
               >
-                Delete
+                Supprimer
               </button>
             </div>
           )}

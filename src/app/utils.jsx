@@ -1,4 +1,7 @@
 import Cookies from "js-cookie";
+import { buildRequestOptions } from "./api";
+import { useAtom } from "jotai";
+import { noticeAtom } from "./atoms";
 
 // ***** FORMULAIRE *****/
 // récupérer les données d'un formulaire
@@ -24,7 +27,8 @@ export function checkPasswords() {
 }
 
 // ****** COOKIES ******* //
-export const cookie_name = import.meta.env.VITE_COOKIE_NAME;
+export function cookie_name(){
+  return import.meta.env.VITE_COOKIE_NAME;}
 
 export function createCookie(data, remember_me = false) {
   Cookies.set(cookie_name, JSON.stringify(data), {

@@ -109,11 +109,11 @@ const ProductList = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Afficher un message de chargement pendant la vérification du statut admin
+    return <div className="text-center py-6">Loading...</div>; // Afficher un message de chargement pendant la vérification du statut admin
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="text-red-500">{error}</div>;
   }
 
   return (

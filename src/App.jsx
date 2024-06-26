@@ -94,6 +94,7 @@ function App() {
             path="/admin/*"
             element={wrapPrivateRoute(<Dashboard />, "admin", isLoggedIn)}
           />
+          <Route path="/products/new" element={<CreateProduct />} />
            <Route
             path="/order/:orderId"
             element={wrapPrivateRoute(<OrderPage />, "my_account", isLoggedIn)}

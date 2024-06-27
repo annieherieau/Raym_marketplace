@@ -1,5 +1,5 @@
 import { useAtom, useAtomValue } from "jotai";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import { updateCartAtom, userAtom } from "../../app/atoms";
 import { buildRequestOptions } from "../../app/api";
 
@@ -112,18 +112,19 @@ export default function CartItem({
   );
 }
 
-CartItem.propTypes = {
-  item: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    product: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      photo_url: PropTypes.string.isRequired,
-      id: PropTypes.number.isRequired,
-    }).isRequired,
-    quantity: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-  }).isRequired,
-  onRemove: PropTypes.func.isRequired,
-  onUpdateQuantity: PropTypes.func.isRequired,
-  cart: PropTypes.bool,
-};
+// CartItem.propTypes = {
+//   item: PropTypes.shape({
+//     id: PropTypes.number.isRequired,
+//     product: PropTypes.shape({
+//       name: PropTypes.string.isRequired,
+//       description: PropTypes.string,
+//       id: PropTypes.number.isRequired,
+//     }).isRequired,
+//     quantity: PropTypes.number.isRequired,
+//   }).isRequired,
+//   onRemove: PropTypes.func,
+//   onUpdateQuantity: PropTypes.func,
+//   onActionComplete: PropTypes.func,
+//   cart: PropTypes.boolean
+// };
+

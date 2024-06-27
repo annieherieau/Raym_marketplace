@@ -51,7 +51,7 @@ export default function ForgotPassword() {
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm border border-black rounded-lg bg-beige">
           <div className="bg-black p-4 rounded-t-lg">
-            <h2 className="text-center mt-8 mb-4 text-4xl font-bold leading-9 tracking-tight text-palegreen">
+            <h2 className="text-center mt-8 mb-4 text-4xl font-bold leading-9 tracking-tight text-palegreen-500">
               Mot de passe oublié
             </h2>
           </div>

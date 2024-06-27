@@ -308,7 +308,7 @@ const Navbar = () => {
             <a href="#" onClick={(e) => handleMenuItemClick(e, "#")}>Boutique</a>
           </li>
           <li className="header__menu-item">
-            <a href="/configurator" onClick={(e) => handleMenuItemClick(e, "/configurator")}>Configurateur</a>
+            <a href="/configurator" onClick={(e) => handleMenuItemClick(e, "/configurateur")}>Configurateur</a>
           </li>
           <li className="header__menu-item">
             <a href="/maintenance" onClick={(e) => handleMenuItemClick(e, "/maintenance")}>Entretien</a>

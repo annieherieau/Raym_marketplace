@@ -12,19 +12,19 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
   const [, setUpdateCart] = useAtom(updateCartAtom);
 
   const handleAddToCart = () => {
-    const { url, options } = buildRequestOptions("cart_items", "create", {
-      body: { product_id: product.id, quantity: 1 },
-      token: user.token,
-    });
-    fetch(url, options)
-      .then((response) => {
-        if (response.status !== 201) {
-          throw new Error("Item not added to cart");
-        }
-        return response.json();
-      })
-      .catch((error) => console.error("Error:", error));
-    setUpdateCart(true);
+      const { url, options } = buildRequestOptions("cart_items", "create", {
+        body: { product_id: product.id, quantity: 1 },
+        token: user.token,
+      });
+      fetch(url, options)
+        .then((response) => {
+          if (response.status !== 201) {
+            throw new Error("Item not added to cart");
+          }
+          return response.json();
+        })
+        .catch((error) => console.error("Error:", error));
+      setUpdateCart(true);
   };
 
   const handleUpdateClick = () => {
@@ -48,11 +48,13 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
         <div className="p-6">
           <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
             {product.category.name || "CATEGORY"}
-          </h3> 
+          </h3>
           <h2 className="text-gray-900 title-font text-lg font-medium">
             {product.name}
           </h2>
-          <p className="mt-1">{product.price ? `$${product.price}` : "$0.00"}</p>
+          <p className="mt-1">
+            {product.price ? `$${product.price}` : "$0.00"}
+          </p>
           <p className="mt-1">{product.description}</p>
           {isLoggedIn && !isAdmin && (
             <button
@@ -102,6 +104,5 @@ Product.propTypes = {
   onUpdateProduct: PropTypes.func,
   onDeleteProduct: PropTypes.func,
 };
-
 
 export default Product;

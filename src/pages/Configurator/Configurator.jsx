@@ -1,10 +1,10 @@
-import DualCarousel from "../../components/Carousel/DualCarousel.jsx";
+
 import { buildRequestOptions } from "../../app/api";
 import { useEffect, useState } from "react";
 import Nav from "../../components/Carousel/Nav.jsx";
 import offRoadConfig from "../../assets/offRoad-config.png";
 import Carousel from "../../components/Carousel/Carousel.jsx";
-const Configurator = ({ allProducts }) => {
+const Configurator = () => {
   const [products, setProducts] = useState(null);
   const [bikeCategories, setBikeCategories] = useState(null);
   const [clothingCategories, setClothingCategories] = useState(null);

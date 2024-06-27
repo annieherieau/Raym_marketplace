@@ -1,6 +1,13 @@
+import { useAtom, useAtomValue } from "jotai";
 import { useState } from "react";
+import { isAuthAtom, updateCartAtom, userAtom } from "../../app/atoms";
+import { useNavigate } from "react-router-dom";
 
-const Carousel = ({ slides, bike=true }) => {
+const Carousel = ({ slides, bike = true }) => {
+  const {isAdmin} = useAtomValue(userAtom);
+  const isLoggedIn = useAtomValue(isAuthAtom);
+  const [, setUpdateCart] = useAtom(updateCartAtom);
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrevious = () => {
@@ -12,10 +19,33 @@ const Carousel = ({ slides, bike=true }) => {
     const newIndex = (currentIndex + 1) % slides.length;
     setCurrentIndex(newIndex);
   };
-// bike ? "h-full":' w-auto max-w-60'
+
+  const handleAddToCart = () => {
+    if (isAdmin) {
+      alert("Vous êtes administrateur. Vous ne pouvez pas commander !");
+    } else if (isLoggedIn) {
+      const { url, options } = buildRequestOptions("cart_items", "create", {
+        body: { product_id: product.id, quantity: 1 },
+        token: user.token,
+      });
+      fetch(url, options)
+        .then((response) => {
+          if (response.status !== 201) {
+            throw new Error("Item not added to cart");
+          }
+          return response.json();
+        })
+        .catch((error) => console.error("Error:", error));
+      setUpdateCart(true);
+    } else {
+      alert("Veuillez vous connecter pour commander");
+      navigate('/login?redirect=configurateur')
+    }
+  };
+  // bike ? "h-full":' w-auto max-w-60'
   return (
     // <div className="relative w-full max-w-lg mx-auto">
-      <div className="relative">
+    <div className="relative">
       <div className=" bg-pink-300 overflow-hidden p-4">
         <img
           src={slides[currentIndex].image}
@@ -27,6 +57,15 @@ const Carousel = ({ slides, bike=true }) => {
             {slides[currentIndex].name}
           </h3>
           <p className="text-white">{slides[currentIndex].price} €</p>
+        </div>
+        <div className="mt-3 text-center">
+          <button
+            type="button"
+            className="px-8 py-3 font-semibold rounded bg-gray-800 dark:bg-gray-100 text-gray-100 dark:text-gray-800"
+            onClick={handleAddToCart}
+          >
+            Acheter
+          </button>
         </div>
       </div>
       <button

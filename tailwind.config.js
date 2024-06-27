@@ -21,7 +21,10 @@ export default {
         'chakra-petch': ['"Chakra Petch"', 'sans-serif'],
       },
       colors: {
-        palegreen: '#98FB98',
+        palegreen: {
+          500: '#98FB98', 
+          600: '#90EE90', 
+        },
       },
     },
   },

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { buildRequestOptions } from '../app/api';
 import CreateComment from '../pages/CreateComment'; // Assure-toi que le chemin est correct
+import StarRating from '../components/StarRating'; // Assure-toi que le chemin est correct
 
 const Comments = ({ productId, isLoggedIn, token, currentUser }) => {
   const [comments, setComments] = useState([]);
@@ -53,24 +54,38 @@ const Comments = ({ productId, isLoggedIn, token, currentUser }) => {
   }
 
   return (
-    <div>
-      <h3>Comments</h3>
-      <ul>
+    <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      <h3 className="text-2xl font-semibold mb-4">Comments</h3>
+      <ul className="space-y-4">
         {comments.map(comment => (
-          <li key={comment.id}>
-            <p>{comment.content}</p>
-            <p>Rating: {comment.rating}</p>
-            {comment.user && <p>By: {comment.user.email}</p>}
+          <li key={comment.id} className="border-b pb-4">
+            <p className="text-gray-700">{comment.content}</p>
+            <StarRating rating={comment.rating} onRatingChange={() => {}} />
+            {comment.user && <p className="text-gray-500">By: {comment.user.email}</p>}
             {isLoggedIn && currentUser && comment.user_id === currentUser.id && (
-              <div>
-                <button onClick={() => handleEditClick(comment.id)}>Edit</button>
-                <button onClick={() => handleDelete(comment.id)}>Delete</button>
+              <div className="mt-2 space-x-2">
+                <button
+                  onClick={() => handleEditClick(comment.id)}
+                  className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(comment.id)}
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                >
+                  Delete
+                </button>
               </div>
             )}
           </li>
         ))}
       </ul>
-      {isLoggedIn && <CreateComment productId={productId} token={token} onCommentCreated={fetchComments} />}
+      {isLoggedIn && (
+        <div className="mt-6">
+          <CreateComment productId={productId} token={token} onCommentCreated={fetchComments} />
+        </div>
+      )}
     </div>
   );
 };

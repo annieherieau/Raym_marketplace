@@ -1,6 +1,7 @@
 import { buildRequestOptions } from "../app/api";
 import { useAtomValue } from "jotai";
 import { userAtom } from "../app/atoms";
+import PropTypes from 'prop-types';
 
 export default function CartItem({
   item,
@@ -66,4 +67,16 @@ export default function CartItem({
   );
 };
 
-
+CartItem.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
+    product: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  onRemove: PropTypes.func.isRequired,
+  onUpdateQuantity: PropTypes.func.isRequired,
+  onActionComplete: PropTypes.func.isRequired,
+  cart: PropTypes.bool,
+};

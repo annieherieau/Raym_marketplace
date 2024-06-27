@@ -157,7 +157,7 @@ const ProductList = () => {
               </div>
             </div>
             <div className="flex flex-wrap w-1/2">
-              <div className="md:p-2 p-1 w-full bg-white" style={{ height: '600px' }}>
+              <div className="md:p-2 p-1 w-full bg-white">
                 {products[3] && (
                   <Product
                     product={products.sort((a, b) => b.rating - a.rating)[3]}

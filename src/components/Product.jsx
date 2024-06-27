@@ -4,6 +4,8 @@ import { userAtom, isAuthAtom, updateCartAtom } from "../app/atoms";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { buildRequestOptions } from "../app/api";
+import CartButton from "./CartButton/CartButton"; // Chemin relatif correct
+import { useRef } from "react";
 
 const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
   const user = useAtomValue(userAtom);
@@ -52,12 +54,7 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
         <p className="mt-1">{product.price ? `$${product.price}` : "$0.00"}</p>
         <p className="mt-1">{product.description}</p>
         {isLoggedIn && !isAdmin && (
-          <button
-            onClick={handleAddToCart}
-            className="mt-2 text-black font-bold bg-palegreen-500 border-0 py-2 px-4 focus:outline-none hover:bg-palegreen-600 rounded"
-          >
-            Ajouter au panier
-          </button>
+          <CartButton onClick={handleAddToCart} />
         )}
         <Link
           to={`/product/${product.id}`}
@@ -99,5 +96,6 @@ Product.propTypes = {
   onDeleteProduct: PropTypes.func,
 };
 
-
 export default Product;
+
+

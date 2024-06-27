@@ -24,6 +24,7 @@
     "animejs": "^3.2.2",
     "autoprefixer": "^10.4.19",
     "dotenv": "^16.4.5",
+    "gsap": "^3.12.5",
     "jotai": "^2.8.3",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",

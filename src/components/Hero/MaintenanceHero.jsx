@@ -10,7 +10,7 @@ const MaintenanceHero = () => {
                 <div className="px-6 py-24 mx-auto max-w-7xl sm:py-32 lg:px-8 relative z-10">
                     <div className="text-center">
                         <h1 className="text-6xl font-bold tracking-tight text-green-400 sm:text-7xl lg:text-8xl pb-10" style={{ fontFamily: 'Chakra Petch' }}>
-                            <FontAwesomeIcon icon={faScrewdriverWrench} /> MAINTENANCE
+                            <FontAwesomeIcon icon={faScrewdriverWrench} /> ENTRETIEN
                         </h1>
                         <h3 className="text-4xl text-white">Quelques conseils pour garder un vélo en parfait état.</h3>
                         <p className="mt-4 text-2xl text-white leading-8">Il est avéré qu'un vélo RAYM peut s'apparenter à un vrai cheval de course. Fiable, solide et fun à rouler. Mais même un pur-sang a besoin de l'attention nécessaire pour délivrer ses meilleures performances. Voici quelques consignes pour tirer le meilleur de votre monture. Gardez à l'esprit que des conditions météo difficiles et une utilisation intensive demanderont un entretien plus régulier.</p>
@@ -24,7 +24,7 @@ const MaintenanceHero = () => {
                                 <img src="src/assets/repair4.jpg" alt="" className="w-full h-full object-cover rounded-full"/>
                             </div>
                             <div className="flex-grow mt-6 text-center sm:text-left sm:mt-0">
-                                <h2 className="mb-2 text-3xl font-medium title-font text-green-400" style={{ fontFamily: 'Chakra Petch' }}>CHAQUE SORTIE</h2>
+                                <h2 className="entretien mb-2 text-3xl font-medium title-font " style={{ fontFamily: 'Chakra Petch' }}>CHAQUE SORTIE</h2>
                                 <ul className="text-2xl text-gray-100">
                                     <li className="p-2"><strong>1. Vérifiez la pression des pneus et l'état des roues</strong> - Vérifiez que les pneus soient gonflés à la pression désirée, avec une pompe ou un manomètre. Faites tourner la roue pour repérer l'usure et d'éventuels dégâts. En même temps, vérifiez aussi que la roue ne soit pas voilée, que les moyeux n'aient pas de jeu et que les disques ne touchent pas.</li>
                                     <li className="p-2"><strong>2. Vérifiez la chaîne</strong> - Assurez-vous que votre chaîne est correctement branchée. Vous devriez aussi essuyer votre chaîne à chaque sortie.</li>
@@ -39,7 +39,7 @@ const MaintenanceHero = () => {
                         {/* Deuxième bloc de conseils */}
                         <div className="flex flex-col items-center pb-10 mx-auto mb-10 border-b border-gray-200 lg:w-3/5 sm:flex-row">
                             <div className="flex-grow mt-6 text-center sm:text-left sm:mt-0">
-                                <h2 className="mb-2 text-3xl font-medium title-font text-green-400" style={{ fontFamily: 'Chakra Petch' }}>TOUTES LES 3 À 5 SORTIES</h2>
+                                <h2 className="entretien mb-2 text-3xl font-medium title-font " style={{ fontFamily: 'Chakra Petch' }}>TOUTES LES 3 À 5 SORTIES</h2>
                                 <ul className="text-2xl text-gray-100">
                                     <li className="p-2"><strong>1. Vérifier la pression de la fourche et de l'amortisseur</strong> - Au cours du temps, les suspensions ont tendance à perdre un peu d'air. Utilisez une pompe haute pression pour vérifier que votre fourche et votre amortisseur gardent la pression adaptée. Si vous avez besoin d'aide pour régler vos suspensions, reportez-vous à notre guide.</li>
                                     <li className="p-2"><strong>2. Vérifier l'état d'usure des plaquettes</strong> - Vérifiez le niveau des plaquettes de frein en regardant à travers l'étrier devant un fond clair ou une feuille de papier. Les conditions humides et une utilisation régulière en descente accélèrent l'usure, soyez donc plus vigilant dans ces conditions. Utilisez de l'alcool ménager pour nettoyer vos freins et repérez toutes fuites d'huile éventuelles.</li>
@@ -66,7 +66,7 @@ const MaintenanceHero = () => {
                                 <img src="src/assets/repair3.webp" alt="Repair Image 3" className="w-full h-full object-cover rounded-full" />
                             </div>
                             <div className="flex-grow mt-6 text-center sm:text-left sm:mt-0">
-                                <h2 className="mb-2 text-3xl font-medium title-font text-green-400" style={{ fontFamily: 'Chakra Petch' }}>TOUS LES 3 À 6 MOIS</h2>
+                                <h2 className="entretien mb-2 text-3xl font-medium title-font " style={{ fontFamily: 'Chakra Petch' }}>TOUS LES 3 À 6 MOIS</h2>
                                 <p>Nombreux de ces points requièrent des outils spécifiques et un certain savoir-faire. Envisagez d'apporter votre vélo chez un revendeur Santa Cruz pour effectuer certains de ces services.</p>
                                 <ul className="text-2xl text-gray-100">
                                     <li className="p-2"><strong>1. Entretien des jambages de fourche</strong> - Changez les joins et l'huile de lubrification. Consultez les conseils d'entretien du constructeur pour avoir des instructions spécifiques, les intervalles entre les services et les volumes d'huile.</li>

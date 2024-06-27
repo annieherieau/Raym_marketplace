@@ -109,7 +109,7 @@ const ProductList = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-6">Loading...</div>; // Afficher un message de chargement pendant la vérification du statut admin
+    return <div className="text-center py-6">Loading...</div>; 
   }
 
   if (error) {
@@ -119,7 +119,7 @@ const ProductList = () => {
   return (
     <>
       <section className="text-gray-600 body-font mr-8 ml-8 mb-8" style={{ borderRadius: '20px' }}>
-        <div className="w-full bg-white px-8 py-10 mx-auto">
+        <div className="w-full bg-white px-8 py-10 mx-auto flex flex-wrap">
           <div className="flex w-full mb-20 flex-wrap">
             <h1 className="sm:text-4xl text-3xl font-bold title-font text-gray-900 lg:w-1/3 lg:mb-0 mb-4">Nos best sellers :</h1>
           </div>
@@ -157,7 +157,7 @@ const ProductList = () => {
               </div>
             </div>
             <div className="flex flex-wrap w-1/2">
-              <div className="md:p-2 p-1 w-full bg-white">
+              <div className="md:p-2 p-1 w-full bg-white" style={{ height: '600px' }}>
                 {products[3] && (
                   <Product
                     product={products.sort((a, b) => b.rating - a.rating)[3]}
@@ -196,3 +196,4 @@ const ProductList = () => {
 };
 
 export default ProductList;
+

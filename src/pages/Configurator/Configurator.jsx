@@ -1,9 +1,9 @@
-import DualCarousel from "../../components/DualCarousel/DualCarousel.jsx";
+import DualCarousel from "../../components/Carousel/DualCarousel.jsx";
 import { buildRequestOptions } from "../../app/api";
 import { useEffect, useState } from "react";
-import Nav from "../../components/DualCarousel/Nav.jsx";
+import Nav from "../../components/Carousel/Nav.jsx";
 import offRoadConfig from "../../assets/offRoad-config.png";
-import Carousel from "../../components/DualCarousel/Carousel.jsx";
+import Carousel from "../../components/Carousel/Carousel.jsx";
 const Configurator = ({ allProducts }) => {
   const [products, setProducts] = useState(null);
   const [bikeCategories, setBikeCategories] = useState(null);
@@ -57,7 +57,7 @@ const Configurator = ({ allProducts }) => {
         <div
           className=" bg-gray-100 "
           style={{
-            height: "55vh",
+            // height: "55vh",
             minWidth: "35vw",
             backgroundImage: `url(${offRoadConfig})`,
             backgroundSize: "cover",
@@ -79,12 +79,12 @@ const Configurator = ({ allProducts }) => {
               setSelectedBikeCategory={setSelectedBikeCategory}
             />
           </div>
-          <div className="flex w-full min-h-[100px] bg-blue-500 text-white p-4">
-            <div className="h-full sm:w-6/12">
+          <div className="flex w-full items-end justify-center  bg-blue-500 text-white p-5">
+            <div className=" bg-green-300 p-2 sm:w-8/12">
               <Carousel slides={products[selectedBikeCategory].products} />
             </div>
-            <div className="sm:w-4/12">
-              <Carousel slides={products[selectedClothingCategory].products} />
+            <div className="bg-green-300 p-2 sm:w-4/12">
+              <Carousel className='' bike={false} slides={products[selectedClothingCategory].products} />
             </div>
           </div>
         </div>

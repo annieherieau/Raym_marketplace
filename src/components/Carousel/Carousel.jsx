@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Carousel = ({ slides }) => {
+const Carousel = ({ slides, bike=true }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrevious = () => {
@@ -12,10 +12,11 @@ const Carousel = ({ slides }) => {
     const newIndex = (currentIndex + 1) % slides.length;
     setCurrentIndex(newIndex);
   };
-
+// bike ? "h-full":' w-auto max-w-60'
   return (
-    <div className="relative w-full max-w-lg mx-auto">
-      <div className="overflow-hidden rounded-lg shadow-lg">
+    // <div className="relative w-full max-w-lg mx-auto">
+      <div className="relative">
+      <div className=" bg-pink-300 overflow-hidden p-4">
         <img
           src={slides[currentIndex].image}
           alt={`Slide ${currentIndex}`}

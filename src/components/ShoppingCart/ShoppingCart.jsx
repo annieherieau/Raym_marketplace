@@ -38,8 +38,16 @@ export default function ShoppingCart({
         throw new Error("Cart not fetched");
       }
       const data = await response.json();
-      // console.log("Cart fetched:", data);
-      setCartItems(data.items);
+      const updatedItems = data.items.reduce((acc, item) => {
+        const existingItem = acc.find(i => i.id === item.id);
+        if (existingItem) {
+          existingItem.quantity += item.quantity;
+        } else {
+          acc.push(item);
+        }
+        return acc;
+      }, []);
+      setCartItems(updatedItems);
       setCartAmount(data.amount);
     } catch (error) {
       console.error("Error fetching cart:", error);
@@ -157,7 +165,7 @@ export default function ShoppingCart({
                               <button
                                 type="button"
                                 id="clear"
-                                className="flex items-center justify-center rounded-md border border-transparent bg-red-500 px-1 py-0.5 text-base font-bold text-white shadow-sm hover:bg-red-600 mt-20"
+                                className="flex items-center justify-center rounded-md border border-transparent bg-red-500 px-2.5 py-2 text-base font-bold text-white shadow-sm hover:bg-red-600 mt-20"
                                 onClick={handleUpdateCart}
                               >
                                 <FontAwesomeIcon
@@ -216,3 +224,6 @@ export default function ShoppingCart({
     </Transition>
   );
 }
+
+
+

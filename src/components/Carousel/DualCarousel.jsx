@@ -1,10 +1,13 @@
-
-import { buildRequestOptions } from "../../app/api";
-import { useEffect, useState } from "react";
-import Nav from "../../components/Carousel/Nav.jsx";
+import { useState } from "react";
 import offRoadConfig from "../../assets/offRoad-config.png";
-import Carousel from "../../components/Carousel/Carousel.jsx";
-const Configurator = () => {
+
+// import "./DualCarrousel.css"; // Import des styles CSS personnalisés
+import { buildRequestOptions } from "../../app/api";
+import { useEffect } from "react";
+import Nav from "./Nav";
+import Carousel from "./Carousel";
+
+const DualCarousel = () => {
   const [products, setProducts] = useState(null);
   const [bikeCategories, setBikeCategories] = useState(null);
   const [clothingCategories, setClothingCategories] = useState(null);
@@ -51,46 +54,18 @@ const Configurator = () => {
     alert(`${product.name} ajouté au panier`);
   };
 
+
   if (products) {
     return (
-      <section className="w-full mx-12 p-6 text-gray-600 body-font font-roboto">
-        <div
-          className=" bg-gray-100 "
-          style={{
-            // height: "55vh",
-            minWidth: "35vw",
-            backgroundImage: `url(${offRoadConfig})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            borderRadius: "20px",
-          }}
-        >
-          <div className=" bg-gray-800">
-            <h1
-              className="p-3 text-2xl text-center font-semibold tracking-widest text-white uppercase  bg-gray-800 rounded-t-lg left-1/2 sm:text-3xl"
-              style={{ fontFamily: '"Chakra Petch", sans-serif' }}
-            >
-              CONFIGURATEUR
-            </h1>
-            <Nav
-              bikeCategories={bikeCategories}
-              clothingCategories={clothingCategories}
-              setSelectedClothingCategory={setSelectedClothingCategory}
-              setSelectedBikeCategory={setSelectedBikeCategory}
-            />
-          </div>
-          <div className="flex w-full items-end justify-center  text-white p-5">
-            <div className="p-2 sm:w-8/12">
-              <Carousel products={products[selectedBikeCategory].products} />
-            </div>
-            <div className="p-2 sm:w-4/12">
-              <Carousel products={products[selectedClothingCategory].products} />
-            </div>
-          </div>
-        </div>
-      </section>
-    );
+      <div className="w-full min-h-[100px] bg-blue-500 text-white p-4">
+      Cette div occupe toute la largeur disponible, même si elle est vide.
+      <Carousel slides={products[selectedBikeCategory].products} />
+    </div>
+  
+  )
+  } else {
+    <p>Erreur: pas de produits</p>;
   }
 };
 
-export default Configurator;
+export default DualCarousel;

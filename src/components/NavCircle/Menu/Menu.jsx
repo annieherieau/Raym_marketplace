@@ -78,7 +78,9 @@ const Navbar = () => {
   const handleResponse = (response) => {
     if (response.status.code === 200) {
       removeCookie();
+      setIsDropdownOpen(false); 
       navigate('/');
+      window.location.reload(); 
     }
   };
   // click sur icône User > toggle du dropdown
@@ -308,7 +310,7 @@ const Navbar = () => {
             <a href="/shop" onClick={(e) => handleMenuItemClick(e, "/shop")}>Boutique</a>
           </li>
           <li className="header__menu-item">
-            <a href="/configurator" onClick={(e) => handleMenuItemClick(e, "/configurator")}>Configurateur</a>
+            <a href="/configurator" onClick={(e) => handleMenuItemClick(e, "/configurateur")}>Configurateur</a>
           </li>
           <li className="header__menu-item">
             <a href="/maintenance" onClick={(e) => handleMenuItemClick(e, "/maintenance")}>Entretien</a>

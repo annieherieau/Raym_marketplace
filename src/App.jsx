@@ -95,16 +95,15 @@ function App() {
             path="/admin/*"
             element={wrapPrivateRoute(<Dashboard />, "admin", isLoggedIn)}
           />
+          <Route path="/products/new" element={<CreateProduct />} />
            <Route
             path="/order/:orderId"
             element={wrapPrivateRoute(<OrderPage />, "my_account", isLoggedIn)}
           />
-          <Route path="/products/:id/edit" element={<EditProduct />} />
-          <Route path="/products/new" element={<CreateProduct />} />
-          <Route path="/product/:productId" element={<ProductPage />} />
+          <Route path="/products/:id/edit" element={wrapPrivateRoute(<EditProduct />, "admin", isLoggedIn)} />
           <Route
             path="/products/:productId/comments/:commentId/edit"
-            element={<EditComment />}
+            element={wrapPrivateRoute(<EditComment />, "", isLoggedIn)}
           />
          
         </Routes>

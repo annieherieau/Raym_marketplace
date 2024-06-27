@@ -11,7 +11,7 @@ const Footer = () => {
         </a>
         <p className="text-sm text-gray-400 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
           © 2024 Team RAYM —
-          <Link to="/contacts" className='hover:text-white'> Robena / Annie / Yann / Malo —</Link>
+          <Link to="/contact" className='hover:text-white'> Robena / Annie / Yann / Malo —</Link>
           <a href="https://www.thehackingproject.org/" className="text-gray-400 ml-1 hover:text-white" rel="noopener noreferrer" target="_blank">@The Hacking Project</a>         
         </p>
        

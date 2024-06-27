@@ -2,21 +2,26 @@ import { useAtom, useAtomValue } from "jotai";
 import { useState } from "react";
 import { isAuthAtom, updateCartAtom, userAtom } from "../../app/atoms";
 import { useNavigate } from "react-router-dom";
+import { buildRequestOptions } from "../../app/api";
+import {
+  faShoppingCart,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Carousel = ({ slides, bike = true }) => {
-  const {isAdmin} = useAtomValue(userAtom);
+const Carousel = ({ products}) => {
+  const {isAdmin, token} = useAtomValue(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [, setUpdateCart] = useAtom(updateCartAtom);
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrevious = () => {
-    const newIndex = (currentIndex - 1 + slides.length) % slides.length;
+    const newIndex = (currentIndex - 1 + products.length) % products.length;
     setCurrentIndex(newIndex);
   };
 
   const handleNext = () => {
-    const newIndex = (currentIndex + 1) % slides.length;
+    const newIndex = (currentIndex + 1) % products.length;
     setCurrentIndex(newIndex);
   };
 
@@ -25,8 +30,8 @@ const Carousel = ({ slides, bike = true }) => {
       alert("Vous êtes administrateur. Vous ne pouvez pas commander !");
     } else if (isLoggedIn) {
       const { url, options } = buildRequestOptions("cart_items", "create", {
-        body: { product_id: product.id, quantity: 1 },
-        token: user.token,
+        body: { product_id: products[currentIndex].id, quantity: 1 },
+        token: token,
       });
       fetch(url, options)
         .then((response) => {
@@ -42,29 +47,33 @@ const Carousel = ({ slides, bike = true }) => {
       navigate('/login?redirect=configurateur')
     }
   };
-  // bike ? "h-full":' w-auto max-w-60'
+
   return (
-    // <div className="relative w-full max-w-lg mx-auto">
+    
     <div className="relative">
-      <div className=" bg-pink-300 overflow-hidden p-4">
+      <div className="overflow-hidden p-4">
         <img
-          src={slides[currentIndex].image}
+          src={products[currentIndex].image}
           alt={`Slide ${currentIndex}`}
           className="w-full h-auto"
         />
-        <div className="mt-3 text-center">
+        <div className="bg-gray-800 bg-opacity-50 rounded-md py-2 mt-3 text-center">
           <h3 className="text-base font-semibold text-white sm:text-lg">
-            {slides[currentIndex].name}
+            {products[currentIndex].name}
           </h3>
-          <p className="text-white">{slides[currentIndex].price} €</p>
+          <p className="text-white">{products[currentIndex].price} €</p>
         </div>
         <div className="mt-3 text-center">
           <button
             type="button"
-            className="px-8 py-3 font-semibold rounded bg-gray-800 dark:bg-gray-100 text-gray-100 dark:text-gray-800"
+            className="px-8 py-3 font-semibold rounded bg-palegreen-500 hover:bg-palegreen-600 text-gray-900 dark:text-gray-800"
             onClick={handleAddToCart}
           >
-            Acheter
+            <FontAwesomeIcon
+      icon={faShoppingCart}
+      // className="text-2xl cursor-pointer cart-icon"
+  
+    />
           </button>
         </div>
       </div>

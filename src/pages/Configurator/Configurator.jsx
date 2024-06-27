@@ -79,12 +79,12 @@ const Configurator = () => {
               setSelectedBikeCategory={setSelectedBikeCategory}
             />
           </div>
-          <div className="flex w-full items-end justify-center  bg-blue-500 text-white p-5">
-            <div className=" bg-green-300 p-2 sm:w-8/12">
-              <Carousel slides={products[selectedBikeCategory].products} />
+          <div className="flex w-full items-end justify-center  text-white p-5">
+            <div className="p-2 sm:w-8/12">
+              <Carousel products={products[selectedBikeCategory].products} />
             </div>
-            <div className="bg-green-300 p-2 sm:w-4/12">
-              <Carousel className='' bike={false} slides={products[selectedClothingCategory].products} />
+            <div className="p-2 sm:w-4/12">
+              <Carousel products={products[selectedClothingCategory].products} />
             </div>
           </div>
         </div>

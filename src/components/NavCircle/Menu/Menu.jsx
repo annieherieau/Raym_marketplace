@@ -78,7 +78,9 @@ const Navbar = () => {
   const handleResponse = (response) => {
     if (response.status.code === 200) {
       removeCookie();
+      setIsDropdownOpen(false); 
       navigate('/');
+      window.location.reload(); 
     }
   };
   // click sur icône User > toggle du dropdown

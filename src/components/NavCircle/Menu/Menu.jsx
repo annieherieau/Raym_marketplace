@@ -305,7 +305,7 @@ const Navbar = () => {
             <a href="/brand" onClick={(e) => handleMenuItemClick(e, "/brand")}>La marque</a>
           </li>
           <li className="header__menu-item">
-            <a href="#" onClick={(e) => handleMenuItemClick(e, "#")}>Boutique</a>
+            <a href="/shop" onClick={(e) => handleMenuItemClick(e, "/shop")}>Boutique</a>
           </li>
           <li className="header__menu-item">
             <a href="/configurator" onClick={(e) => handleMenuItemClick(e, "/configurator")}>Configurateur</a>

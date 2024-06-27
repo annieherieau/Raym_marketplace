@@ -75,7 +75,7 @@ export default function Login() {
             <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm border border-black rounded-lg bg-beige">
                     <div className="bg-black p-4 rounded-t-lg">
-                        <h2 className="text-center mt-8 mb-4 text-4xl font-bold leading-9 tracking-tight text-palegreen">
+                        <h2 className="text-center mt-8 mb-4 text-4xl font-bold leading-9 tracking-tight text-green-400">
                             Connectez-vous
                         </h2>
                     </div>
@@ -141,7 +141,7 @@ export default function Login() {
                         <div className="mt-2 mx-4">
                             <button
                                 type="submit"
-                                className="flex w-full justify-center mt-9 rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-palegreen hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="flex w-full justify-center mt-9 rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-green-400 shadow-sm hover:bg-palegreen hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
                                 Valider
                             </button>

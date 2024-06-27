@@ -27,6 +27,7 @@ import { loadCookie } from "./app/utils";
 import { unknownUser } from "./app/atoms";
 import CreateProduct from "./components/CreateProduct";
 import AccessibilityIcon from "./components/acessibility/AccessibilityIcon";
+import Shop from "./pages/Shop/Shop";
 
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
@@ -83,6 +84,7 @@ function App() {
           <Route path="/maintenance" element={<Maintenance />} />
           <Route path="/mentions-legales" element={<LegalMentions />} />
           <Route path="/configurator" element={<Configurator allProducts={products} />} />
+          <Route path="/shop" element={<Shop products={products} />} />
 
           {/* ROUTES PRIVÉES */}
           <Route

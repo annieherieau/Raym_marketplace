@@ -39,7 +39,15 @@ body {
   box-sizing: border-box;
 }
 
-/* Custom Hero Image */
+/* Maintenance */
+strong {
+  font-weight: bold;
+  color: rgb(74, 255, 170);
+}
+
+.entretien {
+  color: rgb(246, 36, 36);
+}
 
 
 

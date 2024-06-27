@@ -1,18 +1,44 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAtomValue } from 'jotai';
-import { userAtom, isAuthAtom } from '../app/atoms';
+import { useAtom, useAtomValue } from 'jotai';
+import { userAtom, isAuthAtom, updateCartAtom } from '../app/atoms';
 import { buildRequestOptions } from '../app/api';
 import Comments from '../components/Comments';
+import { useNavigate } from 'react-router-dom';
 
 const ProductPage = () => {
   const { productId } = useParams();
-  const { token } = useAtomValue(userAtom);
+  const { token, isAdmin } = useAtomValue(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [product, setProduct] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [, setUpdateCart] = useAtom(updateCartAtom);
+  const navigate = useNavigate();
+
+  const handleAddToCart = () => {
+    if (isAdmin) {
+      alert("Vous êtes administrateur. Vous ne pouvez pas commander !");
+    } else if (isLoggedIn) {
+      const { url, options } = buildRequestOptions("cart_items", "create", {
+        body: { product_id: product.id, quantity: 1 },
+        token: token,
+      });
+      fetch(url, options)
+        .then((response) => {
+          if (response.status !== 201) {
+            throw new Error("Item not added to cart");
+          }
+          return response.json();
+        })
+        .catch((error) => console.error("Error:", error));
+      setUpdateCart(true);
+    } else {
+      alert("Veuillez vous connecter pour commander");
+      navigate(`/login?redirect=product/${product.id}`)
+    }
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -74,14 +100,9 @@ const ProductPage = () => {
               )}
             </div>
             <div className="flex -mx-2 mb-4">
-              <div className="w-1/2 px-2">
-                <button className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
+              <div className="w-full px-2">
+                <button onClick={handleAddToCart} className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
                   Add to Cart
-                </button>
-              </div>
-              <div className="w-1/2 px-2">
-                <button className="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">
-                  Add to Wishlist
                 </button>
               </div>
             </div>

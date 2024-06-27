@@ -1,15 +1,14 @@
-import BrandHero from '../../components/BrandHero/BrandHero';
 import bike1 from '../../assets/VELO6RAPTOR-RAYM.png';
 import bike2 from '../../assets/OnRoad-Raym.png';
 import bike3 from '../../assets/Hybrid-Raym.png';
 
 const Brand = () => {
     return (
-        <div className="bg-black text-white rounded-[40px]" style={{ fontFamily: 'Roboto' }}>
+        <div className="bg-gray-900 text-white rounded-[40px]" style={{ fontFamily: 'Roboto' }}>
             {/* Section d'en-tête */}
             <section className="text-white body-font">
                 <div className="container mx-auto flex px-5 py-24 md:flex-row justify-center items-center">
-                    <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+                    <div className="lg:flex-grow md:w-1/2 flex flex-col md:items-center md:text-center items-center text-center">
                         <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-white" style={{ fontFamily: 'Chakra Petch', color: 'rgb(74, 255, 170)' }}>
                             Bienvenue chez <img src="/src/assets/raymW.png" alt="" className='w-80 h-30 pt-5' />
                         </h1>

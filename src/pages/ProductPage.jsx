@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAtomValue } from 'jotai';
-import { userAtom, isAuthAtom } from '../app/atoms';
+import { useAtom, useAtomValue } from 'jotai';
+import { userAtom, isAuthAtom, updateCartAtom } from '../app/atoms';
 import { buildRequestOptions } from '../app/api';
 import Comments from '../components/Comments';
+import { useNavigate } from 'react-router-dom';
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -13,6 +14,8 @@ const ProductPage = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [, setUpdateCart] = useAtom(updateCartAtom);
+  const navigate = useNavigate();
 
   const handleAddToCart = () => {
     if (isAdmin) {
@@ -20,7 +23,7 @@ const ProductPage = () => {
     } else if (isLoggedIn) {
       const { url, options } = buildRequestOptions("cart_items", "create", {
         body: { product_id: product.id, quantity: 1 },
-        token: user.token,
+        token: token,
       });
       fetch(url, options)
         .then((response) => {
@@ -33,7 +36,7 @@ const ProductPage = () => {
       setUpdateCart(true);
     } else {
       alert("Veuillez vous connecter pour commander");
-      navigate('/login?redirect=configurateur')
+      navigate(`/login?redirect=product/${product.id}`)
     }
   };
 

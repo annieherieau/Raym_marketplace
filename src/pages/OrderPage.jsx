@@ -20,12 +20,13 @@ export default function OrderPage() {
   const action = searchParams.get("action");
   const [paid, setPaid] = useState(false);
 
+console.log(orderId);
   // traitement de la requete d'annulation
   const handleCancelResponse = (response) => {
     console.log(response);
     setUpdateCart(true);
     setOpenCart(true);
-    navigate("/my_account");
+    navigate("/shop");
   };
   // Requête d'annulation de la commande (suppression commande et renvoi des produits dans le panier)
   const handleCancel = (e) => {

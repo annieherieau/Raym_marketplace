@@ -82,7 +82,7 @@ const ProductPage = () => {
     }
   }, [isLoggedIn, token]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Chargement...</p>;
   if (error) return <p>{error}</p>;
 
   return (
@@ -102,28 +102,28 @@ const ProductPage = () => {
             <div className="flex -mx-2 mb-4">
               <div className="w-full px-2">
                 <button onClick={handleAddToCart} className="w-full bg-green-400 dark:bg-gray-600 text-gray-900 py-2 px-4 rounded-full font-bold hover:bg-green-600 dark:hover:bg-gray-700">
-                  Add to Cart
+                  Ajouter au panier
                 </button>
               </div>
             </div>
           </div>
           <div className="md:flex-1 px-4">
-            <h2 className="text-2xl font-bold text-green-400 dark:text-white mb-2">{product.name}</h2>
+            <h1 className="text-5xl font-bold text-green-400 dark:text-white mb-2" style={{ fontFamily: "Chakra Petch" }}>{product.name}</h1>
             <p className="text-gray-100 dark:text-gray-300 text-sm mb-4">
               {product.description}
             </p>
             <div className="flex mb-4">
               <div className="mr-4">
-                <span className="font-bold text-gray-100 dark:text-gray-300">Price:</span>
-                <span className="text-gray-100 dark:text-gray-300">${product.price}</span>
+                <span className="font-bold text-gray-100 dark:text-gray-300">Prix:</span>
+                <span className="text-palegreen-500 dark:text-gray-300 text-3xl"> {product.price}€</span>
               </div>
               <div>
-                <span className="font-bold text-gray-100 dark:text-gray-300">Availability:</span>
-                <span className="text-gray-100 dark:text-gray-300">In Stock</span>
+                <span className="font-bold text-gray-100 dark:text-gray-300"> Disponibilité: </span>
+                <span className="text-palegreen-500 dark:text-gray-300 text-3xl"> En Stock</span>
               </div>
             </div>
             <div className="mb-4">
-              <span className="font-bold text-gray-100 dark:text-gray-300">Product Description:</span>
+              <span className="font-bold text-gray-100 dark:text-gray-300">Description:</span>
               <p className="text-gray-100 dark:text-gray-300 text-sm mt-2">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                 sed ante justo. Integer euismod libero id mauris malesuada tincidunt. Vivamus commodo nulla ut

@@ -74,9 +74,9 @@ const Configurator = () => {
               backgroundImage: `url(${offRoadConfig})`
             }}
           >
-            <div className=" bg-gray-800">
+            <div className=" bg-black">
               <h1
-                className="p-3 text-2xl text-center font-semibold tracking-widest text-white uppercase  bg-gray-800 rounded-t-lg left-1/2 sm:text-3xl"
+                className="p-3 text-2xl text-center font-semibold tracking-widest text-white uppercase  bg-black rounded-t-lg left-1/2 sm:text-3xl"
                 style={{ fontFamily: '"Chakra Petch", sans-serif' }}
               >
                 CONFIGURATEUR

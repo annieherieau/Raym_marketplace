@@ -32,7 +32,7 @@ const Configurator = () => {
       setSelectedBikeCategory(bikeCats[random(bikeCats.length)]);
     }
     // random product
-    const random = (max) => {
+    function random(max){
       return Math.floor(Math.random() * max);
     };
     let defautBikes =

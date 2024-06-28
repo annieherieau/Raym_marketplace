@@ -3,9 +3,8 @@ import { useState } from "react";
 import { isAuthAtom, updateCartAtom, userAtom } from "../../app/atoms";
 import { useNavigate } from "react-router-dom";
 import { buildRequestOptions } from "../../app/api";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
+import CartButton from "../CartButton/CartButton.jsx";
 
 const Carousel = ({ products, onClick, selectedProduct }) => {
   const { isAdmin, token } = useAtomValue(userAtom);
@@ -42,7 +41,6 @@ const Carousel = ({ products, onClick, selectedProduct }) => {
         })
         .catch((error) => console.error("Error:", error));
       setUpdateCart(true);
-      alert(`${products[currentIndex].name} ajouté au panier`);
     } else {
       alert("Veuillez vous connecter pour commander");
       navigate("/login?redirect=configurateur");
@@ -79,13 +77,7 @@ const Carousel = ({ products, onClick, selectedProduct }) => {
           <p className="text-white">{products[currentIndex].price} €</p>
         </div>
         <div className="mt-3 text-center">
-          <button
-            type="button"
-            className="px-8 py-3 font-semibold rounded bg-palegreen-500 hover:bg-palegreen-600 text-gray-900 dark:text-gray-800"
-            onClick={handleAddToCart}
-          >
-            <FontAwesomeIcon icon={faShoppingCart} />
-          </button>
+          <CartButton onClick={handleAddToCart} />
         </div>
       </div>
       <button

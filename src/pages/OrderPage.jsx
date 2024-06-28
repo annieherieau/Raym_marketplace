@@ -113,9 +113,14 @@ console.log(orderId);
             error={error}
           />
           {!paid && !isAdmin && (
-            <div>
-              <button onClick={handleCancel}>Annuler</button>
-              <button onClick={handleCheckout}>Payer</button>
+            <div className="flex justify-end mb-20 ">
+              <button onClick={handleCancel} className="hover:text-gray-500">Retournez à la boutique</button>
+              <button
+                onClick={handleCheckout}
+                className="bg-palegreen-500 hover:bg-palegreen-600 text-black font-bold ml-10 py-4 px-20 rounded-lg"
+              >
+                Payer
+              </button>
             </div>
           )}
           <Checkout action={action} />

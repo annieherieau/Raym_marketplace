@@ -1,121 +1,82 @@
 import { useState, useEffect } from "react";
+import Product from "../../components/Product";
 import { buildRequestOptions } from "../../app/api";
 import { useAtomValue } from "jotai";
 import { userAtom, isAuthAtom } from "../../app/atoms";
-import Product from "../../components/Product";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
 
 const Shop = () => {
   const user = useAtomValue(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [sortOrder, setSortOrder] = useState("desc"); 
   const [error, setError] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchAdminStatus = async () => {
-      if (!isLoggedIn) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const response = await fetch("http://127.0.0.1:3000/admin_check", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to check admin status");
-        }
-
-        const data = await response.json();
-        setIsAdmin(data.admin);
-      } catch (error) {
-        console.error("Error checking admin status:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAdminStatus();
-  }, [isLoggedIn, user.token]);
-
-  useEffect(() => {
     const fetchProducts = async () => {
+      const { url, options } = buildRequestOptions("products", "index", {
+        token: user.token,
+      });
       try {
-        const { url, options } = buildRequestOptions("products", "index", {
-          token: user.token,
-        });
         const response = await fetch(url, options);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setProducts(data);
+        const productsWithNumericPrice = data.map(product => ({
+          ...product,
+          price: parseFloat(product.price)
+        }));
+        setProducts(productsWithNumericPrice);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
         setError("Error fetching products. Please try again later.");
-      } finally {
         setLoading(false);
       }
     };
 
+    const fetchCategories = async () => {
+      const { url, options } = buildRequestOptions("categories", "index", {
+        token: user.token,
+      });
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
     fetchProducts();
+    fetchCategories();
   }, [user.token]);
 
-  // Function to filter products by category
-  const filterProductsByCategory = (category) => {
-    return products.filter((product) => product.category.name === category);
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
   };
 
-  // Handle update product function
-  const handleUpdateProduct = async (id, updatedProduct) => {
-    try {
-      const { url, options } = buildRequestOptions("products", "update", {
-        id,
-        body: updatedProduct,
-        token: user.token,
-      });
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const updatedProductData = await response.json();
-      setProducts((prevProducts) =>
-        prevProducts.map((product) =>
-          product.id === id ? updatedProductData : product
-        )
-      );
-    } catch (error) {
-      console.error("Error updating product:", error);
-      setError("Error updating product. Please try again later.");
-    }
+  const handleSortOrderChange = (event) => {
+    setSortOrder(event.target.value);
   };
 
-  // Handle delete product function
-  const handleDeleteProduct = async (id) => {
-    try {
-      const { url, options } = buildRequestOptions("products", "delete", {
-        id,
-        token: user.token,
-      });
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      setProducts((prevProducts) =>
-        prevProducts.filter((product) => product.id !== id)
-      );
-    } catch (error) {
-      console.error("Error deleting product:", error);
-      setError("Error deleting product. Please try again later.");
+  const filteredProducts = selectedCategory === "all"
+    ? products
+    : products.filter(product => product.category.name === selectedCategory);
+
+  const sortedProducts = filteredProducts.sort((a, b) => {
+    if (sortOrder === "asc") {
+      return a.price - b.price;
+    } else {
+      return b.price - a.price;
     }
-  };
+  });
 
   if (loading) {
     return <div className="text-center py-6">Loading...</div>;
@@ -126,154 +87,41 @@ const Shop = () => {
   }
 
   return (
-    <section className="bg-gray-900 text-gray-100 body-font rounded-[40px]">
-      <div className="container px-5 py-24 mx-auto">
-        <Tabs>
-          <TabList>
-            <Tab>Nos Vélos</Tab>
-            <Tab>Nos Tenues</Tab>
-            <Tab>Nos Accessoires</Tab>
-          </TabList>
-
-          <TabPanel>
-            <div className="flex flex-wrap -m-4">
-              {/* On Road Products */}
-              <div className="lg:w-1/3 sm:w-1/2 p-4">
-                <h2 className="tracking-widest text-2xl title-font font-medium mb-4">
-                  On Road
-                </h2>
-                {filterProductsByCategory("On Road").map((product) => (
-                  <Product
-                    key={product.id}
-                    product={product}
-                    isAdmin={isAdmin}
-                    onUpdateProduct={handleUpdateProduct}
-                    onDeleteProduct={handleDeleteProduct}
-                  />
-                ))}
-              </div>
-
-              {/* Off Road Products */}
-              <div className="lg:w-1/3 sm:w-1/2 p-4">
-                <h2 className="tracking-widest text-2xl title-font font-medium mb-4">
-                  Off Road
-                </h2>
-                {filterProductsByCategory("Off Road").map((product) => (
-                  <Product
-                    key={product.id}
-                    product={product}
-                    isAdmin={isAdmin}
-                    onUpdateProduct={handleUpdateProduct}
-                    onDeleteProduct={handleDeleteProduct}
-                  />
-                ))}
-              </div>
-
-              {/* Hybrid Products */}
-              <div className="lg:w-1/3 sm:w-1/2 p-4">
-                <h2 className="tracking-widest text-2xl title-font font-medium mb-4">
-                  Hybrid
-                </h2>
-                {filterProductsByCategory("Hybrid").map((product) => (
-                  <Product
-                    key={product.id}
-                    product={product}
-                    isAdmin={isAdmin}
-                    onUpdateProduct={handleUpdateProduct}
-                    onDeleteProduct={handleDeleteProduct}
-                  />
-                ))}
-              </div>
-            </div>
-          </TabPanel>
-
-          <TabPanel>
-            {/* Tenue Products */}
-            <div className="flex flex-wrap -m-4">
-              <div className="lg:w-1/3 sm:w-1/2 p-4">
-                <h2 className="tracking-widest text-2xl title-font font-medium mb-4">
-                  Tenue Homme
-                </h2>
-                {filterProductsByCategory("Homme").map((product) => (
-                  <Product
-                    key={product.id}
-                    product={product}
-                    isAdmin={isAdmin}
-                    onUpdateProduct={handleUpdateProduct}
-                    onDeleteProduct={handleDeleteProduct}
-                  />
-                ))}
-              </div>
-
-              <div className="lg:w-1/3 sm:w-1/2 p-4">
-                <h2 className="tracking-widest text-2xl title-font font-medium mb-4">
-                  Tenue Femme
-                </h2>
-                {filterProductsByCategory("Femme").map((product) => (
-                  <Product
-                    key={product.id}
-                    product={product}
-                    isAdmin={isAdmin}
-                    onUpdateProduct={handleUpdateProduct}
-                    onDeleteProduct={handleDeleteProduct}
-                  />
-                ))}
-              </div>
-            </div>
-          </TabPanel>
-
-          <TabPanel>
-            {/* Accessories Products */}
-            <div className="flex flex-wrap -m-4">
-              <div className="lg:w-1/3 sm:w-1/2 p-4">
-                <h2 className="tracking-widest text-2xl title-font font-medium mb-4">
-                  Accessory 1
-                </h2>
-                {filterProductsByCategory("Accessory 1").map((product) => (
-                  <Product
-                    key={product.id}
-                    product={product}
-                    isAdmin={isAdmin}
-                    onUpdateProduct={handleUpdateProduct}
-                    onDeleteProduct={handleDeleteProduct}
-                  />
-                ))}
-              </div>
-
-              <div className="lg:w-1/3 sm:w-1/2 p-4">
-                <h2 className="tracking-widest text-2xl title-font font-medium mb-4">
-                  Accessory 2
-                </h2>
-                {filterProductsByCategory("Accessory 2").map((product) => (
-                  <Product
-                    key={product.id}
-                    product={product}
-                    isAdmin={isAdmin}
-                    onUpdateProduct={handleUpdateProduct}
-                    onDeleteProduct={handleDeleteProduct}
-                  />
-                ))}
-              </div>
-
-              <div className="lg:w-1/3 sm:w-1/2 p-4">
-                <h2 className="tracking-widest text-2xl title-font font-medium mb-4">
-                  Accessory 3
-                </h2>
-                {filterProductsByCategory("Accessory 3").map((product) => (
-                  <Product
-                    key={product.id}
-                    product={product}
-                    isAdmin={isAdmin}
-                    onUpdateProduct={handleUpdateProduct}
-                    onDeleteProduct={handleDeleteProduct}
-                  />
-                ))}
-              </div>
-            </div>
-          </TabPanel>
-        </Tabs>
+    <div className="container mx-auto px-8 bg-white rounded-[20px] overflow-hidden">
+      <div className="flex justify-between items-center my-16">
+        <h1 className="text-3xl font-bold">Boutique</h1>
+        <div className="flex items-center">
+          <div className="mr-4">
+            <label htmlFor="category" className="mr-2">Trier par catégorie:</label>
+            <select id="category" value={selectedCategory} onChange={handleCategoryChange} className="p-2 border rounded">
+              <option value="all">Toutes</option>
+              {categories.map(category => (
+                <option key={category.id} value={category.name}>{category.name}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="sortOrder" className="mr-2">Trier par prix:</label>
+            <select id="sortOrder" value={sortOrder} onChange={handleSortOrderChange} className="p-2 border rounded">
+              <option value="asc">Croissant</option>
+              <option value="desc">Décroissant</option>
+            </select>
+          </div>
+        </div>
       </div>
-    </section>
+      <div className="flex flex-wrap -m-4">
+        {sortedProducts.map(product => (
+          <div key={product.id} className="p-4 md:w-1/3">
+            <Product
+              product={product}
+              isAdmin={false} 
+              onUpdateProduct={null}
+              onDeleteProduct={null}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Nav from "../../components/Carousel/Nav.jsx";
 import offRoadConfig from "../../assets/offRoad-config.png";
 import Carousel from "../../components/Carousel/Carousel.jsx";
-import ProductDetails from "../../components/ProductDetails.jsx";
 import { useSearchParams } from "react-router-dom";
 const Configurator = () => {
   const [searchParams] = useSearchParams();
@@ -68,16 +67,11 @@ const Configurator = () => {
 
   if (products) {
     return (
-      <>
         <section className="w-full mx-12 p-6 text-gray-600 body-font font-roboto">
           <div
-            className=" bg-gray-100 "
+            className=" bg-gray-100 rounded-3xl min-w-36 bg-cover bg-center"
             style={{
-              minWidth: "35vw",
-              backgroundImage: `url(${offRoadConfig})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              borderRadius: "20px",
+              backgroundImage: `url(${offRoadConfig})`
             }}
           >
             <div className=" bg-gray-800">
@@ -110,10 +104,7 @@ const Configurator = () => {
               </div>
             </div>
           </div>
-          <ProductDetails product={selectedProduct} />
         </section>
-
-      </>
     );
   }
 };

@@ -6,7 +6,7 @@ import { buildRequestOptions } from "../../app/api";
 import { useEffect } from "react";
 import CartButton from "../CartButton/CartButton.jsx";
 
-const Carousel = ({ products, onClick, selectedProduct }) => {
+const Carousel = ({ products, selectedProduct }) => {
   const { isAdmin, token } = useAtomValue(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [, setUpdateCart] = useAtom(updateCartAtom);
@@ -63,13 +63,11 @@ const Carousel = ({ products, onClick, selectedProduct }) => {
       <div className="overflow-hidden p-4">
         <img
           src={products[currentIndex].image}
-          onClick={() => onClick(products[currentIndex])}
           alt={`${products[currentIndex].name}`}
-          className="w-full h-auto hover:cursor-pointer"
+          className="w-full h-auto"
         />
         <div
-          onClick={() => onClick(products[currentIndex])}
-          className="bg-gray-800 bg-opacity-50 hover:cursor-pointer rounded-md py-2 mt-3 text-center"
+          className="bg-gray-800 bg-opacity-50 rounded-md py-2 mt-3 text-center"
         >
           <h3 className="text-base font-semibold text-white sm:text-lg">
             {products[currentIndex].name}

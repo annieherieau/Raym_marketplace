@@ -18,12 +18,11 @@ main {
   justify-content: center; 
 }
 
-.footer-fixed {
-  position: relative; 
-  bottom: 0;
+/* footer {
+  margin-bottom: 0%;
   width: 100%;
-  z-index: 10; 
-}
+ 
+} */
 
 body {
   margin: 0;

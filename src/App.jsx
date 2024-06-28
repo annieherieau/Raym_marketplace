@@ -13,9 +13,9 @@ import EditProduct from "./components/EditProduct";
 import ProductPage from "./pages/ProductPage";
 import EditComment from "./pages/EditComment";
 import OrderPage from "./pages/OrderPage";
-import Menu from "./components/NavCircle/Menu/Menu"; // Correction du chemin
-import Home from "./pages/Home/Home"; // Ajout de l'importation
-import Contact from "./pages/Contact/Contact"; // Correction de l'importation
+import Menu from "./components/NavCircle/Menu/Menu"; 
+import Home from "./pages/Home/Home"; 
+import Contact from "./pages/Contact/Contact"; 
 import NoticeModal from "./components/NoticeModal";
 import PrivateRoute from "./components/PrivateRoute";
 import LegalMentions from "./pages/LegalMentions";
@@ -27,7 +27,7 @@ import { loadCookie } from "./app/utils";
 import { unknownUser } from "./app/atoms";
 import CreateProduct from "./components/CreateProduct";
 import AccessibilityIcon from "./components/acessibility/AccessibilityIcon";
-
+import Shop from "./pages/Shop/Shop"; 
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
@@ -84,7 +84,7 @@ function App() {
           <Route path="/mentions-legales" element={<LegalMentions />} />
           <Route path="/configurateur" element={<Configurator />} />
           <Route path="/product/:productId" element={<ProductPage />} />
-
+          <Route path="/shop" element={<Shop />} /> {/* Added route for Shop component */}
           {/* ROUTES PRIVÉES */}
           <Route
             path="/my_account/*"

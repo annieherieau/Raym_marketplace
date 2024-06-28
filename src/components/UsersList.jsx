@@ -38,7 +38,7 @@ export default function UsersList() {
   return (
     <ul>
       {users.map((user) => (
-        <li key={user.id}>{user.email}</li>
+        <li className="text-2xl text-gray-100" key={user.id}>{user.email}</li>
       ))}
     </ul>
   );

@@ -49,8 +49,7 @@ strong {
   color: rgb(246, 36, 36);
 }
 
-
-
+/* Animations */
 .fade-up {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;

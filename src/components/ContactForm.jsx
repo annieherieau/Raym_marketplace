@@ -96,7 +96,7 @@ export default function ContactForm() {
             </div>
           </div>
         </div>
-        <div className="lg:w-1/3 md:w-1/2 bg-gray-900 flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
+        <div className="lg:w-1/3 md:w-1/2 bg-black flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
           <h2 className="text-green-400 text-3xl mb-1 font-bold title-font" style={{fontFamily: 'Chakra Petch'}}>
             Contactez-nous
           </h2>

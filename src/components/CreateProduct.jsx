@@ -49,7 +49,8 @@ const CreateProduct = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="bg-white p-6 rounded shadow">
+      <div className="bg-black p-6 rounded shadow">
+        <h1 className="text-palegreen-500 text-5xl text-center mb-4 font-semibold" style={{ fontFamily: 'Chakra Petch' }}>Créer un nouveau produit</h1>
         <ProductForm categories={categories} colors={colors} onSubmit={handleCreateProduct} />
       </div>
     </div>

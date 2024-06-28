@@ -62,40 +62,40 @@ const ProductForm = ({ product, categories, colors, onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-lg">
+    <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-black shadow-md rounded-lg">
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+        <label className="block text-gray-100 text-sm font-bold mb-2">Nom:</label>
         <input
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
           required
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+        <label className="block text-gray-100 text-sm font-bold mb-2">Description:</label>
         <textarea
           name="description"
           value={formData.description}
           onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">Price:</label>
+        <label className="block text-gray-100 text-sm font-bold mb-2">Prix:</label>
         <input
           type="number"
           name="price"
           value={formData.price}
           onChange={handleChange}
           required
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">Category:</label>
+        <label className="block text-gray-100 text-sm font-bold mb-2">Catégorie:</label>
         <select
           name="category"
           value={formData.category}
@@ -103,7 +103,7 @@ const ProductForm = ({ product, categories, colors, onSubmit }) => {
           required
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         >
-          <option value="">Select a category</option>
+          <option value="">Selectionner une catégorie</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
@@ -112,7 +112,7 @@ const ProductForm = ({ product, categories, colors, onSubmit }) => {
         </select>
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">Color:</label>
+        <label className="block text-gray-100 text-sm font-bold mb-2">Couleur:</label>
         <select
           name="color"
           value={formData.color}
@@ -120,7 +120,7 @@ const ProductForm = ({ product, categories, colors, onSubmit }) => {
           required
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         >
-          <option value="">Select a color</option>
+          <option value="">Selectionner une couleur</option>
           {colors.map((color) => (
             <option key={color.id} value={color.id}>
               {color.name}
@@ -129,12 +129,12 @@ const ProductForm = ({ product, categories, colors, onSubmit }) => {
         </select>
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">Photo:</label>
+        <label className="block text-gray-100 text-sm font-bold mb-2">Photo:</label>
         <input
           type="file"
           name="photo"
           onChange={handleFileChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-100 leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
       <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

@@ -7,7 +7,7 @@ import MyAccount from "./pages/MyAccount";
 import Dashboard from "./pages/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAtom, useAtomValue } from "jotai";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { isAuthAtom, userAtom } from "./app/atoms";
 import EditProduct from "./components/EditProduct";
 import ProductPage from "./pages/ProductPage";
@@ -26,7 +26,7 @@ import { useState } from "react";
 import { loadCookie } from "./app/utils";
 import { unknownUser } from "./app/atoms";
 import CreateProduct from "./components/CreateProduct";
-import AccessibilityIcon from "./components/acessibility/AccessibilityIcon";
+import AccessibilityIcon from "./components/accessibility/AccessibilityIcon";
 import Shop from "./pages/Shop/Shop"; 
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
@@ -41,7 +41,7 @@ function App() {
 
   // Récupérer les produits depuis l'API
   const [products, setProducts] = useState([]);
-  // Récupérer les produits depuis l'API
+
   useEffect(() => {
     fetch(`${api_url}/products`)
       .then((response) => {
@@ -57,6 +57,7 @@ function App() {
         console.error("Error fetching products:", error);
       });
   }, [isLoggedIn]);
+
   // Routes pour user connecté
   function wrapPrivateRoute(element, redirect, isAuth) {
     return (
@@ -82,6 +83,9 @@ function App() {
           <Route path="/brand" element={<Brand />} />
           <Route path="/maintenance" element={<Maintenance />} />
           <Route path="/mentions-legales" element={<LegalMentions />} />
+          <Route path="/configurator" element={<Configurator allProducts={products} />} />
+          <Route path="/shop" element={<Shop products={products} />} />
+
           <Route path="/configurateur" element={<Configurator />} />
           <Route path="/product/:productId" element={<ProductPage />} />
           <Route path="/shop" element={<Shop />} /> {/* Added route for Shop component */}
@@ -104,7 +108,6 @@ function App() {
             path="/products/:productId/comments/:commentId/edit"
             element={wrapPrivateRoute(<EditComment />, "", isLoggedIn)}
           />
-         
         </Routes>
       </main>
       <AccessibilityIcon />

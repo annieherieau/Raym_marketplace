@@ -37,7 +37,6 @@ const CreateComment = ({ onCommentCreated }) => {
 
   return (
     <div>
-      <h2>Create Comment</h2>
       {error && <p className="text-red-500">{error}</p>}
       <CommentForm onSubmit={handleSubmit} productId={Number(productId)} token={token} />
     </div>

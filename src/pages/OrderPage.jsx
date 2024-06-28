@@ -6,6 +6,7 @@ import { buildRequestOptions } from "../app/api";
 import Checkout from "../components/Checkout";
 import { useSearchParams } from "react-router-dom";
 import OrderCard from "../components/OrderCard";
+import Step from "../components/Step"; // Assurez-vous d'importer le composant Step
 import { useNavigate } from "react-router-dom";
 
 export default function OrderPage() {
@@ -101,19 +102,24 @@ console.log(orderId);
 
   if (order) {
     return (
-      <div>
-        <OrderCard
-          order={order}
-          paid={paid}
-          error={error}
-        />
-        {!paid && !isAdmin && (
-          <div>
-            <button onClick={handleCancel}>Annuler</button>
-            <button onClick={handleCheckout}>Payer</button>
-          </div>
-        )}
-        <Checkout action={action} />
+      <div className="flex mt-8 bg-white mr-8 ml-8 rounded-[20px]">
+        <div className="w-2/4">
+          <Step />
+        </div>
+        <div className="w-2/4 mr-10 mt-20">
+          <OrderCard
+            order={order}
+            paid={paid}
+            error={error}
+          />
+          {!paid && !isAdmin && (
+            <div>
+              <button onClick={handleCancel}>Annuler</button>
+              <button onClick={handleCheckout}>Payer</button>
+            </div>
+          )}
+          <Checkout action={action} />
+        </div>
       </div>
     );
   }

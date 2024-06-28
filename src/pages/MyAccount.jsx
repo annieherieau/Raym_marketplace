@@ -5,11 +5,12 @@ import { buildRequestOptions } from "../app/api";
 import UserInfos from "../components/UserInfos";
 import UserForm from "../components/UserForm";
 import OrdersList from "../components/OrdersList";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Modal from "../components/Modal/Modal";
+import { removeCookie } from "../app/utils";
 
 export default function MyAccount() {
-  const [current_user] = useAtom(userAtom);
+  const [current_user, setCurrentUser] = useAtom(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [error, setError] = useState(undefined);
   const [userData, setUserData] = useState(undefined);
@@ -19,9 +20,9 @@ export default function MyAccount() {
   const [showModal, setShowModal] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalContent, setModalContent] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Créer les options de la requête lorsque l'utilisateur est authentifié
     if (current_user.token) {
       setRequestOptions(
         buildRequestOptions("users", "profile", {
@@ -40,7 +41,6 @@ export default function MyAccount() {
   }
 
   useEffect(() => {
-    // Effectuer la requête lorsque les options sont définies ou lorsque updateUser change
     if (requestOptions) {
       fetch(requestOptions.url, requestOptions.options)
         .then((response) => response.json())
@@ -63,10 +63,25 @@ export default function MyAccount() {
     setShowModal(false);
   };
 
+  const handleDeleteAccount = async () => {
+    const { url, options } = buildRequestOptions('users', 'delete', { id: current_user.id, token: current_user.token });
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error('Failed to delete user');
+      }
+      setCurrentUser(false); // Réinitialiser l'état de l'utilisateur après suppression
+      removeCookie();
+      navigate('/'); // Rediriger vers la page d'accueil ou de connexion
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      setError('Failed to delete account');
+    }
+  };
+
   return (
     <div className="min-h-screen ">
       <div className="flex flex-col md:flex-row">
-        {/* Sidebar */}
         <aside className="w-full md:w-64 bg-black text-white rounded-lg ml-2 mr-2 mt-6 mb-6">
           <div className="p-6">
             <h1 className="text-2xl font-semibold">Mon Compte</h1>
@@ -74,25 +89,19 @@ export default function MyAccount() {
           <nav className="mt-6">
             <ul>
               <li
-                className={`p-4 cursor-pointer hover:bg-gray-700 ${
-                  activeTab === 'profile' ? 'bg-gray-700' : ''
-                }`}
+                className={`p-4 cursor-pointer hover:bg-gray-700 ${activeTab === 'profile' ? 'bg-gray-700' : ''}`}
                 onClick={() => setActiveTab('profile')}
               >
                 Profil
               </li>
               <li
-                className={`p-4 cursor-pointer hover:bg-gray-700 ${
-                  activeTab === 'orders' ? 'bg-gray-700' : ''
-                }`}
+                className={`p-4 cursor-pointer hover:bg-gray-700 ${activeTab === 'orders' ? 'bg-gray-700' : ''}`}
                 onClick={() => setActiveTab('orders')}
               >
                 Commandes
               </li>
               <li
-                className={`p-4 cursor-pointer hover:bg-gray-700 ${
-                  activeTab === 'edit' ? 'bg-gray-700' : ''
-                }`}
+                className={`p-4 cursor-pointer hover:bg-gray-700 ${activeTab === 'edit' ? 'bg-gray-700' : ''}`}
                 onClick={() => setActiveTab('edit')}
               >
                 Modifier mes informations
@@ -101,11 +110,10 @@ export default function MyAccount() {
           </nav>
         </aside>
 
-        {/* Main Content */}
         <main className="flex-1 p-6">
           {userData && activeTab === 'profile' && (
             <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
-              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>
+              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{ fontFamily: 'Chakra petch' }}>
                 Mes informations
               </h1>
               {!updateUser && (
@@ -126,7 +134,10 @@ export default function MyAccount() {
                           <div className="text-white">
                             <p>Êtes-vous sûr de vouloir supprimer votre compte ?</p>
                             <div className="flex justify-center mt-4 space-x-6">
-                              <button className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-800">
+                              <button
+                                onClick={handleDeleteAccount}
+                                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-800"
+                              >
                                 Oui
                               </button>
                               <button
@@ -150,7 +161,7 @@ export default function MyAccount() {
 
           {userData && activeTab === 'edit' && (
             <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
-              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>
+              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{ fontFamily: 'Chakra petch' }}>
                 Modifier mes informations
               </h1>
               <UserForm user={userData} onUpdate={() => setActiveTab('profile')} />
@@ -159,7 +170,7 @@ export default function MyAccount() {
 
           {userData && activeTab === 'orders' && !current_user.isAdmin && (
             <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
-              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>
+              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{ fontFamily: 'Chakra petch' }}>
                 Mes Commandes
               </h1>
               <OrdersList />
@@ -168,7 +179,7 @@ export default function MyAccount() {
 
           {!userData && isLoggedIn && (
             <section className="bg-white p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
-              <h1 className="text-2xl font-semibold mb-4 text-center" style={{fontFamily: 'Chakra petch'}}>Mes informations</h1>
+              <h1 className="text-2xl font-semibold mb-4 text-center" style={{ fontFamily: 'Chakra petch' }}>Mes informations</h1>
               {error && <p className="text-red-500">{error}</p>}
               <OrdersList />
             </section>

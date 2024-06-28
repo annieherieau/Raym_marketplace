@@ -5,11 +5,11 @@ import '../../index.css'; // Assurez-vous d'importer votre fichier CSS global si
 const MaintenanceHero = () => {
     return (
         <>
-            <div className="relative rounded-[40px] bg-gray-900">
+            <div className="relative rounded-[20px] bg-black">
 
                 <div className="px-6 py-24 mx-auto max-w-7xl sm:py-32 lg:px-8 relative z-10">
                     <div className="text-center">
-                        <h1 className="text-6xl font-bold tracking-tight text-green-400 sm:text-7xl lg:text-8xl pb-10" style={{ fontFamily: 'Chakra Petch' }}>
+                        <h1 className="text-6xl font-bold tracking-tight text-palegreen-500 sm:text-7xl lg:text-8xl pb-10" style={{ fontFamily: 'Chakra Petch' }}>
                             <FontAwesomeIcon icon={faScrewdriverWrench} /> ENTRETIEN
                         </h1>
                         <h3 className="text-4xl text-white">Quelques conseils pour garder un vélo en parfait état.</h3>

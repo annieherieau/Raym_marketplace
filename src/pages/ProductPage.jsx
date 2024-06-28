@@ -86,14 +86,14 @@ const ProductPage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-800 py-8 rounded-lg">
+    <div className="bg-black dark:bg-gray-800 py-8 rounded-[20px]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row mx-auto">
           <div className="md:flex-1 px-4">
             <div className="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
               {product.photo_url && (
                 <img
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover pt-5"
                   src={product.photo_url}
                   alt={product.name}
                 />
@@ -101,30 +101,30 @@ const ProductPage = () => {
             </div>
             <div className="flex -mx-2 mb-4">
               <div className="w-full px-2">
-                <button onClick={handleAddToCart} className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
+                <button onClick={handleAddToCart} className="w-full bg-green-400 dark:bg-gray-600 text-gray-900 py-2 px-4 rounded-full font-bold hover:bg-green-600 dark:hover:bg-gray-700">
                   Add to Cart
                 </button>
               </div>
             </div>
           </div>
           <div className="md:flex-1 px-4">
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">{product.name}</h2>
-            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+            <h2 className="text-2xl font-bold text-green-400 dark:text-white mb-2">{product.name}</h2>
+            <p className="text-gray-100 dark:text-gray-300 text-sm mb-4">
               {product.description}
             </p>
             <div className="flex mb-4">
               <div className="mr-4">
-                <span className="font-bold text-gray-700 dark:text-gray-300">Price:</span>
-                <span className="text-gray-600 dark:text-gray-300">${product.price}</span>
+                <span className="font-bold text-gray-100 dark:text-gray-300">Price:</span>
+                <span className="text-gray-100 dark:text-gray-300">${product.price}</span>
               </div>
               <div>
-                <span className="font-bold text-gray-700 dark:text-gray-300">Availability:</span>
-                <span className="text-gray-600 dark:text-gray-300">In Stock</span>
+                <span className="font-bold text-gray-100 dark:text-gray-300">Availability:</span>
+                <span className="text-gray-100 dark:text-gray-300">In Stock</span>
               </div>
             </div>
             <div className="mb-4">
-              <span className="font-bold text-gray-700 dark:text-gray-300">Product Description:</span>
-              <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">
+              <span className="font-bold text-gray-100 dark:text-gray-300">Product Description:</span>
+              <p className="text-gray-100 dark:text-gray-300 text-sm mt-2">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                 sed ante justo. Integer euismod libero id mauris malesuada tincidunt. Vivamus commodo nulla ut
                 lorem rhoncus aliquet. Duis dapibus augue vel ipsum pretium, et venenatis sem blandit. Quisque

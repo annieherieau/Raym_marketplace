@@ -83,6 +83,9 @@ function App() {
           <Route path="/brand" element={<Brand />} />
           <Route path="/maintenance" element={<Maintenance />} />
           <Route path="/mentions-legales" element={<LegalMentions />} />
+          <Route path="/configurator" element={<Configurator allProducts={products} />} />
+          <Route path="/shop" element={<Shop products={products} />} />
+
           <Route path="/configurateur" element={<Configurator />} />
           <Route path="/product/:productId" element={<ProductPage />} />
           <Route path="/shop" element={<Shop />} /> {/* Added route for Shop component */}

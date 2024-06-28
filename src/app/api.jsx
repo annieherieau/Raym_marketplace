@@ -100,16 +100,6 @@ const endpoints = {
     method: "GET",
     url: `${api_url}/categories?display=configurator`,
   },
-  //Categories
-  categories:{
-    method: "GET",
-    url: `${api_url}/categories`,
-  },
-  //Colors
-  colors:{
-    method: "GET",
-    url: `${api_url}/colors`,
-  }
 };
 
 // création des paramètres de la requête: options et url

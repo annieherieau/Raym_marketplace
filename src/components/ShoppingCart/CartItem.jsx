@@ -1,5 +1,4 @@
 import { useAtom, useAtomValue } from "jotai";
-// import PropTypes from "prop-types";
 import { updateCartAtom, userAtom } from "../../app/atoms";
 import { buildRequestOptions } from "../../app/api";
 
@@ -7,18 +6,17 @@ export default function CartItem({
   item,
   onRemove,
   onUpdateQuantity,
-  // onActionComplete,
   cart = true,
 }) {
   const { token } = useAtomValue(userAtom);
   const [, setUpdateCart] = useAtom(updateCartAtom);
-  
+
   const handleRemove = () => {
     const { url, options } = buildRequestOptions("cart_items", "delete", {
       id: item.id,
       token: token,
     });
-    console.log(url, options);
+
     fetch(url, options)
       .then((response) => {
         if (!response.ok) {
@@ -26,7 +24,6 @@ export default function CartItem({
         }
         onRemove(item.id);
         setUpdateCart(true);
-        // onActionComplete();
       })
       .catch((error) => console.error("Error:", error));
   };
@@ -46,11 +43,10 @@ export default function CartItem({
         }
         onUpdateQuantity(newQuantity);
         setUpdateCart(true);
-        // onActionComplete();
       })
       .catch((error) => console.error("Error:", error));
   };
-
+  console.log(item);
   return (
     <li className="flex py-6">
       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
@@ -66,12 +62,12 @@ export default function CartItem({
           <div className="flex justify-between text-base font-medium text-gray-900">
             <h3>
               <a href={`product/${item.product.id}`}>{item.product.name}</a>
+              <p className="mt-1 text-sm text-gray-500">
+                {item.product.color.collection}
+              </p>
             </h3>
             <p className="ml-4">{item.price}&nbsp;€</p>
           </div>
-          {/* <p className="mt-1 text-sm text-gray-500">
-                                      {item.product.color.name}
-                                    </p> */}
         </div>
 
         {cart && (
@@ -111,20 +107,3 @@ export default function CartItem({
     </li>
   );
 }
-
-// CartItem.propTypes = {
-//   item: PropTypes.shape({
-//     id: PropTypes.number.isRequired,
-//     product: PropTypes.shape({
-//       name: PropTypes.string.isRequired,
-//       description: PropTypes.string,
-//       id: PropTypes.number.isRequired,
-//     }).isRequired,
-//     quantity: PropTypes.number.isRequired,
-//   }).isRequired,
-//   onRemove: PropTypes.func,
-//   onUpdateQuantity: PropTypes.func,
-//   onActionComplete: PropTypes.func,
-//   cart: PropTypes.boolean
-// };
-

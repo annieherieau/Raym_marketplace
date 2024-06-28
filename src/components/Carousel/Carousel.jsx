@@ -62,7 +62,7 @@ const Carousel = ({ products, selectedProduct }) => {
     <div className="relative">
       <div className="overflow-hidden p-4">
         <img
-          src={products[currentIndex].image}
+          src={products[currentIndex].photo_url}
           alt={`${products[currentIndex].name}`}
           className="w-full h-auto"
         />

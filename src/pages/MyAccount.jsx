@@ -105,7 +105,7 @@ export default function MyAccount() {
         <main className="flex-1 p-6">
           {userData && activeTab === 'profile' && (
             <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
-              <h1 className="text-5xl font-semibold mb-4 text-green-400 text-center" style={{fontFamily: 'Chakra petch'}}>
+              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>
                 Mes informations
               </h1>
               {!updateUser && (
@@ -150,7 +150,7 @@ export default function MyAccount() {
 
           {userData && activeTab === 'edit' && (
             <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
-              <h1 className="text-5xl font-semibold mb-4 text-green-400 text-center" style={{fontFamily: 'Chakra petch'}}>
+              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>
                 Modifier mes informations
               </h1>
               <UserForm user={userData} onUpdate={() => setActiveTab('profile')} />
@@ -159,7 +159,7 @@ export default function MyAccount() {
 
           {userData && activeTab === 'orders' && !current_user.isAdmin && (
             <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
-              <h1 className="text-5xl font-semibold mb-4 text-green-400 text-center" style={{fontFamily: 'Chakra petch'}}>
+              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>
                 Mes Commandes
               </h1>
               <OrdersList />

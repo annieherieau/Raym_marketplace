@@ -11,6 +11,11 @@ const ProductList = () => {
   const [error, setError] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false); 
   const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const [colors, setColors] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedColor, setSelectedColor] = useState("all");
+  const [sortOrder, setSortOrder] = useState("desc");
 
   useEffect(() => {
     const fetchAdminStatus = async () => {
@@ -23,7 +28,7 @@ const ProductList = () => {
         const response = await fetch("http://127.0.0.1:3000/admin_check", {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`, // Utiliser le token de l'utilisateur
+            Authorization: `Bearer ${user.token}`, 
           },
         });
 
@@ -67,6 +72,63 @@ const ProductList = () => {
         setError("Error fetching products. Please try again later.");
       });
   }, [user.token]);
+
+  useEffect(() => {
+    const fetchCategoriesAndColors = async () => {
+      try {
+        const categoriesResponse = await fetch("http://127.0.0.1:3000/categories", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        const colorsResponse = await fetch("http://127.0.0.1:3000/colors", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+
+        if (!categoriesResponse.ok || !colorsResponse.ok) {
+          throw new Error("Failed to fetch categories or colors");
+        }
+
+        const categoriesData = await categoriesResponse.json();
+        const colorsData = await colorsResponse.json();
+        setCategories(categoriesData);
+        setColors(colorsData);
+      } catch (error) {
+        console.error("Error fetching categories or colors:", error);
+      }
+    };
+
+    fetchCategoriesAndColors();
+  }, [user.token]);
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
+  const handleColorChange = (event) => {
+    setSelectedColor(event.target.value);
+  };
+
+  const handleSortOrderChange = (event) => {
+    setSortOrder(event.target.value);
+  };
+
+  const filteredProducts = products.filter(product => {
+    return (selectedCategory === "all" || product.category.name === selectedCategory) &&
+           (selectedColor === "all" || product.color.collection === selectedColor);
+  });
+
+  const sortedProducts = filteredProducts.sort((a, b) => {
+    if (sortOrder === "asc") {
+      return a.price - b.price;
+    } else {
+      return b.price - a.price;
+    }
+  });
 
   const handleUpdateProduct = async (id, updatedProduct) => {
     const { url, options } = buildRequestOptions("products", "update", {
@@ -123,12 +185,39 @@ const ProductList = () => {
           <div className="flex w-full mb-10 flex-wrap">
             <h1 className="sm:text-4xl text-3xl font-bold title-font text-palegreen-500 lg:w-1/3 lg:mb-0">Nos best sellers :</h1>
           </div>
+          <div className="flex w-full mb-8">
+            <div className="mr-4 ">
+              <label htmlFor="category" className="mr-2 text-white">Trier par catégorie :</label>
+              <select id="category" value={selectedCategory} onChange={handleCategoryChange} className="p-2 border rounded">
+                <option value="all">Toutes</option>
+                {categories.map(category => (
+                  <option key={category.id} value={category.name}>{category.name}</option>
+                ))}
+              </select>
+            </div>
+            <div className="mr-4">
+              <label htmlFor="color" className="mr-2 text-white">Trier par couleur :</label>
+              <select id="color" value={selectedColor} onChange={handleColorChange} className="p-2 border rounded">
+                <option value="all">Toutes</option>
+                {colors.map(color => (
+                  <option key={color.id} value={color.collection}>{color.collection}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="sortOrder" className="mr-2 text-white">Trier par prix:</label>
+              <select id="sortOrder" value={sortOrder} onChange={handleSortOrderChange} className="p-2 border rounded pr-8">
+                <option value="asc">Croissant</option>
+                <option value="desc">Décroissant</option>
+              </select>
+            </div>
+          </div>
           <div className="flex flex-wrap md:-m-2 -m-1" style={{ borderRadius: '20px' }}>
             <div className="flex flex-wrap w-1/2">
               <div className="md:p-2 p-1 w-1/2 bg-white">
-                {products[0] && (
+                {sortedProducts[0] && (
                   <Product
-                    product={products.sort((a, b) => b.rating - a.rating)[0]}
+                    product={sortedProducts[0]}
                     isAdmin={isAdmin}
                     onUpdateProduct={isAdmin ? handleUpdateProduct : null}
                     onDeleteProduct={isAdmin ? handleDeleteProduct : null}
@@ -136,9 +225,9 @@ const ProductList = () => {
                 )}
               </div>
               <div className="md:p-2 p-1 w-1/2 bg-white">
-                {products[1] && (
+                {sortedProducts[1] && (
                   <Product
-                    product={products.sort((a, b) => b.rating - a.rating)[1]}
+                    product={sortedProducts[1]}
                     isAdmin={isAdmin}
                     onUpdateProduct={isAdmin ? handleUpdateProduct : null}
                     onDeleteProduct={isAdmin ? handleDeleteProduct : null}
@@ -146,9 +235,9 @@ const ProductList = () => {
                 )}
               </div>
               <div className="md:p-2 p-1 w-full bg-white">
-                {products[2] && (
+                {sortedProducts[2] && (
                   <Product
-                    product={products.sort((a, b) => b.rating - a.rating)[2]}
+                    product={sortedProducts[2]}
                     isAdmin={isAdmin}
                     onUpdateProduct={isAdmin ? handleUpdateProduct : null}
                     onDeleteProduct={isAdmin ? handleDeleteProduct : null}
@@ -158,9 +247,9 @@ const ProductList = () => {
             </div>
             <div className="flex flex-wrap w-1/2">
               <div className="md:p-2 p-1 w-full bg-white">
-                {products[3] && (
+                {sortedProducts[3] && (
                   <Product
-                    product={products.sort((a, b) => b.rating - a.rating)[3]}
+                    product={sortedProducts[3]}
                     isAdmin={isAdmin}
                     onUpdateProduct={isAdmin ? handleUpdateProduct : null}
                     onDeleteProduct={isAdmin ? handleDeleteProduct : null}
@@ -168,9 +257,9 @@ const ProductList = () => {
                 )}
               </div>
               <div className="md:p-2 p-1 w-1/2 bg-white">
-                {products[4] && (
+                {sortedProducts[4] && (
                   <Product
-                    product={products.sort((a, b) => b.rating - a.rating)[4]}
+                    product={sortedProducts[4]}
                     isAdmin={isAdmin}
                     onUpdateProduct={isAdmin ? handleUpdateProduct : null}
                     onDeleteProduct={isAdmin ? handleDeleteProduct : null}
@@ -178,9 +267,9 @@ const ProductList = () => {
                 )}
               </div>
               <div className="md:p-2 p-1 w-1/2 bg-white">
-                {products[5] && (
+                {sortedProducts[5] && (
                   <Product
-                    product={products.sort((a, b) => b.rating - a.rating)[5]}
+                    product={sortedProducts[5]}
                     isAdmin={isAdmin}
                     onUpdateProduct={isAdmin ? handleUpdateProduct : null}
                     onDeleteProduct={isAdmin ? handleDeleteProduct : null}
@@ -196,6 +285,3 @@ const ProductList = () => {
 };
 
 export default ProductList;
-
-
-

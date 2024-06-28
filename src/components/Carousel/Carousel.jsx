@@ -3,17 +3,16 @@ import { useState } from "react";
 import { isAuthAtom, updateCartAtom, userAtom } from "../../app/atoms";
 import { useNavigate } from "react-router-dom";
 import { buildRequestOptions } from "../../app/api";
-import {
-  faShoppingCart,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
+import CartButton from "../CartButton/CartButton.jsx";
 
-const Carousel = ({ products}) => {
-  const {isAdmin, token} = useAtomValue(userAtom);
+const Carousel = ({ products, selectedProduct }) => {
+  const { isAdmin, token } = useAtomValue(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [, setUpdateCart] = useAtom(updateCartAtom);
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
+
 
   const handlePrevious = () => {
     const newIndex = (currentIndex - 1 + products.length) % products.length;
@@ -44,37 +43,39 @@ const Carousel = ({ products}) => {
       setUpdateCart(true);
     } else {
       alert("Veuillez vous connecter pour commander");
-      navigate('/login?redirect=configurateur')
+      navigate("/login?redirect=configurateur");
     }
   };
 
+  // affichage du produit sélectionné (random ou hero)
+  useEffect(() => {
+    if (selectedProduct && products) {
+      products.forEach((element, i) => {
+        if (element == selectedProduct) {
+          setCurrentIndex(i);
+        }
+      });
+    }
+  }, [products, selectedProduct]);
+
   return (
-    
     <div className="relative">
       <div className="overflow-hidden p-4">
         <img
           src={products[currentIndex].image}
-          alt={`Slide ${currentIndex}`}
+          alt={`${products[currentIndex].name}`}
           className="w-full h-auto"
         />
-        <div className="bg-gray-800 bg-opacity-50 rounded-md py-2 mt-3 text-center">
+        <div
+          className="bg-gray-800 bg-opacity-50 rounded-md py-2 mt-3 text-center"
+        >
           <h3 className="text-base font-semibold text-white sm:text-lg">
             {products[currentIndex].name}
           </h3>
           <p className="text-white">{products[currentIndex].price} €</p>
         </div>
         <div className="mt-3 text-center">
-          <button
-            type="button"
-            className="px-8 py-3 font-semibold rounded bg-palegreen-500 hover:bg-palegreen-600 text-gray-900 dark:text-gray-800"
-            onClick={handleAddToCart}
-          >
-            <FontAwesomeIcon
-      icon={faShoppingCart}
-      // className="text-2xl cursor-pointer cart-icon"
-  
-    />
-          </button>
+          <CartButton onClick={handleAddToCart} />
         </div>
       </div>
       <button

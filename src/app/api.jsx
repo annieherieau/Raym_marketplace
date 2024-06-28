@@ -34,6 +34,10 @@ const endpoints = {
     method: "GET",
     url: `${api_url}/current_user`,
   },
+  delete_user: {
+    method: "DELETE",
+    url: `${api_url}/users/{id}`,
+  },
   // RESSOURCES ENDPOINTS
   index: {
     method: "GET",
@@ -96,7 +100,10 @@ const endpoints = {
     method: "GET",
     url: `${api_url}/checkout/cancel?order_id={id}`,
   },
-
+  configurator:{
+    method: "GET",
+    url: `${api_url}/categories?display=configurator`,
+  },
 };
 
 // création des paramètres de la requête: options et url

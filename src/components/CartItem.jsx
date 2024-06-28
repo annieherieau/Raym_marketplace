@@ -1,15 +1,15 @@
-import PropTypes from "prop-types";
 import { buildRequestOptions } from "../app/api";
 import { useAtomValue } from "jotai";
 import { userAtom } from "../app/atoms";
+import PropTypes from 'prop-types';
 
-const CartItem = ({
+export default function CartItem({
   item,
   onRemove,
   onUpdateQuantity,
   onActionComplete,
   cart=true,
-}) => {
+}){
   const { token } = useAtomValue(userAtom);
 
   const handleRemove = () => {
@@ -51,7 +51,7 @@ const CartItem = ({
     <div>
       <h3>{item.product.name}</h3>
       <p>{item.id}</p>
-      <p>Quantity: {item.quantity}</p>
+      <p>Quantité: {item.quantity}</p>
       {cart && (
         <div>
           <button onClick={() => handleChangeQuantity(item.quantity - 1)}>
@@ -60,27 +60,23 @@ const CartItem = ({
           <button onClick={() => handleChangeQuantity(item.quantity + 1)}>
             +
           </button>
-          <button onClick={handleRemove}>Remove</button>
+          <button onClick={handleRemove}>Supprimer</button>
         </div>
       )}
     </div>
   );
 };
 
-// CartItem.propTypes = {
-//   item: PropTypes.shape({
-//     id: PropTypes.number.isRequired,
-//     product: PropTypes.shape({
-//       name: PropTypes.string.isRequired,
-//       description: PropTypes.string,
-//       id: PropTypes.number.isRequired,
-//     }).isRequired,
-//     quantity: PropTypes.number.isRequired,
-//   }).isRequired,
-//   onRemove: PropTypes.func,
-//   onUpdateQuantity: PropTypes.func,
-//   onActionComplete: PropTypes.func,
-//   cart: PropTypes.boolean
-// };
-
-// export default CartItem;
+CartItem.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
+    product: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  onRemove: PropTypes.func.isRequired,
+  onUpdateQuantity: PropTypes.func.isRequired,
+  onActionComplete: PropTypes.func.isRequired,
+  cart: PropTypes.bool,
+};

@@ -7,24 +7,27 @@ import MyAccount from "./pages/MyAccount";
 import Dashboard from "./pages/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAtom, useAtomValue } from "jotai";
-import { useEffect, useState } from "react";
-import { isAuthAtom, unknownUser, userAtom } from "./app/atoms";
-import { loadCookie } from "./app/utils";
-import CreateProduct from "./components/CreateProduct";
+import { useEffect } from "react";
+import { isAuthAtom, userAtom } from "./app/atoms";
 import EditProduct from "./components/EditProduct";
 import ProductPage from "./pages/ProductPage";
 import EditComment from "./pages/EditComment";
 import OrderPage from "./pages/OrderPage";
-import Menu from "./components/NavCircle/Menu/Menu"; // Correction du chemin
-import Accueil from "./pages/Home/Home"; // Ajout de l'importation
-import Contacts from "./pages/Contacts/Contacts"; // Correction de l'importation
+import Menu from "./components/NavCircle/Menu/Menu"; 
+import Home from "./pages/Home/Home"; 
+import Contact from "./pages/Contact/Contact"; 
 import NoticeModal from "./components/NoticeModal";
 import PrivateRoute from "./components/PrivateRoute";
 import LegalMentions from "./pages/LegalMentions";
 import Brand from "./pages/Brand/Brand";
 import Maintenance from "./pages/Maintenance/Maintenance";
 import Configurator from "./pages/Configurator/Configurator";
-
+import { useState } from "react";
+import { loadCookie } from "./app/utils";
+import { unknownUser } from "./app/atoms";
+import CreateProduct from "./components/CreateProduct";
+import AccessibilityIcon from "./components/accessibility/AccessibilityIcon";
+import Shop from "./pages/Shop/Shop"; 
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
@@ -38,7 +41,7 @@ function App() {
 
   // Récupérer les produits depuis l'API
   const [products, setProducts] = useState([]);
-  // Récupérer les produits depuis l'API
+
   useEffect(() => {
     fetch(`${api_url}/products`)
       .then((response) => {
@@ -66,22 +69,27 @@ function App() {
 
   return (
     <BrowserRouter>
+    <div className="flex flex-col min-h-screen">
       <Menu /> {/* Utilisation de NavCircle */}
       <NoticeModal />
-      <main>
+      <main className="flex-grow">
         <Routes>
           {/* ROUTES PUBLIQUES */}
           <Route path="*" element={<NotFound />} />
-          <Route path="/" element={<Accueil products={products} />} />
+          <Route path="/" element={<Home products={products} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/password/:action" element={<Password />} />
-          <Route path="/contacts" element={<Contacts />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/brand" element={<Brand />} />
           <Route path="/maintenance" element={<Maintenance />} />
-          <Route path="/legal_mentions" element={<LegalMentions />} />
-          <Route path="/configurator" element={<Configurator />} />
+          <Route path="/mentions-legales" element={<LegalMentions />} />
+          <Route path="/configurator" element={<Configurator allProducts={products} />} />
+          <Route path="/shop" element={<Shop products={products} />} />
 
+          <Route path="/configurateur" element={<Configurator />} />
+          <Route path="/product/:productId" element={<ProductPage />} />
+          <Route path="/shop" element={<Shop />} /> {/* Added route for Shop component */}
           {/* ROUTES PRIVÉES */}
           <Route
             path="/my_account/*"
@@ -91,20 +99,23 @@ function App() {
             path="/admin/*"
             element={wrapPrivateRoute(<Dashboard />, "admin", isLoggedIn)}
           />
+          <Route path="/products/new" element={<CreateProduct />} />
            <Route
             path="/order/:orderId"
             element={wrapPrivateRoute(<OrderPage />, "my_account", isLoggedIn)}
           />
-          <Route path="/products/:id/edit" element={<EditProduct />} />
-          <Route path="/product/:productId" element={<ProductPage />} />
+          <Route path="/products/:id/edit" element={wrapPrivateRoute(<EditProduct />, "admin", isLoggedIn)} />
           <Route
             path="/products/:productId/comments/:commentId/edit"
-            element={<EditComment />}
+            element={wrapPrivateRoute(<EditComment />, "", isLoggedIn)}
           />
-         
         </Routes>
       </main>
+      <AccessibilityIcon />
+      <footer>
       <Footer />
+      </footer>
+      </div>
     </BrowserRouter>
   );
 }

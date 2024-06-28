@@ -7,6 +7,8 @@ const EditProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [colors, setColors] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -18,7 +20,7 @@ const EditProduct = () => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        // Convertir la price en number
+        // Convertir le prix en nombre
         data.price = Number(data.price);
         setProduct(data);
       } catch (error) {
@@ -27,7 +29,41 @@ const EditProduct = () => {
       }
     };
 
+    const fetchCategories = async () => {
+      console.log("Fetching categories...");
+      const { url, options } = buildRequestOptions('categories', 'index', {});
+      console.log("API URL:", url);
+      console.log("Options:", options);
+      try {
+        const response = await fetch(url, options);
+        console.log("Response status:", response.status);
+        const data = await response.json();
+        console.log("Fetched categories:", data);
+        setCategories(data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    const fetchColors = async () => {
+      console.log("Fetching colors...");
+      const { url, options } = buildRequestOptions('colors', 'index', {});
+      console.log("API URL:", url);
+      console.log("Options:", options);
+      try {
+        const response = await fetch(url, options);
+        console.log("Response status:", response.status);
+        const data = await response.json();
+        console.log("Fetched colors:", data);
+        setColors(data);
+      } catch (error) {
+        console.error('Error fetching colors:', error);
+      }
+    };
+
     fetchProduct();
+    fetchCategories();
+    fetchColors();
   }, [id]);
 
   const handleUpdateProduct = (updatedProduct) => {
@@ -41,7 +77,14 @@ const EditProduct = () => {
   return (
     <div>
       <h2>Edit Product</h2>
-      {product && <ProductForm product={product} onSubmit={handleUpdateProduct} />}
+      {product && (
+        <ProductForm
+          product={product}
+          categories={categories}
+          colors={colors}
+          onSubmit={handleUpdateProduct}
+        />
+      )}
     </div>
   );
 };

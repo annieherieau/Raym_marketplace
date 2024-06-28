@@ -8,6 +8,8 @@ import ProductList from "../components/ProductList";
 import CreateProduct from "../components/CreateProduct";
 import OrdersList from "../components/OrdersList";
 import UsersList from "../components/UsersList";
+import CategoriesList from "../components/CategoriesList";
+import ColorsList from "../components/ColorsList";
 import 'tailwindcss/tailwind.css';
 
 export default function Dashboard() {
@@ -48,13 +50,13 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="h-full bg-gray-100">
-      <div className="flex">
+    <div className="h-full">
+      <div className="flex flex-col md:flex-row">
         {/* Sidebar */}
-        <aside className="w-64 bg-gray-900 text-white">
+        <aside className="w-full md:w-64 bg-black text-white rounded-lg ml-2 mr-2 mt-6 mb-6">
           <div className="p-6">
-            <h1 className="text-2xl font-semibold">Dashboard Admin</h1>
-            <p>Bienvenue, {user.email}</p>
+            <h1 className="text-2xl font-semibold text-palegreen-500">Dashboard Admin</h1>
+            <p>Bienvenue {user.email}</p>
           </div>
           <nav className="mt-6">
             <ul>
@@ -82,6 +84,16 @@ export default function Dashboard() {
               >
                 Liste des commandes
               </li>
+              <li
+              className={`p-4 cursor-pointer hover:bg-gray-700 ${activeTab === 'Categories' ? 'bg-gray-700' : ''}`}
+              onClick={() => setActiveTab('Categories')}>
+                Catégories
+              </li>
+              <li
+                className={`p-4 cursor-pointer hover:bg-gray-700 ${activeTab === 'Categories' ? 'bg-gray-700' : ''}`}
+                onClick={() => setActiveTab('Colors')}>
+                  Couleurs
+                </li>
             </ul>
           </nav>
         </aside>
@@ -89,28 +101,39 @@ export default function Dashboard() {
         {/* Main Content */}
         <main className="flex-1 p-6">
           {activeTab === 'users' && (
-            <section className="bg-white p-6 rounded-lg shadow-md mb-12">
-              <h2 className="text-2xl font-semibold mb-4">Liste des utilisateurs</h2>
+            <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
+              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>Liste des utilisateurs</h1>
               <UsersList />
             </section>
           )}
           {activeTab === 'products' && (
-            <section className="bg-white p-6 rounded-lg shadow-md mb-12">
-              <h2 className="text-2xl font-semibold mb-4">Liste des Produits</h2>
+            <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
+              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>Liste des Produits</h1>
               <ProductList />
             </section>
           )}
           {activeTab === 'create-product' && (
-            <section className="bg-white p-6 rounded-lg shadow-md mb-12">
-              <h2 className="text-2xl font-semibold mb-4">Créer un nouveau Produit</h2>
+            <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
               <CreateProduct />
             </section>
           )}
           {activeTab === 'orders' && (
-            <section className="bg-white p-6 rounded-lg shadow-md mb-12">
-              <h2 className="text-2xl font-semibold mb-4">Liste des commandes</h2>
+            <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
+              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>Liste des commandes</h1>
               <OrdersList />
             </section>
+          )}
+          {activeTab === 'Categories' && (
+            <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
+              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>Catégories</h1>
+              <CategoriesList />
+            </section>
+          )},
+          {activeTab === 'Colors' && (
+               <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
+               <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>Catégories</h1>
+               <ColorsList />
+             </section>
           )}
         </main>
       </div>

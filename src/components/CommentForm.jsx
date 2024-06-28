@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import StarRating from './StarRating';
 
 const CommentForm = ({ comment, onSubmit, productId, token }) => {
   const [content, setContent] = useState(comment ? comment.content : '');
@@ -14,20 +15,26 @@ const CommentForm = ({ comment, onSubmit, productId, token }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Content:</label>
-        <textarea value={content} onChange={(e) => setContent(e.target.value)} required />
+    <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-6 bg-black shadow-md rounded-lg">
+      <div className="mb-4">
+        <label className="block text-green-400 text-sm font-bold mb-2">Avis:</label>
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          required
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
       </div>
-      <div>
-        <label>Rating:</label>
-        <select value={rating} onChange={(e) => setRating(parseInt(e.target.value))} required>
-          {[1, 2, 3, 4, 5].map(r => (
-            <option key={r} value={r}>{r}</option>
-          ))}
-        </select>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">Rating:</label>
+        <StarRating rating={rating} onRatingChange={setRating} />
       </div>
-      <button type="submit">{comment ? 'Update' : 'Create'} Comment</button>
+      <button
+        type="submit"
+        className="bg-green-400 hover:bg-green-600 text-gray-900 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        {comment ? 'Update' : 'Create'} Comment
+      </button>
     </form>
   );
 };

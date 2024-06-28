@@ -14,15 +14,15 @@ body {
 
 main {
   flex: 1;
-  padding-bottom: 50px; 
+  padding-bottom: 50px;
+  justify-content: center; 
 }
 
-.footer-fixed {
-  position: relative; 
-  bottom: 0;
+/* footer {
+  margin-bottom: 0%;
   width: 100%;
-  z-index: 10; 
-}
+ 
+} */
 
 body {
   margin: 0;
@@ -38,13 +38,17 @@ body {
   box-sizing: border-box;
 }
 
-/* Custom Hero Image */
-.bg-custom-image {
-  background-size: cover;
-  background-position: center;
-  border-radius: 25px;
+/* Maintenance */
+strong {
+  font-weight: bold;
+  color: rgb(74, 255, 170);
 }
 
+.entretien {
+  color: rgb(246, 36, 36);
+}
+
+/* Animations */
 .fade-up {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
@@ -63,4 +67,70 @@ body {
       opacity: 1;
       transform: translateY(0);
   }
+}
+
+/* High Contrast Mode */
+.high-contrast {
+  filter: contrast(2);
+}
+
+/* Dark Mode */
+.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* OpenDyslexic Mode */
+.open-dyslexic {
+  font-family: 'OpenDyslexic', sans-serif;
+}
+
+/* Blue Light Filter */
+.blue-light-filter {
+  filter: sepia(0.6) brightness(0.9) contrast(1.1);
+}
+/* Protanopia Mode */
+.protanopia-mode {
+  filter:  
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='protanopia'><feColorMatrix type='matrix' values='0.567, 0.433, 0, 0, 0, 0.558, 0.442, 0, 0, 0, 0, 0.242, 0.758, 0, 0, 0, 0, 0, 1, 0'/></filter></svg>#protanopia");
+}
+
+/* Deuteranopia Mode */
+.deuteranopia-mode {
+  filter: 
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='deuteranopia'><feColorMatrix type='matrix' values='0.625, 0.375, 0, 0, 0, 0.7, 0.3, 0, 0, 0, 0, 0.3, 0.7, 0, 0, 0, 0, 0, 1, 0'/></filter></svg>#deuteranopia");
+}
+
+/* Tritanopia Mode */
+.tritanopia-mode {
+  filter: 
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='tritanopia'><feColorMatrix type='matrix' values='0.95, 0.05, 0, 0, 0, 0, 0.433, 0.567, 0, 0, 0, 0.475, 0.525, 0, 0, 0, 0, 0, 1, 0'/></filter></svg>#tritanopia");
+}
+/* Include OpenDyslexic font */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/gh/antijingoist/open-dyslexic@latest/otf/OpenDyslexic-Regular.otf') format('opentype');
+}
+
+/* Styling for accessibility icon */
+.accessibility-icon {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  background-color: #007bff;
+  color: white;
+  width: 55px; /* Ajuster la taille pour plus de visibilité */
+  height: 55px; /* Ajuster la taille pour plus de visibilité */
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 50;
+  display: flex; /* Pour centrer le contenu */
+  align-items: center; /* Pour centrer le contenu verticalement */
+  justify-content: center; /* Pour centrer le contenu horizontalement */
+  box-sizing: border-box; /* Pour que le padding ne modifie pas les dimensions */
+}
+
+.accessibility-icon i {
+  font-size: 24px;
+  line-height: 1; /* Assurez-vous que la hauteur de ligne ne provoque pas de découpage */
 }

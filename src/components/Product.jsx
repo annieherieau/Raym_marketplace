@@ -4,6 +4,8 @@ import { userAtom, isAuthAtom, updateCartAtom } from "../app/atoms";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { buildRequestOptions } from "../app/api";
+import CartButton from "./CartButton/CartButton"; // Chemin relatif correct
+import { useRef } from "react";
 
 const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
   const user = useAtomValue(userAtom);
@@ -28,7 +30,7 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
   };
 
   const handleUpdateClick = () => {
-    navigate(`/products/${product.id}/edit`); // Navigue vers la page d'édition
+    navigate(`/products/${product.id}/edit`);
   };
 
   const handleDeleteClick = () => {
@@ -36,44 +38,43 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-      <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
-      <p className="text-gray-700 mb-4">{product.description}</p>
-      {product.photo_url && (
-        <img
-          src={product.photo_url}
-          alt={product.name}
-          className="w-24 h-24 object-cover mb-4 rounded"
-        />
-      )}
-      <div className="flex items-center space-x-4">
+    <div className="p-6 rounded">
+      <img
+        alt={product.name}
+        className="w-full h-100 object-cover"
+        src={product.photo_url || "https://dummyimage.com/420x260"}
+      />
+      <div className="p-6">
+        <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
+          {product.category.name || "CATEGORY"}
+        </h3>
+        <h2 className="text-gray-900 title-font text-lg font-medium">
+          {product.name}
+        </h2>
+        <p className="mt-1">{product.price ? `$${product.price}` : "$0.00"}</p>
+        <p className="mt-1 mb-4">{product.description}</p>
         {isLoggedIn && !isAdmin && (
-          <button
-            onClick={handleAddToCart}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Add to Cart
-          </button>
+          <CartButton onClick={handleAddToCart} />
         )}
         <Link
           to={`/product/${product.id}`}
-          className="text-blue-500 hover:underline"
+          className="mt-2 text-indigo-500 inline-flex items-center ml-4"
         >
-          View Details
+          Voir l'article
         </Link>
         {isAdmin && (
-          <div className="flex space-x-2">
+          <div className="mt-2">
             <button
               onClick={handleUpdateClick}
-              className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
+              className="text-white bg-yellow-500 border-0 py-2 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-2"
             >
-              Edit
+              Modifier
             </button>
             <button
               onClick={handleDeleteClick}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              className="text-white bg-red-500 border-0 py-2 px-4 focus:outline-none hover:bg-red-600 rounded"
             >
-              Delete
+              Supprimer
             </button>
           </div>
         )}
@@ -87,11 +88,14 @@ Product.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string,
     id: PropTypes.number.isRequired,
-    photo_url: PropTypes.string, // Ajout de la prop photo_url
+    photo_url: PropTypes.string,
+    price: PropTypes.number,
   }).isRequired,
-  isAdmin: PropTypes.bool.isRequired, // Ajout de la prop isAdmin
+  isAdmin: PropTypes.bool.isRequired,
   onUpdateProduct: PropTypes.func,
   onDeleteProduct: PropTypes.func,
 };
 
 export default Product;
+
+

@@ -38,8 +38,16 @@ export default function ShoppingCart({
         throw new Error("Cart not fetched");
       }
       const data = await response.json();
-      // console.log("Cart fetched:", data);
-      setCartItems(data.items);
+      const updatedItems = data.items.reduce((acc, item) => {
+        const existingItem = acc.find(i => i.id === item.id);
+        if (existingItem) {
+          existingItem.quantity += item.quantity;
+        } else {
+          acc.push(item);
+        }
+        return acc;
+      }, []);
+      setCartItems(updatedItems);
       setCartAmount(data.amount);
     } catch (error) {
       console.error("Error fetching cart:", error);
@@ -157,7 +165,7 @@ export default function ShoppingCart({
                               <button
                                 type="button"
                                 id="clear"
-                                className="flex items-center justify-center rounded-md border border-transparent bg-red-500 px-1 py-0.5 text-base font-bold text-white shadow-sm hover:bg-red-600 mt-20"
+                                className="flex items-center justify-center rounded-md border border-transparent bg-red-500 px-2.5 py-2 text-base font-bold text-white shadow-sm hover:bg-red-600 mt-20"
                                 onClick={handleUpdateCart}
                               >
                                 <FontAwesomeIcon
@@ -174,11 +182,11 @@ export default function ShoppingCart({
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
-                        <p>TOTAL TTC (hors frais de livraison)</p>
-                        <p>{cartAmount}</p>
+                        <p>TOTAL TTC</p>
+                        <p>{cartAmount}&nbsp;€</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
-                        Les frais de livraison seront ajoutés lors du paiement
+                        Vos produits seront disponibles en magasin sous 24h.
                       </p>
                       {cartAmount && (
                         <div className="mt-6">
@@ -216,3 +224,6 @@ export default function ShoppingCart({
     </Transition>
   );
 }
+
+
+

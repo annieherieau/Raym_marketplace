@@ -1,24 +1,23 @@
 import { useAtom, useAtomValue } from "jotai";
-// import PropTypes from "prop-types";
 import { updateCartAtom, userAtom } from "../../app/atoms";
 import { buildRequestOptions } from "../../app/api";
+import { Link } from "react-router-dom";
 
 export default function CartItem({
   item,
   onRemove,
   onUpdateQuantity,
-  // onActionComplete,
   cart = true,
 }) {
   const { token } = useAtomValue(userAtom);
   const [, setUpdateCart] = useAtom(updateCartAtom);
-  
+
   const handleRemove = () => {
     const { url, options } = buildRequestOptions("cart_items", "delete", {
       id: item.id,
       token: token,
     });
-    console.log(url, options);
+
     fetch(url, options)
       .then((response) => {
         if (!response.ok) {
@@ -26,7 +25,6 @@ export default function CartItem({
         }
         onRemove(item.id);
         setUpdateCart(true);
-        // onActionComplete();
       })
       .catch((error) => console.error("Error:", error));
   };
@@ -46,7 +44,6 @@ export default function CartItem({
         }
         onUpdateQuantity(newQuantity);
         setUpdateCart(true);
-        // onActionComplete();
       })
       .catch((error) => console.error("Error:", error));
   };
@@ -65,15 +62,19 @@ export default function CartItem({
         <div>
           <div className="flex justify-between text-base font-medium text-gray-900">
             <h3>
-              <a href={`product/${item.product.id}`}>{item.product.name}</a>
+              <Link to={`${window.location.origin}/product/${item.product.id}`}>{item.product.name}</Link>
+              <p className="mt-1 text-sm text-gray-500">
+                {item.product.color.collection}
+              </p>
             </h3>
             <p className="ml-4">{item.price}&nbsp;€</p>
           </div>
-          {/* <p className="mt-1 text-sm text-gray-500">
-                                      {item.product.color.name}
-                                    </p> */}
         </div>
-
+        {!cart &&(<div className="flex flex-1 items-end justify-between text-sm">
+          <div className="flex items-center">
+            <span className="mr-2">Qté : {item.quantity}</span>
+          </div>{" "}
+        </div>)}
         {cart && (
           <div className="flex flex-1 items-end justify-between text-sm">
             <div className="flex items-center">
@@ -111,19 +112,3 @@ export default function CartItem({
     </li>
   );
 }
-
-// CartItem.propTypes = {
-//   item: PropTypes.shape({
-//     id: PropTypes.number.isRequired,
-//     product: PropTypes.shape({
-//       name: PropTypes.string.isRequired,
-//       description: PropTypes.string,
-//       id: PropTypes.number.isRequired,
-//     }).isRequired,
-//     quantity: PropTypes.number.isRequired,
-//   }).isRequired,
-//   onRemove: PropTypes.func,
-//   onUpdateQuantity: PropTypes.func,
-//   onActionComplete: PropTypes.func,
-//   cart: PropTypes.boolean
-// };

@@ -5,7 +5,7 @@ import '../../index.css'; // Assurez-vous d'importer votre fichier CSS global si
 const MaintenanceHero = () => {
     return (
         <>
-            <div className="relative rounded-[40px] bg-gray-900">
+            <div className="relative rounded-[20px] bg-black">
 
                 <div className="px-6 py-24 mx-auto max-w-7xl sm:py-32 lg:px-8 relative z-10">
                     <div className="text-center">

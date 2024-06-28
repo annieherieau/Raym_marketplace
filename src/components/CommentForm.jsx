@@ -15,9 +15,9 @@ const CommentForm = ({ comment, onSubmit, productId, token }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
+    <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-6 bg-black shadow-md rounded-lg">
       <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">Content:</label>
+        <label className="block text-green-400 text-sm font-bold mb-2">Avis:</label>
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
@@ -31,7 +31,7 @@ const CommentForm = ({ comment, onSubmit, productId, token }) => {
       </div>
       <button
         type="submit"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        className="bg-green-400 hover:bg-green-600 text-gray-900 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       >
         {comment ? 'Update' : 'Create'} Comment
       </button>

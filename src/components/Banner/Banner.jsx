@@ -29,7 +29,7 @@ const Banner = () => {
             <h4>Livraison offerte avec le code :</h4>
             <span className="font-bold text-lg">RAYMFREE</span>
           </div>
-          <a href="#" rel="noreferrer noopener" className="px-5 mt-4 lg:mt-0 py-3 rounded-md border block bg-gray-900 text-white border-black">Je fonce !</a>
+          <a href="#" rel="noreferrer noopener" className="px-5 mt-4 lg:mt-0 py-3 rounded-md border block bg-black text-white border-black">Je fonce !</a>
         </div>
       </div>
     </div>

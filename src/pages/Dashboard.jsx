@@ -51,7 +51,7 @@ export default function Dashboard() {
     <div className="h-full bg-gray-100">
       <div className="flex">
         {/* Sidebar */}
-        <aside className="w-64 bg-gray-900 text-white">
+        <aside className="w-64 bg-black text-white">
           <div className="p-6">
             <h1 className="text-2xl font-semibold">Dashboard Admin</h1>
             <p>Bienvenue, {user.email}</p>

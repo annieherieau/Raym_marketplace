@@ -25,6 +25,9 @@ export default {
           500: '#98FB98', 
           600: '#90EE90', 
         },
+        beige: {
+          200: '#ffdfa7',
+        },
       },
     },
   },
@@ -33,3 +36,4 @@ export default {
     forms,
   ],
 }
+

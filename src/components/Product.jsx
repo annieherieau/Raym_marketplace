@@ -38,7 +38,7 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-6 rounded">
       <img
         alt={product.name}
         className="w-full h-100 object-cover"

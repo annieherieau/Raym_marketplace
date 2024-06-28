@@ -1,6 +1,7 @@
 import { useAtom, useAtomValue } from "jotai";
 import { updateCartAtom, userAtom } from "../../app/atoms";
 import { buildRequestOptions } from "../../app/api";
+import { Link } from "react-router-dom";
 
 export default function CartItem({
   item,
@@ -46,7 +47,7 @@ export default function CartItem({
       })
       .catch((error) => console.error("Error:", error));
   };
-  console.log(item);
+
   return (
     <li className="flex py-6">
       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
@@ -61,7 +62,7 @@ export default function CartItem({
         <div>
           <div className="flex justify-between text-base font-medium text-gray-900">
             <h3>
-              <a href={`product/${item.product.id}`}>{item.product.name}</a>
+              <Link to={`${window.location.origin}/product/${item.product.id}`}>{item.product.name}</Link>
               <p className="mt-1 text-sm text-gray-500">
                 {item.product.color.collection}
               </p>
@@ -69,7 +70,11 @@ export default function CartItem({
             <p className="ml-4">{item.price}&nbsp;€</p>
           </div>
         </div>
-
+        {!cart &&(<div className="flex flex-1 items-end justify-between text-sm">
+          <div className="flex items-center">
+            <span className="mr-2">Qté : {item.quantity}</span>
+          </div>{" "}
+        </div>)}
         {cart && (
           <div className="flex flex-1 items-end justify-between text-sm">
             <div className="flex items-center">

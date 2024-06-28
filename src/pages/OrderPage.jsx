@@ -20,6 +20,7 @@ export default function OrderPage() {
   const action = searchParams.get("action");
   const [paid, setPaid] = useState(false);
 
+console.log(orderId);
   // traitement de la requete d'annulation
   const handleCancelResponse = (response) => {
     console.log(response);

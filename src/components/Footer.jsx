@@ -5,14 +5,16 @@ const Footer = () => {
   return (
     <footer className="bg-black text-white mt-auto">
       <div className="container mx-auto px-5 py-6 flex flex-col md:flex-row items-center justify-between">
+        <div className='flex flex-row'>
         <div className="flex items-center justify-center md:justify-start mb-4 md:mb-0 h-20">
           <img src={logo} alt="RAYM Logo" className="w-35 h-10" />
         </div>
-        <p className="text-sm text-gray-400">
-          © 2024 Team RAYM —
+        <p className="text-sm text-gray-400 flex items-center ml-4">
+           © 2024 Team RAYM —
           <Link to="/contact" className="hover:text-white"> Robena / Annie / Yann / Malo —</Link>
           <a href="https://www.thehackingproject.org/" className="text-gray-400 ml-1 hover:text-white" rel="noopener noreferrer" target="_blank">@The Hacking Project</a>
         </p>
+        </div>
         <div className="mt-4 md:mt-0 flex flex-row">
           <Link to="/mentions-legales" className="text-gray-400 text-sm hover:text-white mr-5">
             Mentions légales

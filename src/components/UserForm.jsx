@@ -38,6 +38,7 @@ export default function UserForm({ user, onUpdate }) {
         const responseData = await response.json();
         if (response.status == 200) {
           onUpdate();
+          window.location.reload();
         } else {
           console.log(response);
           setError(`Erreur ${response.status}: ${JSON.stringify(responseData.errors)}`);

@@ -70,44 +70,43 @@ function App() {
         <Menu />
         <NoticeModal />
         <main className="flex-grow">
-          <Routes>
-            {/* ROUTES PUBLIQUES */}
-            <Route path="*" element={<NotFound />} />
-            <Route path="/" element={<Home products={products} />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/password/:action" element={<Password />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/brand" element={<Brand />} />
-            <Route path="/maintenance" element={<Maintenance />} />
-            <Route path="/mentions-legales" element={<LegalMentions />} />
-            <Route path="/configurator" element={<Configurator allProducts={products} />} />
-            <Route path="/shop" element={<Shop products={products} />} />
-            <Route path="/product/:productId" element={<ProductPage />} />
-            
-            {/* ROUTES PRIVÉES */}
-            <Route
-              path="/my_account/*"
-              element={wrapPrivateRoute(<MyAccount />, "my_account", isLoggedIn)}
-            />
-            <Route
-              path="/admin/*"
-              element={wrapPrivateRoute(<Dashboard />, "admin", isLoggedIn)}
-            />
-            <Route path="/products/new" element={<CreateProduct />} />
-            <Route
-              path="/order/:orderId"
-              element={wrapPrivateRoute(<OrderPage />, "my_account", isLoggedIn)}
-            />
-            <Route
-              path="/products/:id/edit"
-              element={wrapPrivateRoute(<EditProduct />, "admin", isLoggedIn)}
-            />
-            <Route
-              path="/products/:productId/comments/:commentId/edit"
-              element={wrapPrivateRoute(<EditComment />, "", isLoggedIn)}
-            />
-          </Routes>
+        <Routes>
+          {/* ROUTES PUBLIQUES */}
+          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<Home products={products} />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/password/:action" element={<Password />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/brand" element={<Brand />} />
+          <Route path="/maintenance" element={<Maintenance />} />
+          <Route path="/mentions-legales" element={<LegalMentions />} />
+          <Route path="/configurator" element={<Configurator allProducts={products} />} />
+          <Route path="/shop" element={<Shop products={products} />} />
+
+          <Route path="/configurateur" element={<Configurator />} />
+          <Route path="/product/:productId" element={<ProductPage />} />
+          <Route path="/shop" element={<Shop />} /> {/* Added route for Shop component */}
+          {/* ROUTES PRIVÉES */}
+          <Route
+            path="/my_account/*"
+            element={wrapPrivateRoute(<MyAccount />, "my_account", isLoggedIn)}
+          />
+          <Route
+            path="/admin/*"
+            element={wrapPrivateRoute(<Dashboard />, "admin", isLoggedIn)}
+          />
+          <Route path="/products/new" element={<CreateProduct />} />
+           <Route
+            path="/order/:orderId"
+            element={wrapPrivateRoute(<OrderPage />, "my_account", isLoggedIn)}
+          />
+          <Route path="/products/:id/edit" element={wrapPrivateRoute(<EditProduct />, "admin", isLoggedIn)} />
+          <Route
+            path="/products/:productId/comments/:commentId/edit"
+            element={wrapPrivateRoute(<EditComment />, "", isLoggedIn)}
+          />
+        </Routes>
         </main>
         <AccessibilityIcon setDarkMode={setIsDarkMode} />
         <footer>

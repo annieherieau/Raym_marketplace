@@ -58,7 +58,7 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
         )}
         <Link
           to={`/product/${product.id}`}
-          className="mt-2 text-indigo-500 inline-flex items-center ml-4"
+          className="text-indigo-500 inline-flex items-center ml-4"
         >
           Voir l'article
         </Link>
@@ -97,5 +97,6 @@ Product.propTypes = {
 };
 
 export default Product;
+
 
 

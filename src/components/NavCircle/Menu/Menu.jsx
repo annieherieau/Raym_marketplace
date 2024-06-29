@@ -288,7 +288,7 @@ const Navbar = () => {
             controls
           >
             <source
-              src="/src/components/NavCircle/Menu/MTB.mp4"
+              src="/src/assets/MTB.mp4"
               type="video/mp4"
             />
           </video>
@@ -327,3 +327,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

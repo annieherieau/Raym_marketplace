@@ -69,9 +69,10 @@ function App() {
 
   return (
     <BrowserRouter>
+    <div className="flex flex-col min-h-screen">
       <Menu /> {/* Utilisation de NavCircle */}
       <NoticeModal />
-      <main>
+      <main className="flex-grow">
         <Routes>
           {/* ROUTES PUBLIQUES */}
           <Route path="*" element={<NotFound />} />
@@ -111,7 +112,10 @@ function App() {
         </Routes>
       </main>
       <AccessibilityIcon />
+      <footer>
       <Footer />
+      </footer>
+      </div>
     </BrowserRouter>
   );
 }

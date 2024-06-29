@@ -8,6 +8,8 @@ import ProductList from "../components/ProductList";
 import CreateProduct from "../components/CreateProduct";
 import OrdersList from "../components/OrdersList";
 import UsersList from "../components/UsersList";
+import CategoriesList from "../components/CategoriesList";
+import ColorsList from "../components/ColorsList";
 import 'tailwindcss/tailwind.css';
 
 export default function Dashboard() {
@@ -82,6 +84,16 @@ export default function Dashboard() {
               >
                 Liste des commandes
               </li>
+              <li
+              className={`p-4 cursor-pointer hover:bg-gray-700 ${activeTab === 'Categories' ? 'bg-gray-700' : ''}`}
+              onClick={() => setActiveTab('Categories')}>
+                Catégories
+              </li>
+              <li
+                className={`p-4 cursor-pointer hover:bg-gray-700 ${activeTab === 'Categories' ? 'bg-gray-700' : ''}`}
+                onClick={() => setActiveTab('Colors')}>
+                  Couleurs
+                </li>
             </ul>
           </nav>
         </aside>
@@ -110,6 +122,18 @@ export default function Dashboard() {
               <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>Liste des commandes</h1>
               <OrdersList />
             </section>
+          )}
+          {activeTab === 'Categories' && (
+            <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
+              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>Catégories</h1>
+              <CategoriesList />
+            </section>
+          )},
+          {activeTab === 'Colors' && (
+               <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
+               <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>Catégories</h1>
+               <ColorsList />
+             </section>
           )}
         </main>
       </div>

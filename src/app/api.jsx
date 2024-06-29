@@ -34,6 +34,10 @@ const endpoints = {
     method: "GET",
     url: `${api_url}/current_user`,
   },
+  delete_user: {
+    method: "DELETE",
+    url: `${api_url}/users/{id}`,
+  },
   // RESSOURCES ENDPOINTS
   index: {
     method: "GET",

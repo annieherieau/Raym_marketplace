@@ -77,7 +77,7 @@ const MaintenanceHero = () => {
                                     <li className="p-2"><strong>6. Vérifier l'usure et la tension de la chaîne</strong> - Une chaîne excessivement usée peut réduire la durée de vie des composants d'une transmission onéreuse comme la cassette et le plateau. Utilisez un outil de mesure de chaîne pour vérifier l'usure et la remplacer si besoin.</li>
                                     <li className="p-2"><strong>7. Nettoyer les contacts</strong> - Retirez la batterie de votre vélo (si possible) et utilisez un spray de nettoyage spécifique pour les connectiques. Essuyez pour nettoyer.</li>
                                 </ul>
-                                <p className="mt-4 text-lg text-gray-900">Remarque : Du fait de leur poids et vitesse supérieurs, les ebikes ont tendance à voir leurs composants et pneus s'user plus vite. Attendez-vous à réduire les intervalles entre les entretiens pour de meilleures performances. Partez donc plutôt sur des intervalles de 3 mois, plutôt que 6.</p>
+                                <p className="mt-4 text-lg text-gray-100">Remarque : Du fait de leur poids et vitesse supérieurs, les ebikes ont tendance à voir leurs composants et pneus s'user plus vite. Attendez-vous à réduire les intervalles entre les entretiens pour de meilleures performances. Partez donc plutôt sur des intervalles de 3 mois, plutôt que 6.</p>
                             </div>
                         </div>
 

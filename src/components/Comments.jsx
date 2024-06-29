@@ -1,8 +1,9 @@
+// Comments.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { buildRequestOptions } from '../app/api';
-import CreateComment from '../pages/CreateComment'; // Assure-toi que le chemin est correct
-import StarRating from '../components/StarRating'; // Assure-toi que le chemin est correct
+import CreateComment from '../pages/CreateComment';
+import StarRating from '../components/StarRating';
 import { userAtom, isAuthAtom } from "../app/atoms";
 import { useAtomValue } from "jotai";
 
@@ -15,22 +16,22 @@ const Comments = ({ productId, token }) => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const fetchComments = async () => {
-    const { url, options } = buildRequestOptions('products', 'fetch_comments', { id: productId });
-
-    try {
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error('Failed to fetch comments');
-      }
-      const data = await response.json();
-      setComments(data);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
   useEffect(() => {
+    const fetchComments = async () => {
+      const { url, options } = buildRequestOptions('products', 'fetch_comments', { id: productId });
+
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error('Failed to fetch comments');
+        }
+        const data = await response.json();
+        setComments(data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
     fetchComments();
   }, [productId]);
 
@@ -41,14 +42,10 @@ const Comments = ({ productId, token }) => {
         return;
       }
 
-      try {
-        const response = await fetch("http://127.0.0.1:3000/admin_check", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        });
+      const { url, options } = buildRequestOptions(null, 'admin_check', { token: user.token });
 
+      try {
+        const response = await fetch(url, options);
         if (!response.ok) {
           throw new Error("Failed to check admin status");
         }
@@ -128,7 +125,7 @@ const Comments = ({ productId, token }) => {
       </ul>
       {isLoggedIn && (
         <div className="mt-6">
-          <CreateComment productId={productId} token={token} onCommentCreated={fetchComments} />
+          <CreateComment productId={productId} token={token} onCommentCreated={() => fetchComments(productId)} />
         </div>
       )}
     </div>

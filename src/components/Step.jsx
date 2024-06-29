@@ -2,7 +2,9 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faCartArrowDown, faCreditCard, faHandshake } from '@fortawesome/free-solid-svg-icons';
 
+
 const Step = () => {
+  const isDarkMode = localStorage.getItem('darkMode') === 'true';
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto flex flex-wrap">
@@ -15,8 +17,8 @@ const Step = () => {
             <div className="flex-shrink-0 w-24 h-24 bg-green-100 text-green-500 rounded-full inline-flex items-center justify-center">
               <FontAwesomeIcon icon={faHeart} className="w-12 h-12" />
             </div>
-            <div className="flex-grow sm:pl-6 mt-6 sm:mt-0">
-              <h2 className="font-medium title-font text-gray-900 mb-1 text-xl">Choisissez vos articles</h2>
+            <div className={`flex-grow sm:pl-6 mt-6 sm:mt-0 ${isDarkMode ? 'text-gray-200' : 'text-gray-900'}`}>
+              <h2 className="font-medium title-font mb-1 text-xl">Choisissez vos articles</h2>
               <p className="leading-relaxed">Parcourez notre sélection de vélos et d'accessoires haut de gamme et ajoutez vos articles préférés à votre panier.</p>
             </div>
           </div>
@@ -30,8 +32,8 @@ const Step = () => {
             <div className="flex-shrink-0 w-24 h-24 bg-green-100 text-green-500 rounded-full inline-flex items-center justify-center">
               <FontAwesomeIcon icon={faCartArrowDown} className="w-12 h-12" />
             </div>
-            <div className="flex-grow sm:pl-6 mt-6 sm:mt-0">
-              <h2 className="font-medium title-font text-gray-900 mb-1 text-xl">Validez votre panier</h2>
+            <div className={`flex-grow sm:pl-6 mt-6 sm:mt-0 ${isDarkMode ? 'text-gray-200' : 'text-gray-900'}`}>
+              <h2 className="font-medium title-font mb-1 text-xl">Validez votre panier</h2>
               <p className="leading-relaxed">Vérifiez les articles sélectionnés, ajustez les quantités si nécessaire et confirmez votre panier pour passer à l'étape suivante.</p>
             </div>
           </div>
@@ -45,8 +47,8 @@ const Step = () => {
             <div className="flex-shrink-0 w-24 h-24 bg-green-100 text-green-500 rounded-full inline-flex items-center justify-center">
               <FontAwesomeIcon icon={faCreditCard} className="w-12 h-12" />
             </div>
-            <div className="flex-grow sm:pl-6 mt-6 sm:mt-0">
-              <h2 className="font-medium title-font text-gray-900 mb-1 text-xl">Payez votre commande</h2>
+            <div className={`flex-grow sm:pl-6 mt-6 sm:mt-0 ${isDarkMode ? 'text-gray-200' : 'text-gray-900'}`}>
+              <h2 className="font-medium title-font mb-1 text-xl">Payez votre commande</h2>
               <p className="leading-relaxed">Renseignez vos informations personnelles et de paiement pour finaliser votre achat en toute sécurité.</p>
             </div>
           </div>
@@ -60,8 +62,8 @@ const Step = () => {
             <div className="flex-shrink-0 w-24 h-24 bg-green-100 text-green-500 rounded-full inline-flex items-center justify-center">
               <FontAwesomeIcon icon={faHandshake} className="w-12 h-12" />
             </div>
-            <div className="flex-grow sm:pl-6 mt-6 sm:mt-0">
-              <h2 className="font-medium title-font text-gray-900 mb-1 text-xl">Récuperez vos articles</h2>
+            <div className={`flex-grow sm:pl-6 mt-6 sm:mt-0 ${isDarkMode ? 'text-gray-200' : 'text-gray-900'}`}>
+              <h2 className="font-medium title-font mb-1 text-xl">Récuperez vos articles</h2>
               <p className="leading-relaxed">Rendez-vous dans notre magasin pour une remise en main propre incluant des réglages personnalisés et des conseils d'entretien.</p>
             </div>
           </div>

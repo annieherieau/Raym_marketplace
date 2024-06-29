@@ -5,9 +5,7 @@ import { userAtom } from '../app/atoms';
 import { buildRequestOptions } from '../app/api';
 import CommentForm from '../components/CommentForm';
 
-const EditComment = () => {
-  const { productId, commentId } = useParams();
-  const { token } = useAtomValue(userAtom);
+const EditComment = ({ productId, commentId, token, onCancel }) => {
   const [comment, setComment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -58,7 +56,15 @@ const EditComment = () => {
   return (
     <div>
       <h2>Edit Comment</h2>
-      {comment && <CommentForm comment={comment} onSubmit={handleSubmit} productId={Number(productId)} token={token} />}
+      {comment && (
+        <CommentForm
+          comment={comment}
+          onSubmit={handleSubmit}
+          productId={Number(productId)}
+          token={token}
+          onCancel={onCancel}
+        />
+      )}
     </div>
   );
 };

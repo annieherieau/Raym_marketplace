@@ -1,8 +1,8 @@
-// Comments.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { buildRequestOptions } from '../app/api';
 import CreateComment from '../pages/CreateComment';
+import EditComment from '../pages/EditComment';
 import StarRating from '../components/StarRating';
 import { userAtom, isAuthAtom } from "../app/atoms";
 import { useAtomValue } from "jotai";
@@ -14,24 +14,25 @@ const Comments = ({ productId, token }) => {
   const [error, setError] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [editCommentId, setEditCommentId] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      const { url, options } = buildRequestOptions('products', 'fetch_comments', { id: productId });
+  const fetchComments = async () => {
+    const { url, options } = buildRequestOptions('products', 'fetch_comments', { id: productId });
 
-      try {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-          throw new Error('Failed to fetch comments');
-        }
-        const data = await response.json();
-        setComments(data);
-      } catch (error) {
-        setError(error.message);
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error('Failed to fetch comments');
       }
-    };
+      const data = await response.json();
+      setComments(data);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
+  useEffect(() => {
     fetchComments();
   }, [productId]);
 
@@ -80,8 +81,29 @@ const Comments = ({ productId, token }) => {
   };
 
   const handleEditClick = (commentId) => {
-    navigate(`/products/${productId}/comments/${commentId}/edit`);
+    setEditCommentId(commentId);
   };
+
+  const handleEditSubmit = async (id, commentData) => {
+    const { url, options } = buildRequestOptions('comments', 'update', {
+      id,
+      body: commentData,
+      token,
+    });
+
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error('Failed to edit comment');
+      }
+      await fetchComments();
+      setEditCommentId(null);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const userHasCommented = comments.some(comment => comment.user_id === user.id);
 
   if (loading) {
     return <div className="text-center py-6">Loading...</div>;
@@ -97,35 +119,46 @@ const Comments = ({ productId, token }) => {
       <ul className="space-y-4">
         {comments.map(comment => (
           <li key={comment.id} className="border-b pb-4">
-            <p className="text-gray-100">{comment.content}</p>
-            <StarRating rating={comment.rating} onRatingChange={() => {}} />
-            {comment.user && <p className="text-gray-100">Par : {comment.user.email}</p>}
-            {isLoggedIn && (
-              <div className="mt-2 space-x-2">
-                {comment.user_id === user.id && (
-                  <button
-                    onClick={() => handleEditClick(comment.id)}
-                    className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded"
-                  >
-                    Éditer
-                  </button>
+            {editCommentId === comment.id ? (
+              <EditComment
+                productId={productId}
+                commentId={comment.id}
+                token={token}
+                onCancel={() => setEditCommentId(null)}
+              />
+            ) : (
+              <>
+                <p className="text-gray-100">{comment.content}</p>
+                <StarRating rating={comment.rating} onRatingChange={() => {}} />
+                {comment.user && <p className="text-gray-100">Par : {comment.user.email}</p>}
+                {isLoggedIn && (
+                  <div className="mt-2 space-x-2">
+                    {comment.user_id === user.id && (
+                      <button
+                        onClick={() => handleEditClick(comment.id)}
+                        className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded"
+                      >
+                        Éditer
+                      </button>
+                    )}
+                    {(comment.user_id === user.id || isAdmin) && (
+                      <button
+                        onClick={() => handleDelete(comment.id)}
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                      >
+                        Supprimer
+                      </button>
+                    )}
+                  </div>
                 )}
-                {(comment.user_id === user.id || isAdmin) && (
-                  <button
-                    onClick={() => handleDelete(comment.id)}
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                  >
-                    Supprimer
-                  </button>
-                )}
-              </div>
+              </>
             )}
           </li>
         ))}
       </ul>
-      {isLoggedIn && (
+      {isLoggedIn && !userHasCommented && (
         <div className="mt-6">
-          <CreateComment productId={productId} token={token} onCommentCreated={() => fetchComments(productId)} />
+          <CreateComment productId={productId} token={token} onCommentCreated={fetchComments} />
         </div>
       )}
     </div>

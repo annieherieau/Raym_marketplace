@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../index.css';
 
 const AccessibilityPanel = ({
@@ -11,12 +11,18 @@ const AccessibilityPanel = ({
   decreaseTextSize,
 }) => {
   const [activeTab, setActiveTab] = useState('general');
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const darkModeSetting = localStorage.getItem('darkMode') === 'true';
+    setIsDarkMode(darkModeSetting);
+  }, []);
 
   const renderGeneralSettings = () => (
     <div className="space-y-2">
       <button
         onClick={toggleDarkMode}
-        className="w-full py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+        className={`w-full py-2 px-4 ${isDarkMode ? 'bg-gray-700' : 'bg-blue-500'} text-white rounded-lg hover:bg-blue-600`}
       >
         Mode sombre
       </button>
@@ -77,11 +83,11 @@ const AccessibilityPanel = ({
   );
 
   return (
-    <div className="fixed bottom-16 left-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg z-50 w-64 accessibility-panel">
+    <div className={`fixed bottom-16 left-4 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-4 rounded-lg shadow-lg z-50 w-64 accessibility-panel`}>
       <button className="absolute top-2 right-2 text-red-500 close-btn" onClick={onClose}>
         X
       </button>
-      <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
+      <h2 className={`text-lg font-semibold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
         Paramètres d'accessibilité
       </h2>
       <div className="flex mb-4">

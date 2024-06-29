@@ -7,7 +7,7 @@ import MyAccount from "./pages/MyAccount";
 import Dashboard from "./pages/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAtom, useAtomValue } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { isAuthAtom, userAtom } from "./app/atoms";
 import EditProduct from "./components/EditProduct";
 import ProductPage from "./pages/ProductPage";
@@ -22,7 +22,6 @@ import LegalMentions from "./pages/LegalMentions";
 import Brand from "./pages/Brand/Brand";
 import Maintenance from "./pages/Maintenance/Maintenance";
 import Configurator from "./pages/Configurator/Configurator";
-import { useState } from "react";
 import { loadCookie } from "./app/utils";
 import { unknownUser } from "./app/atoms";
 import CreateProduct from "./components/CreateProduct";
@@ -34,13 +33,19 @@ const api_url = import.meta.env.VITE_BACK_API_URL;
 function App() {
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [user, setUser] = useAtom(userAtom);
+  const initializeDarkMode = () => {
+    const darkMode = localStorage.getItem('darkMode');
+    if (darkMode === null) {
+      const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      localStorage.setItem('darkMode', prefersDarkMode);
+    }
+  };
+  const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     setUser(loadCookie() ? loadCookie() : unknownUser);
   }, [setUser]);
-
-  // Récupérer les produits depuis l'API
-  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     fetch(`${api_url}/products`)
@@ -58,7 +63,11 @@ function App() {
       });
   }, [isLoggedIn]);
 
-  // Routes pour user connecté
+  useEffect(() => {
+    initializeDarkMode();
+    setIsDarkMode(localStorage.getItem('darkMode') === 'true');
+  }, []);
+
   function wrapPrivateRoute(element, redirect, isAuth) {
     return (
       <PrivateRoute redirect={redirect} isAuth={isAuth}>
@@ -69,10 +78,10 @@ function App() {
 
   return (
     <BrowserRouter>
-    <div className="flex flex-col min-h-screen">
-      <Menu /> {/* Utilisation de NavCircle */}
-      <NoticeModal />
-      <main className="flex-grow">
+      <div className={`flex flex-col min-h-screen ${isDarkMode ? 'dark-mode' : ''}`}>
+        <Menu />
+        <NoticeModal />
+        <main className="flex-grow">
         <Routes>
           {/* ROUTES PUBLIQUES */}
           <Route path="*" element={<NotFound />} />
@@ -110,11 +119,11 @@ function App() {
             element={wrapPrivateRoute(<EditComment />, "", isLoggedIn)}
           />
         </Routes>
-      </main>
-      <AccessibilityIcon />
-      <footer>
-      <Footer />
-      </footer>
+        </main>
+        <AccessibilityIcon setDarkMode={setIsDarkMode} />
+        <footer>
+          <Footer />
+        </footer>
       </div>
     </BrowserRouter>
   );

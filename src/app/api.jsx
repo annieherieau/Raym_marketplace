@@ -104,6 +104,10 @@ const endpoints = {
     method: "GET",
     url: `${api_url}/categories?display=configurator`,
   },
+  admin_check: {
+    method: "GET",
+    url: `${api_url}/admin_check`,
+  },
 };
 
 // création des paramètres de la requête: options et url

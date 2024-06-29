@@ -33,6 +33,13 @@ const api_url = import.meta.env.VITE_BACK_API_URL;
 function App() {
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [user, setUser] = useAtom(userAtom);
+  const initializeDarkMode = () => {
+    const darkMode = localStorage.getItem('darkMode');
+    if (darkMode === null) {
+      const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      localStorage.setItem('darkMode', prefersDarkMode);
+    }
+  };
   const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('darkMode') === 'true');
   const [products, setProducts] = useState([]);
 
@@ -55,6 +62,11 @@ function App() {
         console.error("Error fetching products:", error);
       });
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    initializeDarkMode();
+    setIsDarkMode(localStorage.getItem('darkMode') === 'true');
+  }, []);
 
   function wrapPrivateRoute(element, redirect, isAuth) {
     return (

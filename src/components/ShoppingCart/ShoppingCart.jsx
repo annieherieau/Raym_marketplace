@@ -25,7 +25,10 @@ export default function ShoppingCart({
   const [cartItems, setCartItems] = useState([]);
   const [error, setError] = useState(null);
   const [cartAmount, setCartAmount] = useState(0);
-  const [updateCart, setUpdateCart] =useAtom(updateCartAtom)
+  const [updateCart, setUpdateCart] = useAtom(updateCartAtom);
+
+  // Récupération du mode sombre depuis le localStorage
+  const isDarkMode = localStorage.getItem('darkMode') === 'true';
 
   const fetchCart = async () => {
     const { url, options } = buildRequestOptions("cart", "cart", {
@@ -58,20 +61,17 @@ export default function ShoppingCart({
   useEffect(() => {
     if (token) {
       fetchCart();
-      setUpdateCart(false)
+      setUpdateCart(false);
     }
   }, [token, updateCart]);
 
-  // const handleActionComplete = () => {
-  //   fetchCart();
-  // };
-
   const handleResponse = (response, action) => {
-    if (action == "validate") {
+    if (action === "validate") {
       onClose();
       window.location.replace(`/order/${response.order.id}`);
     }
   };
+
   const handleUpdateCart = (event) => {
     event.preventDefault();
     const action = event.target.id;
@@ -92,6 +92,7 @@ export default function ShoppingCart({
   if (error) {
     return <div>{error}</div>;
   }
+
   return (
     <Transition show={isOpen}>
       <Dialog className="relative z-50" onClose={onClose}>
@@ -117,20 +118,19 @@ export default function ShoppingCart({
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <DialogPanel className="pointer-events-auto w-screen max-w-md rounded-l-2xl">
-                  <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                <DialogPanel className={`pointer-events-auto w-screen max-w-md rounded-l-2xl ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+                  <div className="flex h-full flex-col overflow-y-scroll shadow-xl">
                     <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                       <div className="flex items-start justify-between">
-                        <DialogTitle className="text-3xl font-bold text-gray-900">
+                        <DialogTitle className="text-3xl font-bold">
                           Votre Panier
                         </DialogTitle>
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
-                            className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                            className="relative -m-2 p-2 hover:text-gray-500"
                             onClick={onClose}
                           >
-                            <span className="absolute -inset-0.5" />
                             <span className="sr-only">Fermer le panier</span>
                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                           </button>
@@ -152,7 +152,6 @@ export default function ShoppingCart({
                                   onUpdateQuantity={(quantity) =>
                                     onUpdateItem(item.id, quantity)
                                   }
-                                  // onActionComplete={handleActionComplete}
                                 />
                               ))}
                             </ul>
@@ -181,11 +180,11 @@ export default function ShoppingCart({
                     </div>
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                      <div className="flex justify-between text-base font-medium text-gray-900">
+                      <div className="flex justify-between text-base font-medium">
                         <p>TOTAL TTC</p>
                         <p>{cartAmount}&nbsp;€</p>
                       </div>
-                      <p className="mt-0.5 text-sm text-gray-500">
+                      <p className="mt-0.5 text-sm">
                         Vos produits seront disponibles en magasin sous 24h.
                       </p>
                       {cartAmount && (
@@ -194,13 +193,13 @@ export default function ShoppingCart({
                             href="#"
                             onClick={handleUpdateCart}
                             id="validate"
-                            className="flex items-center justify-center rounded-md border border-transparent bg-green-300 px-6 py-3 text-base font-bold text-black shadow-sm hover:bg-green-400"
+                            className="flex items-center justify-center rounded-md border border-transparent bg-green-300 px-6 py-3 text-base font-bold shadow-sm hover:bg-green-400"
                           >
                             Valider mon Panier
                           </a>
                         </div>
                       )}
-                      <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+                      <div className="mt-6 flex justify-center text-center text-sm">
                         <p>
                           ou{" "}
                           <button
@@ -225,5 +224,9 @@ export default function ShoppingCart({
   );
 }
 
-
-
+ShoppingCart.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onRemoveItem: PropTypes.func,
+  onUpdateItem: PropTypes.func,
+};

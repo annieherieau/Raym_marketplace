@@ -25,6 +25,7 @@ const Navbar = () => {
   const userIconRef = useRef(null);
   const closeTimeoutRef = useRef(null);
   const location = useLocation();
+  const isDarkMode = localStorage.getItem('darkMode') === 'true';
 
   // vérification du statut admin
   useEffect(() => {
@@ -183,29 +184,33 @@ const Navbar = () => {
       </header>
       {/* DROPDOWN MENU */}
       <div
-        className={`dropdown-menu ${isDropdownOpen ? "open" : ""}`}
+        className={`dropdown-menu ${isDropdownOpen ? "open" : ""} ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
         onMouseEnter={handleDropdownHover}
         onMouseLeave={handleDropdownLeave}
       >
         <ul>
           {!isLoggedIn && (
             <>
-              <li className="header__menu-item">
+              <li className='header__menu-item' >
                 <a href="/login" onClick={(e) => handleMenuItemClick(e, "/login")}>
                   <FontAwesomeIcon
                     icon={faArrowRightToBracket}
-                    className="icon-spacing"
+                    className={`${isDarkMode ? 'text-white' : 'text-black'} icon-spacing`}
                   />{" "}
-                  Connexion
+                 <span className={isDarkMode ? 'text-white' : 'text-black'}>
+                      Connexion
+                  </span>
                 </a>
               </li>
               <li className="header__menu-item">
                 <a href="/register" onClick={(e) => handleMenuItemClick(e, "/register")}>
                   <FontAwesomeIcon
                     icon={faArrowRightToBracket}
-                    className="icon-spacing"
+                    className={`${isDarkMode ? 'text-white' : 'text-black'} icon-spacing`}
                   />{" "}
-                  Inscription
+                      <span className={isDarkMode ? 'text-white' : 'text-black'}>
+                        Inscription
+                      </span>
                 </a>
               </li>
             </>
@@ -214,16 +219,20 @@ const Navbar = () => {
             <>
               <li className="header__menu-item mt-10 mb-8 border-b border-gray-300">
                 <a>
-                  <span className="font-bold text-xl">{user.email}</span>
+                <span className={`font-bold text-xl ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                    {user.email}
+                </span>
                 </a>
               </li>
               <li className="header__menu-item">
                 <a href="/my_account" onClick={(e) => handleMenuItemClick(e, "/my_account")}>
                   <FontAwesomeIcon
                     icon={faAddressCard}
-                    className="icon-spacing"
+                    className={`${isDarkMode ? 'text-white' : 'text-black'} icon-spacing`}
                   />{" "}
-                  Mon compte
+                  <span className={isDarkMode ? 'text-white' : 'text-black'}>
+                    Mon Compte
+                  </span>
                 </a>
               </li>
             </>
@@ -233,9 +242,11 @@ const Navbar = () => {
               <a href="/admin" onClick={(e) => handleMenuItemClick(e, "/admin")}>
                 <FontAwesomeIcon
                   icon={faAddressCard}
-                  className="icon-spacing"
+                  className={`${isDarkMode ? 'text-white' : 'text-black'} icon-spacing`}
                 />{" "}
-                Dashboard
+               <span className={isDarkMode ? 'text-white' : 'text-black'}>
+                  Dashboard
+                </span>
               </a>
             </li>
           )}
@@ -245,9 +256,11 @@ const Navbar = () => {
               <a href="#" onClick={handleLogout}>
                 <FontAwesomeIcon
                   icon={faArrowRightToBracket}
-                  className="inverted-icon icon-spacing"
+                  className={`${isDarkMode ? 'text-white' : 'text-black'} reverted-icon icon-spacing`}
                 />{" "}
-                Deconnexion
+                <span className={isDarkMode ? 'text-white' : 'text-black'}>
+                  Deconnexion
+                </span>
               </a>
             </li>
           )}

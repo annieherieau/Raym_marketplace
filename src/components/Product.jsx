@@ -1,10 +1,9 @@
 import PropTypes from "prop-types";
 import { useAtom, useAtomValue } from "jotai";
 import { userAtom, isAuthAtom, updateCartAtom } from "../app/atoms";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { buildRequestOptions } from "../app/api";
-import CartButton from "./CartButton/CartButton"; // Chemin relatif correct
+import CartButton from "./CartButton/CartButton";
 import { useRef } from "react";
 
 const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
@@ -12,6 +11,9 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
   const isLoggedIn = useAtomValue(isAuthAtom);
   const navigate = useNavigate();
   const [, setUpdateCart] = useAtom(updateCartAtom);
+  
+  // Récupérer l'état du mode sombre depuis le localStorage
+  const isDarkMode = localStorage.getItem('darkMode') === 'true';
 
   const handleAddToCart = () => {
     const { url, options } = buildRequestOptions("cart_items", "create", {
@@ -38,17 +40,17 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
   };
 
   return (
-    <div className="p-6 rounded">
+    <div className={`p-6 rounded ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
       <img
         alt={product.name}
         className="w-full h-100 object-cover"
         src={product.photo_url || "https://dummyimage.com/420x260"}
       />
       <div className="p-6">
-        <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
+        <h3 className={`text-xs tracking-widest title-font mb-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
           {product.category.name || "CATEGORY"}
         </h3>
-        <h2 className="text-gray-900 title-font text-lg font-medium">
+        <h2 className={`title-font text-lg font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
           {product.name}
         </h2>
         <p className="mt-1">{product.price ? `$${product.price}` : "$0.00"}</p>
@@ -58,7 +60,7 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
         )}
         <Link
           to={`/product/${product.id}`}
-          className="text-indigo-500 inline-flex items-center ml-4"
+          className={`inline-flex items-center ml-4 ${isDarkMode ? 'text-indigo-400' : 'text-indigo-500'}`}
         >
           Voir l'article
         </Link>
@@ -66,13 +68,13 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
           <div className="mt-2">
             <button
               onClick={handleUpdateClick}
-              className="text-white bg-yellow-500 border-0 py-2 px-4 focus:outline-none hover:bg-yellow-600 rounded mr-2"
+              className={`text-white border-0 py-2 px-4 focus:outline-none rounded mr-2 ${isDarkMode ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-yellow-500 hover:bg-yellow-600'}`}
             >
               Modifier
             </button>
             <button
               onClick={handleDeleteClick}
-              className="text-white bg-red-500 border-0 py-2 px-4 focus:outline-none hover:bg-red-600 rounded"
+              className={`text-white border-0 py-2 px-4 focus:outline-none rounded ${isDarkMode ? 'bg-red-600 hover:bg-red-700' : 'bg-red-500 hover:bg-red-600'}`}
             >
               Supprimer
             </button>
@@ -90,6 +92,9 @@ Product.propTypes = {
     id: PropTypes.number.isRequired,
     photo_url: PropTypes.string,
     price: PropTypes.number,
+    category: PropTypes.shape({
+      name: PropTypes.string,
+    }),
   }).isRequired,
   isAdmin: PropTypes.bool.isRequired,
   onUpdateProduct: PropTypes.func,
@@ -97,6 +102,3 @@ Product.propTypes = {
 };
 
 export default Product;
-
-
-

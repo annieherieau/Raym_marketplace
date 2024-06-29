@@ -17,6 +17,9 @@ const ProductList = () => {
   const [selectedColor, setSelectedColor] = useState("all");
   const [sortOrder, setSortOrder] = useState("desc");
 
+  // Récupération du mode sombre depuis le localStorage
+  const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
   useEffect(() => {
     const fetchAdminStatus = async () => {
       if (!isLoggedIn) {
@@ -165,7 +168,7 @@ const ProductList = () => {
   }
 
   return (
-    <section className="text-gray-600 body-font mr-8 ml-8 mb-8" style={{ borderRadius: '20px' }}>
+    <section className={`text-gray-600 body-font mr-8 ml-8 mb-8 ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`} style={{ borderRadius: '20px' }}>
       <div className="w-full bg-black px-8 py-10 mx-auto flex flex-wrap">
         <div className="flex w-full mb-10 flex-wrap">
           <h1 className="sm:text-4xl text-3xl font-bold title-font text-palegreen-500 lg:w-1/3 lg:mb-0">Nos best sellers :</h1>
@@ -200,7 +203,7 @@ const ProductList = () => {
         <div className="flex flex-wrap md:-m-2 -m-1" style={{ borderRadius: '20px' }}>
           <div className="flex flex-wrap w-1/2">
             {sortedProducts.slice(0, 3).map((product) => (
-              <div key={product.id} className="md:p-2 p-1 w-1/2 bg-white border border-black" style={{ borderWidth: '8px', borderRadius: '20px' }}>
+              <div key={product.id} className={`md:p-2 p-1 w-1/2 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
                 <Product
                   product={product}
                   isAdmin={isAdmin}
@@ -212,7 +215,7 @@ const ProductList = () => {
           </div>
           <div className="flex flex-wrap w-1/2">
             {sortedProducts.slice(3, 6).map((product) => (
-              <div key={product.id} className="md:p-2 p-1 w-1/2 bg-white border border-black" style={{ borderWidth: '8px', borderRadius: '20px' }}>
+              <div key={product.id} className={`md:p-2 p-1 w-1/2 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
                 <Product
                   product={product}
                   isAdmin={isAdmin}

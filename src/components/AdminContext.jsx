@@ -2,6 +2,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { useAtomValue } from 'jotai';
 import { userAtom, isAuthAtom } from '../app/atoms';
+const api_url = import.meta.env.VITE_BACK_API_URL;
 
 export const AdminContext = createContext();
 
@@ -25,7 +26,7 @@ export const AdminProvider = ({ children }) => {
 
       try {
         console.log('Fetching admin status...');
-        const response = await fetch('http://127.0.0.1:3000/admin_check', {
+        const response = await fetch(`${api_url}/categories` , {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${user.token}`

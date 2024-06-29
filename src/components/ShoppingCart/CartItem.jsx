@@ -12,6 +12,9 @@ export default function CartItem({
   const { token } = useAtomValue(userAtom);
   const [, setUpdateCart] = useAtom(updateCartAtom);
 
+  // Récupération du mode sombre depuis le localStorage
+  const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
   const handleRemove = () => {
     const { url, options } = buildRequestOptions("cart_items", "delete", {
       id: item.id,
@@ -60,21 +63,25 @@ export default function CartItem({
 
       <div className="ml-4 flex flex-1 flex-col">
         <div>
-          <div className="flex justify-between text-base font-medium text-gray-900">
+          <div className={`flex justify-between text-base font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
             <h3>
-              <Link to={`${window.location.origin}/product/${item.product.id}`}>{item.product.name}</Link>
-              <p className="mt-1 text-sm text-gray-500">
+              <Link to={`/product/${item.product.id}`} className={isDarkMode ? 'text-white' : 'text-indigo-600'}>
+                {item.product.name}
+              </Link>
+              <p className={`mt-1 text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                 {item.product.color.collection}
               </p>
             </h3>
             <p className="ml-4">{item.price}&nbsp;€</p>
           </div>
         </div>
-        {!cart &&(<div className="flex flex-1 items-end justify-between text-sm">
-          <div className="flex items-center">
-            <span className="mr-2">Qté : {item.quantity}</span>
-          </div>{" "}
-        </div>)}
+        {!cart && (
+          <div className="flex flex-1 items-end justify-between text-sm">
+            <div className="flex items-center">
+              <span className="mr-2">Qté : {item.quantity}</span>
+            </div>
+          </div>
+        )}
         {cart && (
           <div className="flex flex-1 items-end justify-between text-sm">
             <div className="flex items-center">
@@ -84,7 +91,7 @@ export default function CartItem({
                 min="1"
                 value={item.quantity}
                 onChange={handleChangeQuantity}
-                className="w-16"
+                className={`w-16 ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}
                 style={{
                   textAlign: "left",
                   paddingLeft: "0",
@@ -101,7 +108,7 @@ export default function CartItem({
               <button
                 type="button"
                 onClick={handleRemove}
-                className="font-medium text-indigo-600 hover:text-indigo-500"
+                className={`font-medium ${isDarkMode ? 'text-red-400' : 'text-indigo-600'} hover:text-indigo-500`}
               >
                 Supprimer
               </button>

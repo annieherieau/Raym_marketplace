@@ -90,7 +90,7 @@ export default function Dashboard() {
                 Catégories
               </li>
               <li
-                className={`p-4 cursor-pointer hover:bg-gray-700 ${activeTab === 'Categories' ? 'bg-gray-700' : ''}`}
+                className={`p-4 cursor-pointer hover:bg-gray-700 ${activeTab === 'Colors' ? 'bg-gray-700' : ''}`}
                 onClick={() => setActiveTab('Colors')}>
                   Couleurs
                 </li>
@@ -128,10 +128,10 @@ export default function Dashboard() {
               <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>Catégories</h1>
               <CategoriesList />
             </section>
-          )},
+          )}
           {activeTab === 'Colors' && (
                <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
-               <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>Catégories</h1>
+               <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{fontFamily: 'Chakra petch'}}>Couleurs</h1>
                <ColorsList />
              </section>
           )}

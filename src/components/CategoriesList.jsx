@@ -17,6 +17,7 @@ const CategoriesList = () => {
     clothing: false,
   });
   const [categoryToDelete, setCategoryToDelete] = useState(null);
+  const isDarkMode = localStorage.getItem('darkMode') === 'true';
 
   useEffect(() => {
     fetchCategories();
@@ -125,22 +126,22 @@ const CategoriesList = () => {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h3 className="text-2xl font-semibold mb-4 text-black">Liste des Catégories</h3>
+    <div className={`max-w-3xl mx-auto p-6 shadow-md rounded-lg ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+      <h3 className="text-2xl font-semibold mb-4">Liste des Catégories</h3>
       <form onSubmit={handleSubmit} className="mb-6">
         <div className="mb-4">
-          <label className="block text-black text-sm font-bold mb-2">Nom:</label>
+          <label className="block text-sm font-bold mb-2">Nom:</label>
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
             required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${isDarkMode ? 'bg-gray-700 text-white' : 'text-black'}`}
           />
         </div>
         <div className="mb-4">
-          <label className="block text-black text-sm font-bold mb-2">Configurator:</label>
+          <label className="block text-sm font-bold mb-2">Configurator:</label>
           <input
             type="checkbox"
             name="configurator"
@@ -150,7 +151,7 @@ const CategoriesList = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-black text-sm font-bold mb-2">Bike:</label>
+          <label className="block text-sm font-bold mb-2">Bike:</label>
           <input
             type="checkbox"
             name="bike"
@@ -160,7 +161,7 @@ const CategoriesList = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-black text-sm font-bold mb-2">Clothing:</label>
+          <label className="block text-sm font-bold mb-2">Clothing:</label>
           <input
             type="checkbox"
             name="clothing"
@@ -177,10 +178,10 @@ const CategoriesList = () => {
       <ul className="space-y-4">
         {categories.map(category => (
           <li key={category.id} className="border-b pb-4">
-            <h4 className="text-xl text-black">{category.name}</h4>
-            <p className="text-black">Configurator: {category.configurator ? 'Oui' : 'Non'}</p>
-            <p className="text-black">Bike: {category.bike ? 'Oui' : 'Non'}</p>
-            <p className="text-black">Clothing: {category.clothing ? 'Oui' : 'Non'}</p>
+            <h4 className="text-xl">{category.name}</h4>
+            <p>Configurator: {category.configurator ? 'Oui' : 'Non'}</p>
+            <p>Bike: {category.bike ? 'Oui' : 'Non'}</p>
+            <p>Clothing: {category.clothing ? 'Oui' : 'Non'}</p>
             <div className="mt-2 space-x-2">
               <button
                 onClick={() => handleEdit(category)}
@@ -200,7 +201,7 @@ const CategoriesList = () => {
       </ul>
       {categoryToDelete && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+          <div className={`p-6 rounded-lg shadow-lg ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
             <p className="mb-4">Êtes-vous sûr de vouloir supprimer la catégorie : {categoryToDelete.name}, et tous les produits qui lui sont associés?</p>
             <div className="flex justify-end">
               <button

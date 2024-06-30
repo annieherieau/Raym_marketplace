@@ -316,9 +316,9 @@ video {
 
 /* ###### Navbar ###### */
 
-.header__content {
+header__content {
   display: flex;
-  align-items: center; 
+  align-items: center;
   justify-content: space-between;
   width: 100%;
 }
@@ -327,16 +327,16 @@ video {
   position: relative;
   display: flex;
   align-items: center;
-  overflow: visible; 
+  overflow: visible;
 }
 
 .cart-icon {
-  margin-left: 2em; 
+  margin-left: 2em;
   margin-right: 3em;
 }
 
 .user-icon {
-  padding: 0.5em; 
+  padding: 0.5em;
 }
 
 @keyframes zoomBounce {
@@ -377,8 +377,6 @@ video {
   position: absolute;
   top: 72px; 
   right: 14em; 
-  background-color: white;
-  color: black;
   border: none; 
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -443,13 +441,11 @@ video {
 
 .dropdown-menu li a {
   text-decoration: none;
-  color: black; 
   font-size: 1rem;
   font-family: 'Roboto', sans-serif !important;
 }
 
 .dropdown-menu li a:hover {
-  background-color: transparent; 
   transform: scale(1.1); 
   transition: transform 0.3s ease-in-out; 
 }
@@ -460,7 +456,6 @@ video {
 }
 
 .icon-spacing {
-  color: black; /* Couleur des icônes noir */
   margin-right: 8px; 
 }
 

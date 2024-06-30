@@ -1,3 +1,4 @@
+// CreateComment.jsx
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAtomValue } from 'jotai';
@@ -27,7 +28,7 @@ const CreateComment = ({ onCommentCreated }) => {
         return;
       }
 
-      onCommentCreated(); // Appelle la fonction de rappel pour re-fetch les commentaires
+      onCommentCreated(); // Refetch les commentaires
       navigate(`/product/${productId}`);
     } catch (error) {
       console.error('Error creating comment:', error);

@@ -8,6 +8,7 @@ import JumbotronSince from '../../components/Jumbotron/JumbotronSince';
 import BentoGrid from '../../components/BentoGrid';
 import Partner from '../../components/Partner/Partner';
 
+
 export default function Home({ products }) {
   return (
     <div>
@@ -17,6 +18,7 @@ export default function Home({ products }) {
       <ProductList products={products} />
       <BentoGrid />
       <Jumbotron />
+     
       <Partner /> 
     </div>
   );

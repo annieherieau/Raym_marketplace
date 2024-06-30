@@ -9,6 +9,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { isAuthAtom, openCartAtom, userAtom } from "../../../app/atoms";
 import { removeCookie } from "../../../app/utils";
 import { buildRequestOptions } from "../../../app/api";
+import mtbVideo from '../../../assets/MTB.mp4';
 
 const Navbar = () => {
   const user = useAtomValue(userAtom);
@@ -287,7 +288,7 @@ const Navbar = () => {
             controls
           >
             <source
-              src="/src/assets/MTB.mp4"
+              src={mtbVideo}
               type="video/mp4"
             />
           </video>

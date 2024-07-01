@@ -115,7 +115,7 @@ const ProductPage = () => {
             <div className="flex mb-4">
               <div className="mr-4">
                 <span className="font-bold text-gray-100 dark:text-gray-300">Prix:</span>
-                <span className="text-palegreen-500 dark:text-gray-300 text-3xl"> {product.price}€</span>
+                <span className="text-palegreen-500 dark:text-gray-300 text-3xl"> {parseFloat(product.price).toFixed(2)}€</span>
               </div>
               <div>
                 <span className="font-bold text-gray-100 dark:text-gray-300"> Disponibilité: </span>

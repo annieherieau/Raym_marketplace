@@ -16,14 +16,16 @@ const CartButton = ({ onClick }) => {
   if(!isAdmin){
     return (
       <button className={`cart-button ${clicked ? 'clicked' : ''}`} onClick={handleClick}>
-        <span className="add-to-cart">Ajouter au panier</span>
-        <span className="added">Ajouté !</span>
-        <i className="fas fa-shopping-cart"></i>
-        <i className="fas fa-box"></i>
+        <div>
+          <span className="add-to-cart">Ajouter au panier</span>
+          <span className="added">Ajouté !</span>
+          <i className="fas fa-shopping-cart"></i>
+          <i className="fas fa-box"></i>
+        </div>
       </button>
     );
-  }
-  
-};
+  };
+
+}
 
 export default CartButton;

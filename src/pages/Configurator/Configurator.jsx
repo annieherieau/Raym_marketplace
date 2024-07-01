@@ -37,7 +37,7 @@ const Configurator = () => {
     // random product
     function random(max){
       return Math.floor(Math.random() * max);
-    };
+    }
     let defautBikes =
       response[selectedBikeCategory || bikeCats[random(bikeCats.length)]]
         .products;
@@ -119,7 +119,7 @@ const Configurator = () => {
                   selectedProduct={selectedProduct}
                 />
               </div>
-              <div className="p-2 sm:w-4/12">
+              <div className="p-2 sm:w-4/12 carousel-container">
                 <Carousel
                   products={products[selectedClothingCategory].products}
                   onClick={handleProductDetails}
@@ -133,4 +133,6 @@ const Configurator = () => {
 };
 
 export default Configurator;
+
+
 

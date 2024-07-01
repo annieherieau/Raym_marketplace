@@ -72,7 +72,9 @@ const Carousel = ({ products, selectedProduct }) => {
           <h3 className="text-base font-semibold text-white sm:text-lg">
             {products[currentIndex].name}
           </h3>
-          <p className="text-white">{products[currentIndex].price} €</p>
+          <p className="text-white">
+            {products[currentIndex].price ? `${parseFloat(products[currentIndex].price).toFixed(2)} €` : "0.00 €"}
+          </p>
         </div>
         <div className="mt-3 text-center">
           <CartButton onClick={handleAddToCart} />

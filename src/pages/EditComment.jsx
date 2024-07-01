@@ -5,7 +5,7 @@ import { userAtom } from '../app/atoms';
 import { buildRequestOptions } from '../app/api';
 import CommentForm from '../components/CommentForm';
 
-const EditComment = ({ productId, commentId, token, onCancel }) => {
+const EditComment = ({ productId, commentId, token, onCancel, onCommentEdited }) => {
   const [comment, setComment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -45,6 +45,7 @@ const EditComment = ({ productId, commentId, token, onCancel }) => {
         throw new Error('Failed to update comment');
       }
       navigate(`/product/${productId}`);
+      onCommentEdited();
     } catch (error) {
       console.error('Error updating comment:', error);
     }

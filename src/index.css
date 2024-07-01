@@ -5,24 +5,22 @@
 html, body, #root {
   height: 100%;
   margin: 0;
+  overflow: auto; /* Ajouté pour permettre le défilement */
 }
 
 body {
   display: flex;
   flex-direction: column;
+  overflow: auto; /* Ajouté pour permettre le défilement */
 }
 
 main {
   flex: 1;
   padding-bottom: 50px;
   justify-content: center; 
+  overflow: auto; /* Ajouté pour permettre le défilement */
 }
 
-/* footer {
-  margin-bottom: 0%;
-  width: 100%;
- 
-} */
 
 body {
   margin: 0;
@@ -31,11 +29,12 @@ body {
   font-family: 'Roboto', Helvetica, sans-serif;
   font-size: 1rem;
   line-height: 1.2;
-  overflow-y: auto; /* Changed this line */
+  overflow-y: auto; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
+  overflow: auto; /* Ajouté pour permettre le défilement */
 }
 
 /* Maintenance */
@@ -119,18 +118,18 @@ strong {
   right: 16px;
   background-color: #007bff;
   color: white;
-  width: 55px; /* Ajuster la taille pour plus de visibilité */
-  height: 55px; /* Ajuster la taille pour plus de visibilité */
+  width: 55px; 
+  height: 55px; 
   border-radius: 50%;
   cursor: pointer;
   z-index: 50;
-  display: flex; /* Pour centrer le contenu */
-  align-items: center; /* Pour centrer le contenu verticalement */
-  justify-content: center; /* Pour centrer le contenu horizontalement */
-  box-sizing: border-box; /* Pour que le padding ne modifie pas les dimensions */
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  box-sizing: border-box; 
 }
 
 .accessibility-icon i {
   font-size: 24px;
-  line-height: 1; /* Assurez-vous que la hauteur de ligne ne provoque pas de découpage */
+  line-height: 1; 
 }

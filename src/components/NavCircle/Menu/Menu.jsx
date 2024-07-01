@@ -277,7 +277,7 @@ const Navbar = () => {
         className="header__nav nav-js"
         data-active={isRevealed ? "true" : "false"}
       >
-        <section className="clip-text-video">
+        <section className="clip-text-video" style={{ overflow: 'hidden' }}>
           <video
             autoPlay
             loop
@@ -286,6 +286,7 @@ const Navbar = () => {
             preload="auto"
             width="100%"
             controls
+            style={{ pointerEvents: 'none' }}
           >
             <source
               src={mtbVideo}

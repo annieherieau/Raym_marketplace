@@ -9,7 +9,6 @@ export default function UserForm({ user, onUpdate }) {
   const { id, token } = useAtomValue(userAtom);
   const [error, setError] = useState("");
   const [formValues, setFormValues] = useState({ ...user });
-  console.log(token);
 
   const handleChange = (event) => {
     const updatedValues = { ...formValues };

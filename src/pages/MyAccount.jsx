@@ -172,7 +172,7 @@ export default function MyAccount() {
               <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{ fontFamily: 'Chakra Petch' }}>
                 Modifier mes informations
               </h1>
-              <UserForm user={userData} setUpdateUser={setUpdateUser} />
+              <UserForm user={userData} onUpdate={setUpdateUser} />
               <div className="flex justify-center mt-4">
                 <button
                   className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"

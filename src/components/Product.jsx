@@ -35,10 +35,6 @@ const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
     navigate(`/products/${product.id}/edit`);
   };
 
-  const handleDeleteClick = () => {
-    onDeleteProduct(product.id);
-  };
-
   const schemaOrgData = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -92,7 +88,7 @@ const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
               Modifier
             </button>
             <button
-              onClick={handleDeleteClick}
+              onClick={() => onDeleteProduct(product.id)}
               className={`text-white border-0 py-2 px-4 focus:outline-none rounded ${isDarkMode ? 'bg-red-600 hover:bg-red-700' : 'bg-red-500 hover:bg-red-600'}`}
             >
               Supprimer

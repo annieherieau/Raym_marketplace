@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ProductForm from "./ProductForm";
 import { buildRequestOptions } from "../app/api";
+import { useAtom } from "jotai";
+import { noticeAtom } from "../app/atoms";
 
 const EditProduct = () => {
   const { id } = useParams();
@@ -10,6 +12,7 @@ const EditProduct = () => {
   const [categories, setCategories] = useState([]);
   const [colors, setColors] = useState([]);
   const [error, setError] = useState(null);
+  const [, setNotice] = useAtom(noticeAtom);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -69,7 +72,11 @@ const EditProduct = () => {
   }, [id]);
 
   const handleUpdateProduct = (updatedProduct) => {
-    navigate("/admin"); // Redirige vers le dashboard admin après la mise à jour
+    setNotice({
+      title: "Modifier un Produit",
+      message: "Produit modifié avec succès",
+    });
+    navigate(`/admin?product=${updatedProduct.id}`)
   };
 
   if (error) {
@@ -77,8 +84,14 @@ const EditProduct = () => {
   }
 
   return (
-    <div>
-      <h2>Edit Product</h2>
+    <div className="container mx-auto px-4 py-8">
+      <div className="bg-black p-6 rounded shadow">
+        <h1
+          className="text-palegreen-500 text-5xl text-center mb-4 font-semibold"
+          style={{ fontFamily: "Chakra Petch" }}
+        >
+          Modifier un produit
+        </h1>
       {product && (
         <ProductForm
           product={product}
@@ -87,6 +100,7 @@ const EditProduct = () => {
           onSubmit={handleUpdateProduct}
         />
       )}
+    </div>
     </div>
   );
 };

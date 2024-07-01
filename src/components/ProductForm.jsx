@@ -77,7 +77,7 @@ const ProductForm = ({ product, categories, colors, onSubmit }) => {
           value={formData.name}
           onChange={handleChange}
           required
-          className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow text-black appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
       <div className="mb-4">
@@ -88,7 +88,7 @@ const ProductForm = ({ product, categories, colors, onSubmit }) => {
           name="description"
           value={formData.description}
           onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow text-gray-700 appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
       <div className="mb-4">
@@ -99,7 +99,7 @@ const ProductForm = ({ product, categories, colors, onSubmit }) => {
           name="long_description"
           value={formData.long_description}
           onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow text-gray-700 appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
       <div className="mb-4">
@@ -112,7 +112,7 @@ const ProductForm = ({ product, categories, colors, onSubmit }) => {
           value={formData.price}
           onChange={handleChange}
           required
-          className="shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow text-gray-700 appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
       <div className="mb-4">

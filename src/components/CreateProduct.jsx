@@ -47,7 +47,6 @@ const CreateProduct = ({ redirect }) => {
   }, [user]);
 
   const handleCreateProduct = (newProduct) => {
-    console.log(newProduct);
     setNotice({
       title: "Nouveau Produit",
       message: "Nouveau produit créé avec succès",

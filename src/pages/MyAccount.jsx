@@ -74,10 +74,7 @@ export default function MyAccount() {
     const { url, options } = buildRequestOptions('users', 'delete', { id: current_user.id, token: current_user.token });
     try {
       const response = await fetch(url, options);
-      // if (!response.ok) {
-      //   throw new Error('Failed to delete user');
-      // }
-      setNotice({title:'Demande de suppression', message: response.
+      setNotice({title:'Demande de suppression', message: response.message || response.error
       })
       setCurrentUser(false); // Réinitialiser l'état de l'utilisateur après suppression
       removeCookie();

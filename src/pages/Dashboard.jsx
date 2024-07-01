@@ -114,7 +114,7 @@ export default function Dashboard() {
           )}
           {activeTab === 'create-product' && (
             <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
-              <CreateProduct />
+              <CreateProduct redirect={() => setActiveTab('products')}/>
             </section>
           )}
           {activeTab === 'orders' && (

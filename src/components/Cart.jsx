@@ -7,7 +7,12 @@ import "../index.css";
 import { useNavigate } from "react-router-dom";
 import CartItem from "./ShoppingCart/CartItem";
 
-export default function Cart({ onRemoveItem = () => {}, onUpdateItem = () => {}, isOpen, onClose}){
+export default function Cart({
+  onRemoveItem = () => {},
+  onUpdateItem = () => {},
+  isOpen,
+  onClose,
+}) {
   const { token } = useAtomValue(userAtom);
   const [cartItems, setCartItems] = useState([]);
   const [error, setError] = useState(null);
@@ -29,8 +34,10 @@ export default function Cart({ onRemoveItem = () => {}, onUpdateItem = () => {},
       setCartItems(data.items);
       setCartAmount(data.amount);
     } catch (error) {
-      console.error("Error fetching cart:", error);
-      setError("Error fetching cart. Please try again later.");
+      console.error("Erreur lors de la récupération du panier:", error);
+      setError(
+        "Erreur lors de la récupération du panier. Veuillez réessayer plus tard."
+      );
     }
   };
 
@@ -59,7 +66,7 @@ export default function Cart({ onRemoveItem = () => {}, onUpdateItem = () => {},
       .then((response) => response.json())
       .then((response) => handleResponse(response, action))
       .catch((err) =>
-        setError(`Error occured. Please try again later. ${err}`)
+        setError(`Error occured. Veuillez réessayer plus tard. ${err}`)
       );
     setCartItems([]);
     setCartAmount(0);
@@ -98,10 +105,9 @@ export default function Cart({ onRemoveItem = () => {}, onUpdateItem = () => {},
       )}
     </div>
   );
-};
+}
 
 Cart.propTypes = {
   onRemoveItem: PropTypes.func,
   onUpdateItem: PropTypes.func,
 };
-

@@ -1,22 +1,30 @@
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { buildRequestOptions } from '../app/api';
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { buildRequestOptions } from "../app/api";
 
 const AdditionalProductsModal = ({ open, onClose, onAddToCart }) => {
   const [additionalProducts, setAdditionalProducts] = useState([]);
 
   useEffect(() => {
     const fetchAdditionalProducts = async () => {
-      const { url, options } = buildRequestOptions('products', 'fetch_additional_products');
+      const { url, options } = buildRequestOptions(
+        "products",
+        "fetch_additional_products"
+      );
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
-          throw new Error('Failed to fetch additional products');
+          throw new Error(
+            "Échec de la récupération de  produits supplémentaires"
+          );
         }
         const data = await response.json();
         setAdditionalProducts(data);
       } catch (error) {
-        console.error('Error fetching additional products:', error);
+        console.error(
+          "Échec de la récupération de  produits supplémentaires:",
+          error
+        );
       }
     };
 
@@ -33,10 +41,12 @@ const AdditionalProductsModal = ({ open, onClose, onAddToCart }) => {
         <h2>Produits Additionnels</h2>
         <button onClick={onClose}>Close</button>
         <ul>
-          {additionalProducts.map(product => (
+          {additionalProducts.map((product) => (
             <li key={product.id}>
               <p>{product.name}</p>
-              <button onClick={() => onAddToCart(product)}>Ajouter au panier</button>
+              <button onClick={() => onAddToCart(product)}>
+                Ajouter au panier
+              </button>
             </li>
           ))}
         </ul>

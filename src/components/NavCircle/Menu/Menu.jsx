@@ -48,7 +48,9 @@ const Navbar = () => {
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
-          throw new Error("Failed to check admin status");
+          throw new Error(
+            "Échec de la vérification du statut d'administrateur"
+          );
         }
 
         const data = await response.json();
@@ -131,7 +133,9 @@ const Navbar = () => {
 
   const handleClickModal = () => {
     if (!isAdmin) {
-      navigate(`/login?redirect=${location.pathname != '/' ? location.pathname: ''} `);
+      navigate(
+        `/login?redirect=${location.pathname != "/" ? location.pathname : ""} `
+      );
     }
     setShowModal(false);
   };

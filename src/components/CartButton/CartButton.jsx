@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import './CartButton.css';
-import {useAtomValue } from 'jotai';
-import { isAuthAtom } from '../../app/atoms';
+import React, { useState } from "react";
+import "./CartButton.css";
+import { useAtomValue } from "jotai";
+import { isAuthAtom } from "../../app/atoms";
 
-const CartButton = ({ onClick }) => {
+export default function CartButton({ onClick }) {
   const [clicked, setClicked] = useState(false);
   const isAdmin = useAtomValue(isAuthAtom);
 
@@ -13,19 +13,21 @@ const CartButton = ({ onClick }) => {
     setTimeout(() => setClicked(false), 2000); // Réinitialiser l'animation après 2 secondes
   };
 
-  if(!isAdmin){
-    return (
-      <button className={`cart-button ${clicked ? 'clicked' : ''}`} onClick={handleClick}>
-        <div>
+  return (
+    <>
+      {isAdmin && (
+        <button
+          className={`cart-button ${clicked ? "clicked" : ""}`}
+          onClick={handleClick}
+        >
           <span className="add-to-cart">Ajouter au panier</span>
           <span className="added">Ajouté !</span>
           <i className="fas fa-shopping-cart"></i>
           <i className="fas fa-box"></i>
-        </div>
-      </button>
-    );
-  };
-
+        </button>
+      )}
+    </>
+  );
 }
 
-export default CartButton;
+

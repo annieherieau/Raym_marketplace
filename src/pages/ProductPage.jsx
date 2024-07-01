@@ -6,6 +6,7 @@ import { buildRequestOptions } from "../app/api";
 import Comments from "../components/Comments";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal/Modal";
+import CartButton from "../components/CartButton/CartButton";
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -18,6 +19,7 @@ const ProductPage = () => {
   const [, setUpdateCart] = useAtom(updateCartAtom);
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [isImageFullScreen, setIsImageFullScreen] = useState(false);
 
   const handleAddToCart = () => {
     if (isLoggedIn) {
@@ -37,6 +39,10 @@ const ProductPage = () => {
     } else {
       setShowModal(true);
     }
+  };
+
+  const toggleImageFullScreen = () => {
+    setIsImageFullScreen(!isImageFullScreen);
   };
 
   useEffect(() => {
@@ -98,22 +104,24 @@ const ProductPage = () => {
           <div className="md:flex-1 px-4">
             <div className="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
               {product.photo_url && (
-                <img
-                  className="w-full h-full object-cover pt-5"
-                  src={product.photo_url}
-                  alt={product.name}
-                />
+                <>
+                  {isImageFullScreen && (
+                    <div className="fixed inset-0 bg-white bg-opacity-70 backdrop-blur-sm z-40"></div>
+                  )}
+                  <img
+                    className={`w-full h-full pt-5 ${isImageFullScreen ? 'fixed top-0 left-0 w-[75%] h-[75%] z-50 transform -translate-x-1/2 -translate-y-1/2' : 'object-cover'}`}
+                    src={product.photo_url}
+                    alt={product.name}
+                    onClick={toggleImageFullScreen}
+                    style={isImageFullScreen ? { top: '50%', left: '50%', objectFit: 'contain' } : {}}
+                  />
+                </>
               )}
             </div>
             {!isAdmin && (
               <div className="flex -mx-2 mb-4">
                 <div className="w-full px-2">
-                  <button
-                    onClick={handleAddToCart}
-                    className="w-full bg-green-400 dark:bg-gray-600 text-gray-900 py-2 px-4 rounded-full font-bold hover:bg-green-600 dark:hover:bg-gray-700"
-                  >
-                    Ajouter au panier
-                  </button>
+                  <CartButton onClick={handleAddToCart} />
                 </div>
               </div>
             )}
@@ -135,16 +143,6 @@ const ProductPage = () => {
                   {parseFloat(product.price).toFixed(2)}€
                 </span>
               </div>
-              {/* <div>
-                <span className="font-bold text-gray-100 dark:text-gray-300">
-                  {" "}
-                  Disponibilité:{" "}
-                </span>
-                <span className="text-palegreen-500 dark:text-gray-300 text-3xl">
-                  {" "}
-                  En Stock
-                </span>
-              </div> */}
             </div>
             <div className="mb-4">
               <span className="font-bold text-gray-100 dark:text-gray-300">

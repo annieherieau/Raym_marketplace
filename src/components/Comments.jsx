@@ -123,7 +123,7 @@ const Comments = ({ productId, token }) => {
               <>
                 <p className="text-gray-100">{comment.content}</p>
                 <StarRating rating={comment.rating} onRatingChange={() => {}} />
-                {comment.user && <p className="text-gray-100">Par : {comment.user.email}</p>}
+                {comment.user && <p className="text-gray-100">Par : {comment.user.first_name ? comment.user.first_name : 'utilisateur anonyme'}</p>}
                 {isLoggedIn && (
                   <div className="mt-2 space-x-2">
                     {comment.user_id === user.id && (

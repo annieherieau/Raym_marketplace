@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { buildRequestOptions } from "../../app/api";
 import { useEffect } from "react";
 import CartButton from "../CartButton/CartButton.jsx";
+import Modal from "../Modal/Modal.jsx";
 
 const Carousel = ({ products, selectedProduct }) => {
   const { isAdmin, token } = useAtomValue(userAtom);
@@ -12,7 +13,7 @@ const Carousel = ({ products, selectedProduct }) => {
   const [, setUpdateCart] = useAtom(updateCartAtom);
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const [showModal, setShowModal] = useState(false);
 
   const handlePrevious = () => {
     const newIndex = (currentIndex - 1 + products.length) % products.length;
@@ -25,9 +26,7 @@ const Carousel = ({ products, selectedProduct }) => {
   };
 
   const handleAddToCart = () => {
-    if (isAdmin) {
-      alert("Vous êtes administrateur. Vous ne pouvez pas commander !");
-    } else if (isLoggedIn) {
+    if (isLoggedIn) {
       const { url, options } = buildRequestOptions("cart_items", "create", {
         body: { product_id: products[currentIndex].id, quantity: 1 },
         token: token,
@@ -42,8 +41,7 @@ const Carousel = ({ products, selectedProduct }) => {
         .catch((error) => console.error("Error:", error));
       setUpdateCart(true);
     } else {
-      alert("Veuillez vous connecter pour commander");
-      navigate("/login?redirect=configurateur");
+      setShowModal(true);
     }
   };
 
@@ -66,14 +64,14 @@ const Carousel = ({ products, selectedProduct }) => {
           alt={`${products[currentIndex].name}`}
           className="w-full h-auto"
         />
-        <div
-          className="bg-gray-800 bg-opacity-50 rounded-md py-2 mt-3 text-center"
-        >
+        <div className="bg-gray-800 bg-opacity-50 rounded-md py-2 mt-3 text-center">
           <h3 className="text-base font-semibold text-white sm:text-lg">
             {products[currentIndex].name}
           </h3>
           <p className="text-white">
-            {products[currentIndex].price ? `${parseFloat(products[currentIndex].price).toFixed(2)} €` : "0.00 €"}
+            {products[currentIndex].price
+              ? `${parseFloat(products[currentIndex].price).toFixed(2)} €`
+              : "0.00 €"}
           </p>
         </div>
         <div className="mt-3 text-center">
@@ -118,6 +116,28 @@ const Carousel = ({ products, selectedProduct }) => {
           />
         </svg>
       </button>
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        title="Ajouter au panier"
+      >
+        <>
+          <p>
+            {isAdmin
+              ? "Vous êtes administrateur. Vous ne pouvez pas commander !"
+              : "Veuillez vous connecter pour commander"}
+          </p>
+          {!isAdmin && (
+            <button
+              type="button"
+              onClick={() => navigate("/login?redirect=configurateur")}
+              className="my-5 px-8 py-3 font-semibold rounded bg-gray-800 dark:bg-gray-100 text-gray-100 hover:bg-green-500 dark:hover:bg-gray-700"
+            >
+              Se Connecter
+            </button>
+          )}
+        </>
+      </Modal>
     </div>
   );
 };

@@ -46,6 +46,7 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
     "name": product.name,
     "image": product.photo_url || "https://dummyimage.com/420x260",
     "description": product.description,
+    "category": product.category.name,
     "brand": {
       "@type": "Brand",
       "name": product.brand || "Raym Bicycle"

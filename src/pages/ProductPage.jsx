@@ -109,9 +109,6 @@ const ProductPage = () => {
           </div>
           <div className="md:flex-1 px-4">
             <h1 className="text-5xl font-bold text-green-400 dark:text-white mb-2" style={{ fontFamily: "Chakra Petch" }}>{product.name}</h1>
-            <p className="text-gray-100 dark:text-gray-300 text-sm mb-4">
-              {product.description}
-            </p>
             <div className="flex mb-4">
               <div className="mr-4">
                 <span className="font-bold text-gray-100 dark:text-gray-300">Prix:</span>
@@ -125,11 +122,10 @@ const ProductPage = () => {
             <div className="mb-4">
               <span className="font-bold text-gray-100 dark:text-gray-300">Description:</span>
               <p className="text-gray-100 dark:text-gray-300 text-sm mt-2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                sed ante justo. Integer euismod libero id mauris malesuada tincidunt. Vivamus commodo nulla ut
-                lorem rhoncus aliquet. Duis dapibus augue vel ipsum pretium, et venenatis sem blandit. Quisque
-                ut erat vitae nisi ultrices placerat non eget velit. Integer ornare mi sed ipsum lacinia, non
-                sagittis mauris blandit. Morbi fermentum libero vel nisl suscipit, nec tincidunt mi consectetur.
+              {product.description}
+              </p>
+              <p className="text-gray-100 dark:text-gray-300 text-sm mt-2">
+              {product.long_description}
               </p>
             </div>
             <Comments productId={productId} isLoggedIn={isLoggedIn} token={token} currentUser={currentUser} />

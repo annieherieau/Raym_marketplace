@@ -9,14 +9,14 @@ const ProductList = () => {
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false); 
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const [colors, setColors] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedColor, setSelectedColor] = useState("all");
   const [sortOrder, setSortOrder] = useState("desc");
-  const isDarkMode = localStorage.getItem('darkMode') === 'true';
+  const isDarkMode = localStorage.getItem("darkMode") === "true";
 
   useEffect(() => {
     const fetchAdminStatus = async () => {
@@ -25,12 +25,16 @@ const ProductList = () => {
         return;
       }
 
-      const { url, options } = buildRequestOptions(null, 'admin_check', { token: user.token });
+      const { url, options } = buildRequestOptions(null, "admin_check", {
+        token: user.token,
+      });
 
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
-          throw new Error("Failed to check admin status");
+          throw new Error(
+            "Échec de la vérification du statut d'administrateur"
+          );
         }
 
         const data = await response.json();
@@ -52,48 +56,58 @@ const ProductList = () => {
     fetch(url, options)
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error("Réponse réseau incorrecte");
         }
         return response.json();
       })
       .then((data) => {
         // Convertir le prix en nombre
-        const productsWithNumericPrice = data.map(product => ({
+        const productsWithNumericPrice = data.map((product) => ({
           ...product,
-          price: parseFloat(product.price)
+          price: parseFloat(product.price),
         }));
         setProducts(productsWithNumericPrice);
       })
       .catch((error) => {
-        console.error("Error fetching products:", error);
-        setError("Error fetching products. Please try again later.");
+        console.error("Erreur lors de la récupération des produits:", error);
+        setError(
+          "Erreur lors de la récupération des produits. Veuillez réessayer plus tard."
+        );
       });
   }, [user.token]);
 
   useEffect(() => {
     const fetchCategoriesAndColors = async () => {
       try {
-        const { url: categoriesUrl, options: categoriesOptions } = buildRequestOptions('categories', 'index', { token: user.token });
-        const { url: colorsUrl, options: colorsOptions } = buildRequestOptions('colors', 'index', { token: user.token });
-  
+        const { url: categoriesUrl, options: categoriesOptions } =
+          buildRequestOptions("categories", "index", { token: user.token });
+        const { url: colorsUrl, options: colorsOptions } = buildRequestOptions(
+          "colors",
+          "index",
+          { token: user.token }
+        );
+
         const [categoriesResponse, colorsResponse] = await Promise.all([
           fetch(categoriesUrl, categoriesOptions),
           fetch(colorsUrl, colorsOptions),
         ]);
-  
+
         if (!categoriesResponse.ok || !colorsResponse.ok) {
-          throw new Error("Failed to fetch categories or colors");
+          throw new Error("Échec de la récupération de categories or colors");
         }
-  
+
         const categoriesData = await categoriesResponse.json();
         const colorsData = await colorsResponse.json();
         setCategories(categoriesData);
         setColors(colorsData);
       } catch (error) {
-        console.error("Error fetching categories or colors:", error);
+        console.error(
+          "Erreur lors de la récupération de categories or colors:",
+          error
+        );
       }
     };
-  
+
     fetchCategoriesAndColors();
   }, [user.token]);
 
@@ -109,9 +123,12 @@ const ProductList = () => {
     setSortOrder(event.target.value);
   };
 
-  const filteredProducts = products.filter(product => {
-    return (selectedCategory === "all" || product.category.name === selectedCategory) &&
-           (selectedColor === "all" || product.color.collection === selectedColor);
+  const filteredProducts = products.filter((product) => {
+    return (
+      (selectedCategory === "all" ||
+        product.category.name === selectedCategory) &&
+      (selectedColor === "all" || product.color.collection === selectedColor)
+    );
   });
 
   const sortedProducts = filteredProducts.sort((a, b) => {
@@ -131,7 +148,7 @@ const ProductList = () => {
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error("Réponse réseau incorrecte");
       }
       const updatedProductData = await response.json();
       setProducts(
@@ -141,7 +158,7 @@ const ProductList = () => {
       );
     } catch (error) {
       console.error("Error updating product:", error);
-      setError("Error updating product. Please try again later.");
+      setError("Error updating product. Veuillez réessayer plus tard.");
     }
   };
 
@@ -153,17 +170,17 @@ const ProductList = () => {
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error("Réponse réseau incorrecte");
       }
       setProducts(products.filter((product) => product.id !== id));
     } catch (error) {
       console.error("Error deleting product:", error);
-      setError("Error deleting product. Please try again later.");
+      setError("Error deleting product. Veuillez réessayer plus tard.");
     }
   };
 
   if (loading) {
-    return <div className="text-center py-6">Loading...</div>; 
+    return <div className="text-center py-6">Loading...</div>;
   }
 
   if (error) {
@@ -172,115 +189,209 @@ const ProductList = () => {
 
   return (
     <>
-     <section className={`text-gray-600 body-font mr-8 ml-8 mb-8 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`} style={{ borderRadius: '20px' }}>
-  <div className={`w-full px-8 py-10 mx-auto flex flex-wrap ${isDarkMode ? 'bg-gray-900' : 'bg-black'}`}>
-    <div className="flex w-full mb-10 flex-wrap">
-      <h1 className={`sm:text-4xl text-3xl font-bold title-font ${isDarkMode ? 'text-green-400' : 'text-palegreen-500'} lg:w-1/3 lg:mb-0`}>
-        Nos best sellers :
-      </h1>
-    </div>
-    <div className="flex w-full mb-8">
-      <div className="mr-4">
-        <label htmlFor="category" className='mr-2 text-white'>
-          Trier par catégorie :
-        </label>
-        <select id="category" value={selectedCategory} onChange={handleCategoryChange} className={`p-2 border rounded ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
-          <option value="all">Toutes</option>
-          {categories.map(category => (
-            <option key={category.id} value={category.name}>{category.name}</option>
-          ))}
-        </select>
-      </div>
-      <div className="mr-4">
-        <label htmlFor="color" className='mr-2 text-white'>
-          Trier par couleur :
-        </label>
-        <select id="color" value={selectedColor} onChange={handleColorChange} className={`p-2 border rounded ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
-          <option value="all">Toutes</option>
-          {colors.map(color => (
-            <option key={color.id} value={color.collection}>{color.collection}</option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label htmlFor="sortOrder" className='text-white mr-2'>
-          Trier par prix:
-        </label>
-        <select id="sortOrder" value={sortOrder} onChange={handleSortOrderChange} className={`p-2 border rounded pr-8 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
-          <option value="asc">Croissant</option>
-          <option value="desc">Décroissant</option>
-        </select>
-      </div>
-    </div>
-    <div className="flex flex-wrap md:-m-2 -m-1" style={{ borderRadius: '20px' }}>
-      <div className="flex flex-wrap w-full lg:w-1/2">
-        <div className={`md:p-2 p-1 w-full sm:w-1/2 ${sortedProducts[0] ? (isDarkMode ? 'bg-gray-800' : 'bg-white') : 'bg-black'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
-          {sortedProducts[0] && (
-            <Product
-              product={sortedProducts[0]}
-              isAdmin={isAdmin}
-              onUpdateProduct={isAdmin ? handleUpdateProduct : null}
-              onDeleteProduct={isAdmin ? handleDeleteProduct : null}
-            />
-          )}
+      <section
+        className={`text-gray-600 body-font mr-8 ml-8 mb-8 ${
+          isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+        }`}
+        style={{ borderRadius: "20px" }}
+      >
+        <div
+          className={`w-full px-8 py-10 mx-auto flex flex-wrap ${
+            isDarkMode ? "bg-gray-900" : "bg-black"
+          }`}
+        >
+          <div className="flex w-full mb-10 flex-wrap">
+            <h1
+              className={`sm:text-4xl text-3xl font-bold title-font ${
+                isDarkMode ? "text-green-400" : "text-palegreen-500"
+              } lg:w-1/3 lg:mb-0`}
+            >
+              Nos best sellers :
+            </h1>
+          </div>
+          <div className="flex w-full mb-8">
+            <div className="mr-4">
+              <label htmlFor="category" className="mr-2 text-white">
+                Trier par catégorie :
+              </label>
+              <select
+                id="category"
+                value={selectedCategory}
+                onChange={handleCategoryChange}
+                className={`p-2 border rounded ${
+                  isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+                }`}
+              >
+                <option value="all">Toutes</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.name}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mr-4">
+              <label htmlFor="color" className="mr-2 text-white">
+                Trier par couleur :
+              </label>
+              <select
+                id="color"
+                value={selectedColor}
+                onChange={handleColorChange}
+                className={`p-2 border rounded ${
+                  isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+                }`}
+              >
+                <option value="all">Toutes</option>
+                {colors.map((color) => (
+                  <option key={color.id} value={color.collection}>
+                    {color.collection}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="sortOrder" className="text-white mr-2">
+                Trier par prix:
+              </label>
+              <select
+                id="sortOrder"
+                value={sortOrder}
+                onChange={handleSortOrderChange}
+                className={`p-2 border rounded pr-8 ${
+                  isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+                }`}
+              >
+                <option value="asc">Croissant</option>
+                <option value="desc">Décroissant</option>
+              </select>
+            </div>
+          </div>
+          <div
+            className="flex flex-wrap md:-m-2 -m-1"
+            style={{ borderRadius: "20px" }}
+          >
+            <div className="flex flex-wrap w-full lg:w-1/2">
+              <div
+                className={`md:p-2 p-1 w-full sm:w-1/2 ${
+                  sortedProducts[0]
+                    ? isDarkMode
+                      ? "bg-gray-800"
+                      : "bg-white"
+                    : "bg-black"
+                } border border-black`}
+                style={{ borderWidth: "8px", borderRadius: "20px" }}
+              >
+                {sortedProducts[0] && (
+                  <Product
+                    product={sortedProducts[0]}
+                    isAdmin={isAdmin}
+                    onUpdateProduct={isAdmin ? handleUpdateProduct : null}
+                    onDeleteProduct={isAdmin ? handleDeleteProduct : null}
+                  />
+                )}
+              </div>
+              <div
+                className={`md:p-2 p-1 w-full sm:w-1/2 ${
+                  sortedProducts[1]
+                    ? isDarkMode
+                      ? "bg-gray-800"
+                      : "bg-white"
+                    : "bg-black"
+                } border border-black`}
+                style={{ borderWidth: "8px", borderRadius: "20px" }}
+              >
+                {sortedProducts[1] && (
+                  <Product
+                    product={sortedProducts[1]}
+                    isAdmin={isAdmin}
+                    onUpdateProduct={isAdmin ? handleUpdateProduct : null}
+                    onDeleteProduct={isAdmin ? handleDeleteProduct : null}
+                  />
+                )}
+              </div>
+              <div
+                className={`md:p-2 p-1 w-full ${
+                  sortedProducts[2]
+                    ? isDarkMode
+                      ? "bg-gray-800"
+                      : "bg-white"
+                    : "bg-black"
+                } border border-black`}
+                style={{ borderWidth: "8px", borderRadius: "20px" }}
+              >
+                {sortedProducts[2] && (
+                  <Product
+                    product={sortedProducts[2]}
+                    isAdmin={isAdmin}
+                    onUpdateProduct={isAdmin ? handleUpdateProduct : null}
+                    onDeleteProduct={isAdmin ? handleDeleteProduct : null}
+                  />
+                )}
+              </div>
+            </div>
+            <div className="flex flex-wrap w-full lg:w-1/2">
+              <div
+                className={`md:p-2 p-1 w-full ${
+                  sortedProducts[3]
+                    ? isDarkMode
+                      ? "bg-gray-800"
+                      : "bg-white"
+                    : "bg-black"
+                } border border-black`}
+                style={{ borderWidth: "8px", borderRadius: "20px" }}
+              >
+                {sortedProducts[3] && (
+                  <Product
+                    product={sortedProducts[3]}
+                    isAdmin={isAdmin}
+                    onUpdateProduct={isAdmin ? handleUpdateProduct : null}
+                    onDeleteProduct={isAdmin ? handleDeleteProduct : null}
+                  />
+                )}
+              </div>
+              <div
+                className={`md:p-2 p-1 w-full sm:w-1/2 ${
+                  sortedProducts[4]
+                    ? isDarkMode
+                      ? "bg-gray-800"
+                      : "bg-white"
+                    : "bg-black"
+                } border border-black`}
+                style={{ borderWidth: "8px", borderRadius: "20px" }}
+              >
+                {sortedProducts[4] && (
+                  <Product
+                    product={sortedProducts[4]}
+                    isAdmin={isAdmin}
+                    onUpdateProduct={isAdmin ? handleUpdateProduct : null}
+                    onDeleteProduct={isAdmin ? handleDeleteProduct : null}
+                  />
+                )}
+              </div>
+              <div
+                className={`md:p-2 p-1 w-full sm:w-1/2 ${
+                  sortedProducts[5]
+                    ? isDarkMode
+                      ? "bg-gray-800"
+                      : "bg-white"
+                    : "bg-black"
+                } border border-black`}
+                style={{ borderWidth: "8px", borderRadius: "20px" }}
+              >
+                {sortedProducts[5] && (
+                  <Product
+                    product={sortedProducts[5]}
+                    isAdmin={isAdmin}
+                    onUpdateProduct={isAdmin ? handleUpdateProduct : null}
+                    onDeleteProduct={isAdmin ? handleDeleteProduct : null}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
         </div>
-        <div className={`md:p-2 p-1 w-full sm:w-1/2 ${sortedProducts[1] ? (isDarkMode ? 'bg-gray-800' : 'bg-white') : 'bg-black'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
-          {sortedProducts[1] && (
-            <Product
-              product={sortedProducts[1]}
-              isAdmin={isAdmin}
-              onUpdateProduct={isAdmin ? handleUpdateProduct : null}
-              onDeleteProduct={isAdmin ? handleDeleteProduct : null}
-            />
-          )}
-        </div>
-        <div className={`md:p-2 p-1 w-full ${sortedProducts[2] ? (isDarkMode ? 'bg-gray-800' : 'bg-white') : 'bg-black'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
-          {sortedProducts[2] && (
-            <Product
-              product={sortedProducts[2]}
-              isAdmin={isAdmin}
-              onUpdateProduct={isAdmin ? handleUpdateProduct : null}
-              onDeleteProduct={isAdmin ? handleDeleteProduct : null}
-            />
-          )}
-        </div>
-      </div>
-      <div className="flex flex-wrap w-full lg:w-1/2">
-        <div className={`md:p-2 p-1 w-full ${sortedProducts[3] ? (isDarkMode ? 'bg-gray-800' : 'bg-white') : 'bg-black'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
-          {sortedProducts[3] && (
-            <Product
-              product={sortedProducts[3]}
-              isAdmin={isAdmin}
-              onUpdateProduct={isAdmin ? handleUpdateProduct : null}
-              onDeleteProduct={isAdmin ? handleDeleteProduct : null}
-            />
-          )}
-        </div>
-        <div className={`md:p-2 p-1 w-full sm:w-1/2 ${sortedProducts[4] ? (isDarkMode ? 'bg-gray-800' : 'bg-white') : 'bg-black'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
-          {sortedProducts[4] && (
-            <Product
-              product={sortedProducts[4]}
-              isAdmin={isAdmin}
-              onUpdateProduct={isAdmin ? handleUpdateProduct : null}
-              onDeleteProduct={isAdmin ? handleDeleteProduct : null}
-            />
-          )}
-        </div>
-        <div className={`md:p-2 p-1 w-full sm:w-1/2 ${sortedProducts[5] ? (isDarkMode ? 'bg-gray-800' : 'bg-white') : 'bg-black'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
-          {sortedProducts[5] && (
-            <Product
-              product={sortedProducts[5]}
-              isAdmin={isAdmin}
-              onUpdateProduct={isAdmin ? handleUpdateProduct : null}
-              onDeleteProduct={isAdmin ? handleDeleteProduct : null}
-            />
-          )}
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
+      </section>
     </>
   );
 };

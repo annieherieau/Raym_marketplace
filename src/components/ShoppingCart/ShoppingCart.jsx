@@ -28,7 +28,7 @@ export default function ShoppingCart({
   const [updateCart, setUpdateCart] = useAtom(updateCartAtom);
 
   // Récupération du mode sombre depuis le localStorage
-  const isDarkMode = localStorage.getItem('darkMode') === 'true';
+  const isDarkMode = localStorage.getItem("darkMode") === "true";
 
   const fetchCart = async () => {
     const { url, options } = buildRequestOptions("cart", "cart", {
@@ -42,7 +42,7 @@ export default function ShoppingCart({
       }
       const data = await response.json();
       const updatedItems = data.items.reduce((acc, item) => {
-        const existingItem = acc.find(i => i.id === item.id);
+        const existingItem = acc.find((i) => i.id === item.id);
         if (existingItem) {
           existingItem.quantity += item.quantity;
         } else {
@@ -53,8 +53,10 @@ export default function ShoppingCart({
       setCartItems(updatedItems);
       setCartAmount(data.amount);
     } catch (error) {
-      console.error("Error fetching cart:", error);
-      setError("Error fetching cart. Please try again later.");
+      console.error("Erreur lors de la récupération du panier:", error);
+      setError(
+        "Erreur lors de la récupération du panier. Veuillez réessayer plus tard."
+      );
     }
   };
 
@@ -83,7 +85,7 @@ export default function ShoppingCart({
       .then((response) => response.json())
       .then((response) => handleResponse(response, action))
       .catch((err) =>
-        setError(`Error occured. Please try again later. ${err}`)
+        setError(`Error occured. Veuillez réessayer plus tard. ${err}`)
       );
     setCartItems([]);
     setCartAmount(0);
@@ -118,7 +120,13 @@ export default function ShoppingCart({
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <DialogPanel className={`pointer-events-auto w-screen max-w-md rounded-l-2xl ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+                <DialogPanel
+                  className={`pointer-events-auto w-screen max-w-md rounded-l-2xl ${
+                    isDarkMode
+                      ? "bg-gray-800 text-white"
+                      : "bg-white text-black"
+                  }`}
+                >
                   <div className="flex h-full flex-col overflow-y-scroll shadow-xl">
                     <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                       <div className="flex items-start justify-between">
@@ -187,7 +195,7 @@ export default function ShoppingCart({
                       <p className="mt-0.5 text-sm">
                         Vos produits seront disponibles en magasin sous 24h.
                       </p>
-                      {cartAmount!=0 && (
+                      {cartAmount != 0 && (
                         <div className="mt-6">
                           <a
                             href="#"

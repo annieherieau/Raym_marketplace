@@ -69,7 +69,7 @@ const AccessibilityIcon = ({ setDarkMode }) => {
   return (
     <>
       <div
-        className="accessibility-icon fixed bottom-4 left-4 bg-blue-500 text-white p-4 rounded-full cursor-pointer z-50 flex items-center justify-center"
+        className="accessibility-icon fixed bottom-4 bg-blue-500 text-white p-4 rounded-full cursor-pointer z-50 flex items-center justify-center"
         onClick={togglePanel}
       >
         <i className="fas fa-universal-access text-2xl"></i>

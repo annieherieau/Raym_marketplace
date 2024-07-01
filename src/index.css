@@ -115,7 +115,7 @@ strong {
 .accessibility-icon {
   position: fixed;
   bottom: 16px;
-  left: 16px;
+  right: 16px;
   background-color: #007bff;
   color: white;
   width: 55px; 

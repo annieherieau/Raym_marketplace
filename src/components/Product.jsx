@@ -53,7 +53,7 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
         <h2 className={`title-font text-lg font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
           {product.name}
         </h2>
-        <p className="mt-1">{product.price ? `$${product.price}` : "$0.00"}</p>
+        <p className="mt-1">{product.price ? `${product.price.toFixed(2)}€` : "0.00€"}</p>
         <p className="mt-1 mb-4">{product.description}</p>
         {isLoggedIn && !isAdmin && (
           <CartButton onClick={handleAddToCart} />
@@ -102,4 +102,3 @@ Product.propTypes = {
 };
 
 export default Product;
-

@@ -116,7 +116,7 @@ const Shop = () => {
   return (
     <div className={`container mx-auto px-8 bg-black text-white rounded-[20px] overflow-hidden`}>
       <div className="flex justify-between items-center my-16">
-        <h1 className="text-3xl font-bold">Boutique</h1>
+        <h1 className={`sm:text-4xl text-3xl font-bold title-font ${isDarkMode ? 'text-green-400' : 'text-palegreen-500'} lg:w-1/3 lg:mb-0`}>Boutique</h1>
         <div className="flex items-center">
           <div className="mr-4">
             <label htmlFor="category" className="mr-2">Trier par catégorie:</label>
@@ -145,7 +145,7 @@ const Shop = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap -m-2">
+      <div className="flex flex-wrap -m-2 mb-8">
         {sortedProducts.map(product => (
           <div key={product.id} className="p-2 md:w-1/3">
             <Product
@@ -163,5 +163,3 @@ const Shop = () => {
 };
 
 export default Shop;
-
-

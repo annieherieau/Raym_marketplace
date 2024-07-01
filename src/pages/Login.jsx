@@ -33,7 +33,7 @@ export default function Login() {
             if (response) {
                 const { data, status } = await response.json();
                 if (status.code === 200) {
-                    setNotice({ title: "success", message: status.message });
+                    setNotice({ title: "success"});
 
                     // création du cookie
                     const cookieData = {
@@ -59,7 +59,7 @@ export default function Login() {
                 }
             }
         } catch (error) {
-            setNotice({ title: "Erreur", message: "Email ou mot de passe incorrect(s)" });
+            setNotice({ title: "Erreur", message: error.message });
             console.log(error.message);
         }
     };

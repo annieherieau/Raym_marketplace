@@ -110,3 +110,4 @@ const Configurator = () => {
 };
 
 export default Configurator;
+

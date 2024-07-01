@@ -1,4 +1,4 @@
-import React from 'react';
+
 import tdfLogo from '/../../assets/TdfLogo.jpg';
 import labLogo from '/../../assets/LabLogo.jpg';
 import onRoadMalo from '/../../assets/CorsicaEiffel.jpg'; 
@@ -12,7 +12,7 @@ const BentoGridTwo = () => {
             <div className="container px-5 py-8 mx-auto flex flex-wrap">
                 <div className="flex w-full mb-8 flex-wrap">
                     <h1 className="sm:text-3xl text-2xl title-font lg:mb-0 mb-4" style={{ backgroundColor: 'black', fontSize: '2.4rem' }}>
-                        <span style={{ fontFamily: 'Sonder Regular', color: 'yellow' }}>LA RAFALE :</span> <span style={{ color: 'white' }}>Élégance et puissance, leader incontesté</span>
+                        <span style={{ fontFamily: 'Sonder Regular', color: 'yellow' }}>OVERCHARGE Hybrid :</span> <span style={{ color: 'white' }}>Élégance et puissance, leader incontesté</span>
                     </h1>                
                 </div>
                 <div className="flex flex-wrap md:-m-2 -m-1">

@@ -121,6 +121,16 @@ export default function OrderPage() {
               </button>
             </div>
           )}
+          {paid && (
+            <div className="flex justify-end mb-20">
+              <button
+                onClick={() => navigate("/my_account?tab=orders")}
+                className={`ml-10 py-4 px-20 rounded-lg font-bold ${isDarkMode ? 'bg-palegreen-500 hover:bg-palegreen-700 text-white' : 'bg-palegreen-500 hover:bg-palegreen-700 text-black'}`}
+              >
+                Retour à la liste des commandes
+              </button>
+            </div>
+          )}
           <Checkout action={action} />
         </div>
       </div>

@@ -39,6 +39,10 @@ export default function Register() {
             isAdmin: responseData.admin
           };
           createCookie(cookieData, userData.remember_me);
+
+          // Redirection et rafraîchissement de la page
+          navigate("/");
+          window.location.reload();
         } else {
           setNotice({
             type: "error",
@@ -57,8 +61,9 @@ export default function Register() {
   useEffect(() => {
     if (isLoggedIn || notice.type == "success") {
       navigate("/");
+      window.location.reload();
     }
-  }, [isLoggedIn, notice]);
+  }, [isLoggedIn, notice, navigate]);
 
   return (
     <div>
@@ -143,7 +148,7 @@ export default function Register() {
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center mt-9 rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-palegreen hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="flex w-full justify-center mt-9 rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-palegreen-500 shadow-sm hover:bg-palegreen hover:text-palegreen-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Valider
                 </button>

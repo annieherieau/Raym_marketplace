@@ -6,7 +6,7 @@ import { userAtom, isAuthAtom } from "../../app/atoms";
 
 const Shop = () => {
   const user = useAtomValue(userAtom);
-  const isLoggedIn = useAtomValue(isAuthAtom);
+
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [colors, setColors] = useState([]);
@@ -17,7 +17,7 @@ const Shop = () => {
   const [loading, setLoading] = useState(true);
 
   // Récupération du mode sombre depuis le localStorage
-  const isDarkMode = localStorage.getItem('darkMode') === 'true';
+  const isDarkMode = localStorage.getItem("darkMode") === "true";
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -27,18 +27,20 @@ const Shop = () => {
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error("Réponse réseau incorrecte");
         }
         const data = await response.json();
-        const productsWithNumericPrice = data.map(product => ({
+        const productsWithNumericPrice = data.map((product) => ({
           ...product,
-          price: parseFloat(product.price)
+          price: parseFloat(product.price),
         }));
         setProducts(productsWithNumericPrice);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching products:", error);
-        setError("Error fetching products. Please try again later.");
+        console.error("Erreur lors de la récupération des produits:", error);
+        setError(
+          "Erreur lors de la récupération des produits. Veuillez réessayer plus tard."
+        );
         setLoading(false);
       }
     };
@@ -50,12 +52,12 @@ const Shop = () => {
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error("Réponse réseau incorrecte");
         }
         const data = await response.json();
         setCategories(data);
       } catch (error) {
-        console.error("Error fetching categories:", error);
+        console.error("Erreur lors de la récupération de categories:", error);
       }
     };
 
@@ -66,12 +68,12 @@ const Shop = () => {
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error("Réponse réseau incorrecte");
         }
         const data = await response.json();
         setColors(data);
       } catch (error) {
-        console.error("Error fetching colors:", error);
+        console.error("Erreur lors de la récupération des couleurs:", error);
       }
     };
 
@@ -92,9 +94,52 @@ const Shop = () => {
     setSortOrder(event.target.value);
   };
 
-  const filteredProducts = products.filter(product => {
-    return (selectedCategory === "all" || product.category.name === selectedCategory) &&
-           (selectedColor === "all" || product.color.collection === selectedColor);
+  const handleUpdateProduct = async (id, updatedProduct) => {
+    const { url, options } = buildRequestOptions("products", "update", {
+      id,
+      body: updatedProduct,
+      token: user.token,
+    });
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Réponse réseau incorrecte");
+      }
+      const updatedProductData = await response.json();
+      setProducts(
+        products.map((product) =>
+          product.id === id ? updatedProductData : product
+        )
+      );
+    } catch (error) {
+      console.error("Error updating product:", error);
+      setError("Error updating product. Veuillez réessayer plus tard.");
+    }
+  };
+
+  const handleDeleteProduct = async (id) => {
+    const { url, options } = buildRequestOptions("products", "delete", {
+      id,
+      token: user.token,
+    });
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Réponse réseau incorrecte");
+      }
+      setProducts(products.filter((product) => product.id !== id));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      setError("Error deleting product. Veuillez réessayer plus tard.");
+    }
+  };
+
+  const filteredProducts = products.filter((product) => {
+    return (
+      (selectedCategory === "all" ||
+        product.category.name === selectedCategory) &&
+      (selectedColor === "all" || product.color.collection === selectedColor)
+    );
   });
 
   const sortedProducts = filteredProducts.sort((a, b) => {
@@ -114,31 +159,64 @@ const Shop = () => {
   }
 
   return (
-    <div className={`container mx-auto px-8 bg-black text-white rounded-[20px] overflow-hidden`}>
+    <div
+      className={`container mx-auto px-8 bg-black text-white rounded-[20px] overflow-hidden`}
+    >
       <div className="flex justify-between items-center my-16">
-        <h1 className={`sm:text-4xl text-3xl font-bold title-font ${isDarkMode ? 'text-green-400' : 'text-palegreen-500'} lg:w-1/3 lg:mb-0`}>Boutique</h1>
+        <h1
+          className={`sm:text-4xl text-3xl font-bold title-font ${
+            isDarkMode ? "text-green-400" : "text-palegreen-500"
+          } lg:w-1/3 lg:mb-0`}
+        >
+          Boutique
+        </h1>
         <div className="flex items-center">
           <div className="mr-4">
-            <label htmlFor="category" className="mr-2">Trier par catégorie:</label>
-            <select id="category" value={selectedCategory} onChange={handleCategoryChange} className={`p-2 border rounded bg-gray-800 text-white`}>
+            <label htmlFor="category" className="mr-2">
+              Trier par catégorie:
+            </label>
+            <select
+              id="category"
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              className={`p-2 border rounded bg-gray-800 text-white`}
+            >
               <option value="all">Toutes</option>
-              {categories.map(category => (
-                <option key={category.id} value={category.name}>{category.name}</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.name}>
+                  {category.name}
+                </option>
               ))}
             </select>
           </div>
           <div className="mr-4">
-            <label htmlFor="color" className="mr-2">Trier par couleur:</label>
-            <select id="color" value={selectedColor} onChange={handleColorChange} className={`p-2 border rounded bg-gray-800 text-white`}>
+            <label htmlFor="color" className="mr-2">
+              Trier par couleur:
+            </label>
+            <select
+              id="color"
+              value={selectedColor}
+              onChange={handleColorChange}
+              className={`p-2 border rounded bg-gray-800 text-white`}
+            >
               <option value="all">Toutes</option>
-              {colors.map(color => (
-                <option key={color.id} value={color.collection}>{color.collection}</option>
+              {colors.map((color) => (
+                <option key={color.id} value={color.collection}>
+                  {color.collection}
+                </option>
               ))}
             </select>
           </div>
           <div>
-            <label htmlFor="sortOrder" className="mr-2">Trier par prix:</label>
-            <select id="sortOrder" value={sortOrder} onChange={handleSortOrderChange} className={`p-2 border rounded pr-8 bg-gray-800 text-white`}>
+            <label htmlFor="sortOrder" className="mr-2">
+              Trier par prix:
+            </label>
+            <select
+              id="sortOrder"
+              value={sortOrder}
+              onChange={handleSortOrderChange}
+              className={`p-2 border rounded pr-8 bg-gray-800 text-white`}
+            >
               <option value="asc">Croissant</option>
               <option value="desc">Décroissant</option>
             </select>
@@ -146,14 +224,12 @@ const Shop = () => {
         </div>
       </div>
       <div className="flex flex-wrap -m-2 mb-8">
-        {sortedProducts.map(product => (
+        {sortedProducts.map((product) => (
           <div key={product.id} className="p-2 md:w-1/3">
             <Product
               product={product}
-              isAdmin={false} 
-              onUpdateProduct={null}
-              onDeleteProduct={null}
-              isDarkMode={isDarkMode}
+              onUpdateProduct={user.isAdmin ? handleUpdateProduct : null}
+              onDeleteProduct={user.isAdmin ? handleDeleteProduct : null}
             />
           </div>
         ))}

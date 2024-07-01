@@ -54,7 +54,7 @@ const ProductPage = () => {
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
-          throw new Error("Failed to fetch product details");
+          throw new Error("Échec de la récupération de product details");
         }
         const data = await response.json();
         setProduct(data);
@@ -77,12 +77,15 @@ const ProductPage = () => {
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
-          throw new Error("Failed to fetch current user");
+          throw new Error("Échec de la récupération de  l'utilisateur actuel");
         }
         const data = await response.json();
         setCurrentUser(data);
       } catch (error) {
-        console.error("Error fetching current user:", error);
+        console.error(
+          "Erreur lors de la récupération de l'utilisateur actuel:",
+          error
+        );
       }
     };
 

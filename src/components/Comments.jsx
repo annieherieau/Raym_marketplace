@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { buildRequestOptions } from '../app/api';
-import CreateComment from '../pages/CreateComment';
-import EditComment from '../pages/EditComment';
-import StarRating from '../components/StarRating';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { buildRequestOptions } from "../app/api";
+import CreateComment from "../pages/CreateComment";
+import EditComment from "../pages/EditComment";
+import StarRating from "../components/StarRating";
 import { userAtom, isAuthAtom } from "../app/atoms";
 import { useAtomValue } from "jotai";
 
@@ -18,17 +18,19 @@ const Comments = ({ productId, token }) => {
   const navigate = useNavigate();
 
   const fetchComments = async () => {
-    const { url, options } = buildRequestOptions('products', 'fetch_comments', { id: productId });
+    const { url, options } = buildRequestOptions("products", "fetch_comments", {
+      id: productId,
+    });
 
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
-        throw new Error('Failed to fetch comments');
+        throw new Error("Échec de la récupération de comments");
       }
       const data = await response.json();
       setComments(data);
     } catch (error) {
-      console.error("Error fetching comments:", error);
+      console.error("Erreur lors de la récupération de comments:", error);
       setError(error.message);
     }
   };
@@ -44,12 +46,16 @@ const Comments = ({ productId, token }) => {
         return;
       }
 
-      const { url, options } = buildRequestOptions(null, 'admin_check', { token: user.token });
+      const { url, options } = buildRequestOptions(null, "admin_check", {
+        token: user.token,
+      });
 
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
-          throw new Error("Failed to check admin status");
+          throw new Error(
+            "Échec de la vérification du statut d'administrateur"
+          );
         }
 
         const data = await response.json();
@@ -65,7 +71,7 @@ const Comments = ({ productId, token }) => {
   }, [isLoggedIn, user.token]);
 
   const handleDelete = async (commentId) => {
-    const { url, options } = buildRequestOptions('comments', 'delete', {
+    const { url, options } = buildRequestOptions("comments", "delete", {
       id: commentId,
       token,
     });
@@ -73,9 +79,9 @@ const Comments = ({ productId, token }) => {
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
-        throw new Error('Failed to delete comment');
+        throw new Error("Échec de la suppression de comment");
       }
-      setComments(comments.filter(comment => comment.id !== commentId));
+      setComments(comments.filter((comment) => comment.id !== commentId));
     } catch (error) {
       console.error("Error deleting comment:", error);
       setError(error.message);
@@ -87,15 +93,16 @@ const Comments = ({ productId, token }) => {
   };
 
   const handleEditSubmit = async (id) => {
-
-      await fetchComments();
-      setEditCommentId(null);
-      navigate(`/product/${productId}`);
-      console.error("Error editing comment:", error);
-      setError(error.message);
+    await fetchComments();
+    setEditCommentId(null);
+    navigate(`/product/${productId}`);
+    console.error("Error editing comment:", error);
+    setError(error.message);
   };
 
-  const userHasCommented = comments.some(comment => comment.user_id === user.id);
+  const userHasCommented = comments.some(
+    (comment) => comment.user_id === user.id
+  );
 
   if (loading) {
     return <div className="text-center py-6">Loading...</div>;
@@ -107,9 +114,11 @@ const Comments = ({ productId, token }) => {
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-black shadow-md rounded-lg">
-      <h3 className="text-2xl font-semibold mb-4 text-green-400">Commentaires</h3>
+      <h3 className="text-2xl font-semibold mb-4 text-green-400">
+        Commentaires
+      </h3>
       <ul className="space-y-4">
-        {comments.map(comment => (
+        {comments.map((comment) => (
           <li key={comment.id} className="border-b pb-4">
             {editCommentId === comment.id ? (
               <EditComment
@@ -123,7 +132,14 @@ const Comments = ({ productId, token }) => {
               <>
                 <p className="text-gray-100">{comment.content}</p>
                 <StarRating rating={comment.rating} onRatingChange={() => {}} />
-                {comment.user && <p className="text-gray-100">Par : {comment.user.first_name ? comment.user.first_name : 'utilisateur anonyme'}</p>}
+                {comment.user && (
+                  <p className="text-gray-100">
+                    Par :{" "}
+                    {comment.user.first_name
+                      ? comment.user.first_name
+                      : "utilisateur anonyme"}
+                  </p>
+                )}
                 {isLoggedIn && (
                   <div className="mt-2 space-x-2">
                     {comment.user_id === user.id && (
@@ -151,7 +167,11 @@ const Comments = ({ productId, token }) => {
       </ul>
       {isLoggedIn && !userHasCommented && (
         <div className="mt-6">
-          <CreateComment productId={productId} token={token} onCommentCreated={fetchComments} />
+          <CreateComment
+            productId={productId}
+            token={token}
+            onCommentCreated={fetchComments}
+          />
         </div>
       )}
     </div>

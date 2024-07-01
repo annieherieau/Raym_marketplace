@@ -5,7 +5,7 @@ import { buildRequestOptions } from "../app/api";
 import UserInfos from "../components/UserInfos";
 import UserForm from "../components/UserForm";
 import OrdersList from "../components/OrdersList";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import Modal from "../components/Modal/Modal";
 import { removeCookie } from "../app/utils";
 
@@ -21,6 +21,14 @@ export default function MyAccount() {
   const [modalTitle, setModalTitle] = useState('');
   const [modalContent, setModalContent] = useState(null);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab) {
+      setActiveTab(tab);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (current_user.token) {
@@ -113,7 +121,7 @@ export default function MyAccount() {
         <main className="flex-1 p-6">
           {userData && activeTab === 'profile' && (
             <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
-              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{ fontFamily: 'Chakra petch' }}>
+              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{ fontFamily: 'Chakra Petch' }}>
                 Mes informations
               </h1>
               {!updateUser && (
@@ -161,35 +169,37 @@ export default function MyAccount() {
 
           {userData && activeTab === 'edit' && (
             <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
-              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{ fontFamily: 'Chakra petch' }}>
+              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{ fontFamily: 'Chakra Petch' }}>
                 Modifier mes informations
               </h1>
-              <UserForm user={userData} onUpdate={() => setActiveTab('profile')} />
+              <UserForm user={userData} setUpdateUser={setUpdateUser} />
+              <div className="flex justify-center mt-4">
+                <button
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  onClick={() => setActiveTab('profile')}
+                >
+                  Retour
+                </button>
+              </div>
             </section>
           )}
 
-          {userData && activeTab === 'orders' && !current_user.isAdmin && (
+          {activeTab === 'orders' && (
             <section className="bg-black p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
-              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{ fontFamily: 'Chakra petch' }}>
-                Mes Commandes
+              <h1 className="text-5xl font-semibold mb-4 text-palegreen-500 text-center" style={{ fontFamily: 'Chakra Petch' }}>
+                Mes commandes
               </h1>
               <OrdersList />
             </section>
           )}
-
-          {!userData && isLoggedIn && (
-            <section className="bg-white p-6 rounded-lg shadow-md md:w-5/6 mx-auto">
-              <h1 className="text-2xl font-semibold mb-4 text-center" style={{ fontFamily: 'Chakra petch' }}>Mes informations</h1>
-              {error && <p className="text-red-500">{error}</p>}
-              <OrdersList />
-            </section>
-          )}
-
-          <Modal show={showModal} onClose={closeModal} title={modalTitle}>
-            {modalContent}
-          </Modal>
         </main>
       </div>
+
+      {showModal && (
+        <Modal title={modalTitle} onClose={closeModal}>
+          {modalContent}
+        </Modal>
+      )}
     </div>
   );
 }

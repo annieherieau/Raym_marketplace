@@ -1,5 +1,5 @@
 import { useAtom, useAtomValue } from "jotai";
-import { isAuthAtom, userAtom } from "../app/atoms";
+import { isAuthAtom, noticeAtom, userAtom } from "../app/atoms";
 import { useState, useEffect } from "react";
 import { buildRequestOptions } from "../app/api";
 import UserInfos from "../components/UserInfos";
@@ -18,8 +18,7 @@ export default function MyAccount() {
   const [requestOptions, setRequestOptions] = useState(undefined);
   const [activeTab, setActiveTab] = useState('profile');
   const [showModal, setShowModal] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalContent, setModalContent] = useState(null);
+  const [notice, setNotice] = useAtom(noticeAtom)
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -75,15 +74,17 @@ export default function MyAccount() {
     const { url, options } = buildRequestOptions('users', 'delete', { id: current_user.id, token: current_user.token });
     try {
       const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error('Failed to delete user');
-      }
+      // if (!response.ok) {
+      //   throw new Error('Failed to delete user');
+      // }
+      setNotice({title:'Demande de suppression', message: response.
+      })
       setCurrentUser(false); // Réinitialiser l'état de l'utilisateur après suppression
       removeCookie();
       navigate('/'); // Rediriger vers la page d'accueil ou de connexion
     } catch (error) {
       console.error('Error deleting user:', error);
-      setError('Failed to delete account');
+      setNotice({title: 'Erreur', message: 'Failed to delete account'});
     }
   };
 
@@ -136,27 +137,8 @@ export default function MyAccount() {
                     </button>
                     <button
                       className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-800"
-                      onClick={() =>
-                        openModal(
-                          'Suppression du compte',
-                          <div className="text-white">
-                            <p>Êtes-vous sûr de vouloir supprimer votre compte ?</p>
-                            <div className="flex justify-center mt-4 space-x-6">
-                              <button
-                                onClick={handleDeleteAccount}
-                                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-800"
-                              >
-                                Oui
-                              </button>
-                              <button
-                                onClick={closeModal}
-                                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-800"
-                              >
-                                Non
-                              </button>
-                            </div>
-                          </div>
-                        )
+                      onClick={() =>setShowModal(true)
+                        
                       }
                     >
                       Supprimer mon compte
@@ -196,9 +178,29 @@ export default function MyAccount() {
       </div>
 
       {showModal && (
-        <Modal title={modalTitle} onClose={closeModal}>
-          {modalContent}
-        </Modal>
+         <Modal
+         show={showModal}
+         onClose={() => setShowModal(false)}
+         title="Suppression du compte"
+       >
+         <div>
+                            <p>Êtes-vous sûr de vouloir supprimer votre compte ?</p>
+                            <div className="flex justify-center mt-4 space-x-6">
+                              <button
+                                onClick={handleDeleteAccount}
+                                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-800"
+                              >
+                                Oui
+                              </button>
+                              <button
+                                onClick={closeModal}
+                                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-800"
+                              >
+                                Non
+                              </button>
+                            </div>
+                          </div>
+       </Modal>
       )}
     </div>
   );

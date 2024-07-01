@@ -2,14 +2,15 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ProductForm from "./ProductForm";
 import { buildRequestOptions } from "../app/api";
-import { useAtomValue } from "jotai";
-import { userAtom } from "../app/atoms";
+import { useAtom, useAtomValue } from "jotai";
+import { noticeAtom, userAtom } from "../app/atoms";
 
-const CreateProduct = () => {
+const CreateProduct = ({ redirect }) => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [colors, setColors] = useState([]);
   const user = useAtomValue(userAtom);
+  const [notice, setNotice] = useAtom(noticeAtom);
 
   useEffect(() => {
     if (!user || !user.token) {
@@ -48,7 +49,12 @@ const CreateProduct = () => {
   }, [user]);
 
   const handleCreateProduct = (newProduct) => {
-    navigate("/admin"); // Redirige vers la liste des produits après la création
+    console.log(newProduct);
+    setNotice({
+      title: "Nouveau Produit",
+      message: "Nouveau produit créé avec succès",
+    });
+    redirect();
   };
 
   return (

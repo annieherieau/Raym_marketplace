@@ -71,7 +71,7 @@ const Configurator = () => {
           <div
             className=" bg-gray-100 rounded-3xl min-w-36 bg-cover bg-center"
             style={{
-              backgroundImage: `url(${offRoadConfig})`
+              // backgroundImage: `url(${offRoadConfig})`
             }}
           >
             <div className=" bg-black">

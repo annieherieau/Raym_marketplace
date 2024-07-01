@@ -20,7 +20,7 @@ export default function ContactForm() {
     event.preventDefault();
 
     if (!captchaValue) {
-      setNotice({ title: "Erreur", message: "Veuillez compléter le CAPTCHA", show: true});
+      setNotice({ title: "Erreur", message: "Veuillez compléter le CAPTCHA"});
       return;
     }
 
@@ -49,13 +49,13 @@ export default function ContactForm() {
         }
       }
     } catch (error) {
-      setNotice({ type: "Erreur", message: "Une erreur s'est produite" });
+      setNotice({ title: "Erreur", message: "Une erreur s'est produite, veuillez réessayer." });
       console.log(error.message);
     }
   };
 
   useEffect(() => {
-    if (notice.type === "success") {
+    if (notice.title === "success") {
       document.forms["contact-form"].reset();
     }
   }, [notice]);

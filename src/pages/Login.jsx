@@ -33,7 +33,7 @@ export default function Login() {
             if (response) {
                 const { data, status } = await response.json();
                 if (status.code === 200) {
-                    setNotice({ type: "success", message: status.message });
+                    setNotice({ title: "success", message: status.message });
 
                     // création du cookie
                     const cookieData = {
@@ -53,19 +53,19 @@ export default function Login() {
                     });
                 } else {
                     setNotice({
-                        type: "error",
-                        message: `Erreur ${status.code}: ${status.message}`,
+                        title: "Erreur",
+                        message: `${status.code}: ${status.message}`,
                     });
                 }
             }
         } catch (error) {
-            setNotice({ type: "error", message: "Invalid Email or Password" });
+            setNotice({ title: "Erreur", message: "Email ou mot de passe incorrect(s)" });
             console.log(error.message);
         }
     };
 
     useEffect(() => {
-        if (isLoggedIn || notice.type === 'success') {
+        if (isLoggedIn || notice.title === 'success') {
             navigate(`/${redirect}`);
         }
     }, [isLoggedIn, notice]);

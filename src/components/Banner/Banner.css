@@ -11,20 +11,6 @@
   letter-spacing: 0.05px;
 }
 
-.letters {
-  display: inline-block;
-  vertical-align: middle;
-  letter-spacing: 0.05em;
-}
-
-.letter {
-  display: inline-block;
-}
-
-.spaced {
-  margin-left: 0.5em;
-}
-
 @media (max-width: 768px) {
   .text-container {
     flex-direction: column;
@@ -33,14 +19,6 @@
 
   .static-text {
     text-align: center;
-  }
-
-  .spaced {
-    margin-left: 0;
-    margin-top: 0.5em;
-    text-align: center;
-    font-size: 0.8em;
-    white-space: nowrap;
   }
 
   .banner {

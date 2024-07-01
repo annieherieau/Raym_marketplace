@@ -4,7 +4,7 @@ const JumbotronSince = () => {
       <div className="container px-5 py-8 mx-auto">
         <div className="flex flex-col text-center w-full">
           <h1 className="sm:text-5xl text-4xl font-medium title-font mb-4 text-white">
-          Depuis 2024, nous redéfinissons le cyclisme : on road, off road, et hybrid. Faites confiance à notre expertise et<span className="font-bold" style={{ color: 'palegreen' }}> découvrez l'innovation à chaque tour de pédale !</span>
+          Nous redéfinissons le cyclisme : on road, off road, et hybrid. Faites confiance à notre expertise et<span className="font-bold" style={{ color: 'palegreen' }}> découvrez l'innovation à chaque tour de pédale !</span>
           </h1>
         </div>
       </div>

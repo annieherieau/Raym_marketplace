@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { buildRequestOptions } from "../app/api";
 import CartButton from "./CartButton/CartButton";
 import { useRef } from "react";
+import SchemaOrg from './SchemaOrg';
 
 const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
   const user = useAtomValue(userAtom);
@@ -37,6 +38,26 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
 
   const handleDeleteClick = () => {
     onDeleteProduct(product.id);
+  };
+
+  const schemaOrgData = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.name,
+    "image": product.photo_url || "https://dummyimage.com/420x260",
+    "description": product.description,
+    "sku": product.sku || "SKU_NON_DEFINI", // Ajouter un SKU par défaut si nécessaire
+    "brand": {
+      "@type": "Brand",
+      "name": product.brand || "Votre Marque"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "EUR",
+      "price": product.price || 0,
+      "availability": product.availability || "https://schema.org/InStock", // Adaptez selon la disponibilité réelle
+      "url": `https://votresite.com/products/${product.id}` // URL du produit
+    }
   };
 
   return (
@@ -81,6 +102,7 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
           </div>
         )}
       </div>
+      <SchemaOrg data={schemaOrgData} />
     </div>
   );
 };

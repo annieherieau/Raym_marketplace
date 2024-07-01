@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import CartItem from "./ShoppingCart/CartItem";
+import { useAtomValue } from "jotai";
+import { userAtom } from "../app/atoms";
 
 export default function OrderCard({ order, paid, error, details = true }) {
   const isDarkMode = localStorage.getItem('darkMode') === 'true';
+  const user = useAtomValue(userAtom);
 
   if (order) {
     return (
@@ -10,9 +13,9 @@ export default function OrderCard({ order, paid, error, details = true }) {
         <h1 className="text-xl font-bold mb-2">
           Commande n° {order.id || order.order.id}
         </h1>
-        <p className="mb-1">
-          Client: {order.user_email}
-        </p>
+        {user.admin && (<p className="mb-1">
+         Client: {order.user_email}
+        </p>)}
         {error && <p className="text-red-500 mb-1">{error}</p>}
         <p className="mb-1">
           Total: {order.amount}€

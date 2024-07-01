@@ -18,7 +18,6 @@ const Comments = ({ productId, token }) => {
   const navigate = useNavigate();
 
   const fetchComments = async () => {
-    console.log("Fetching comments for productId:", productId);
     const { url, options } = buildRequestOptions('products', 'fetch_comments', { id: productId });
 
     try {
@@ -27,7 +26,6 @@ const Comments = ({ productId, token }) => {
         throw new Error('Failed to fetch comments');
       }
       const data = await response.json();
-      console.log("Fetched comments:", data);
       setComments(data);
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -47,7 +45,6 @@ const Comments = ({ productId, token }) => {
       }
 
       const { url, options } = buildRequestOptions(null, 'admin_check', { token: user.token });
-      console.log("Checking admin status for token:", user.token);
 
       try {
         const response = await fetch(url, options);
@@ -56,7 +53,6 @@ const Comments = ({ productId, token }) => {
         }
 
         const data = await response.json();
-        console.log("Admin status:", data.admin);
         setIsAdmin(data.admin);
       } catch (error) {
         console.error("Error checking admin status:", error);
@@ -69,7 +65,6 @@ const Comments = ({ productId, token }) => {
   }, [isLoggedIn, user.token]);
 
   const handleDelete = async (commentId) => {
-    console.log("Deleting comment with id:", commentId);
     const { url, options } = buildRequestOptions('comments', 'delete', {
       id: commentId,
       token,
@@ -81,7 +76,6 @@ const Comments = ({ productId, token }) => {
         throw new Error('Failed to delete comment');
       }
       setComments(comments.filter(comment => comment.id !== commentId));
-      console.log("Deleted comment with id:", commentId);
     } catch (error) {
       console.error("Error deleting comment:", error);
       setError(error.message);
@@ -89,7 +83,6 @@ const Comments = ({ productId, token }) => {
   };
 
   const handleEditClick = (commentId) => {
-    console.log("Editing comment with id:", commentId);
     setEditCommentId(commentId);
   };
 

@@ -6,6 +6,7 @@ import { buildRequestOptions } from "../../app/api";
 import { useEffect } from "react";
 import CartButton from "../CartButton/CartButton.jsx";
 import Modal from "../Modal/Modal.jsx";
+import "./Carousel.css"; 
 
 const Carousel = ({ products, selectedProduct }) => {
   const { isAdmin, token } = useAtomValue(userAtom);
@@ -57,14 +58,14 @@ const Carousel = ({ products, selectedProduct }) => {
   }, [products, selectedProduct]);
 
   return (
-    <div className="relative">
-      <div className="overflow-hidden p-4">
+    <div className="relative w-full h-full">
+      <div className="overflow-hidden p-4 w-full h-full">
         <img
           src={products[currentIndex].photo_url}
           alt={`${products[currentIndex].name}`}
-          className="w-full h-auto"
+          className="w-full h-full object-cover"
         />
-        <div className="bg-gray-800 bg-opacity-50 rounded-md py-2 mt-3 text-center">
+        <div className="rounded-md py-2 mt-3 text-center">
           <h3 className="text-base font-semibold text-white sm:text-lg">
             {products[currentIndex].name}
           </h3>
@@ -80,7 +81,7 @@ const Carousel = ({ products, selectedProduct }) => {
       </div>
       <button
         onClick={handlePrevious}
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 shadow-lg focus:outline-none"
+        className="arrow-button left"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +89,6 @@ const Carousel = ({ products, selectedProduct }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="size-6"
         >
           <path
             strokeLinecap="round"
@@ -99,7 +99,7 @@ const Carousel = ({ products, selectedProduct }) => {
       </button>
       <button
         onClick={handleNext}
-        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 shadow-lg focus:outline-none"
+        className="arrow-button right"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +107,6 @@ const Carousel = ({ products, selectedProduct }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="size-6"
         >
           <path
             strokeLinecap="round"
@@ -143,3 +142,4 @@ const Carousel = ({ products, selectedProduct }) => {
 };
 
 export default Carousel;
+

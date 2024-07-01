@@ -187,7 +187,7 @@ export default function ShoppingCart({
                       <p className="mt-0.5 text-sm">
                         Vos produits seront disponibles en magasin sous 24h.
                       </p>
-                      {cartAmount && (
+                      {cartAmount!=0 && (
                         <div className="mt-6">
                           <a
                             href="#"

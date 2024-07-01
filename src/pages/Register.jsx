@@ -28,8 +28,7 @@ export default function Register() {
       if (response) {
         const responseData = await response.json();
         if (response.status == 201) {
-          console.log(response);
-          setNotice({ type: "success", message: "New user created" });
+          setNotice({ title: "success" });
 
           // creéation du cookie
           const cookieData = {
@@ -45,21 +44,21 @@ export default function Register() {
           window.location.reload();
         } else {
           setNotice({
-            type: "error",
-            message: `Erreur ${response.status}: ${JSON.stringify(
+            title: "Erreur",
+            message: `${response.status}: ${JSON.stringify(
               responseData.errors
             )}`,
           });
         }
       }
     } catch (error) {
-      setNotice({ type: "error", message: error.message });
+      setNotice({ title: "Erreur", message: error.message });
       console.log(error.message);
     }
   };
 
   useEffect(() => {
-    if (isLoggedIn || notice.type == "success") {
+    if (isLoggedIn || notice.title == "success") {
       navigate("/");
       window.location.reload();
     }

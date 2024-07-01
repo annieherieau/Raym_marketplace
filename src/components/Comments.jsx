@@ -28,6 +28,7 @@ const Comments = ({ productId, token }) => {
       const data = await response.json();
       setComments(data);
     } catch (error) {
+      console.error("Error fetching comments:", error);
       setError(error.message);
     }
   };
@@ -76,6 +77,7 @@ const Comments = ({ productId, token }) => {
       }
       setComments(comments.filter(comment => comment.id !== commentId));
     } catch (error) {
+      console.error("Error deleting comment:", error);
       setError(error.message);
     }
   };
@@ -84,23 +86,13 @@ const Comments = ({ productId, token }) => {
     setEditCommentId(commentId);
   };
 
-  const handleEditSubmit = async (id, commentData) => {
-    const { url, options } = buildRequestOptions('comments', 'update', {
-      id,
-      body: commentData,
-      token,
-    });
+  const handleEditSubmit = async (id) => {
 
-    try {
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error('Failed to edit comment');
-      }
       await fetchComments();
       setEditCommentId(null);
-    } catch (error) {
+      navigate(`/product/${productId}`);
+      console.error("Error editing comment:", error);
       setError(error.message);
-    }
   };
 
   const userHasCommented = comments.some(comment => comment.user_id === user.id);
@@ -125,12 +117,13 @@ const Comments = ({ productId, token }) => {
                 commentId={comment.id}
                 token={token}
                 onCancel={() => setEditCommentId(null)}
+                onCommentEdited={handleEditSubmit}
               />
             ) : (
               <>
                 <p className="text-gray-100">{comment.content}</p>
                 <StarRating rating={comment.rating} onRatingChange={() => {}} />
-                {comment.user && <p className="text-gray-100">Par : {comment.user.email}</p>}
+                {comment.user && <p className="text-gray-100">Par : {comment.user.first_name ? comment.user.first_name : 'utilisateur anonyme'}</p>}
                 {isLoggedIn && (
                   <div className="mt-2 space-x-2">
                     {comment.user_id === user.id && (

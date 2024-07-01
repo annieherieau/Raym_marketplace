@@ -114,13 +114,13 @@ const Shop = () => {
   }
 
   return (
-    <div className={`container mx-auto px-8 ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'} rounded-[20px] overflow-hidden`}>
+    <div className={`container mx-auto px-8 bg-black text-white rounded-[20px] overflow-hidden`}>
       <div className="flex justify-between items-center my-16">
         <h1 className="text-3xl font-bold">Boutique</h1>
         <div className="flex items-center">
           <div className="mr-4">
             <label htmlFor="category" className="mr-2">Trier par catégorie:</label>
-            <select id="category" value={selectedCategory} onChange={handleCategoryChange} className={`p-2 border rounded ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+            <select id="category" value={selectedCategory} onChange={handleCategoryChange} className={`p-2 border rounded bg-gray-800 text-white`}>
               <option value="all">Toutes</option>
               {categories.map(category => (
                 <option key={category.id} value={category.name}>{category.name}</option>
@@ -129,7 +129,7 @@ const Shop = () => {
           </div>
           <div className="mr-4">
             <label htmlFor="color" className="mr-2">Trier par couleur:</label>
-            <select id="color" value={selectedColor} onChange={handleColorChange} className={`p-2 border rounded ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+            <select id="color" value={selectedColor} onChange={handleColorChange} className={`p-2 border rounded bg-gray-800 text-white`}>
               <option value="all">Toutes</option>
               {colors.map(color => (
                 <option key={color.id} value={color.collection}>{color.collection}</option>
@@ -138,16 +138,16 @@ const Shop = () => {
           </div>
           <div>
             <label htmlFor="sortOrder" className="mr-2">Trier par prix:</label>
-            <select id="sortOrder" value={sortOrder} onChange={handleSortOrderChange} className={`p-2 border rounded pr-8 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+            <select id="sortOrder" value={sortOrder} onChange={handleSortOrderChange} className={`p-2 border rounded pr-8 bg-gray-800 text-white`}>
               <option value="asc">Croissant</option>
               <option value="desc">Décroissant</option>
             </select>
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap -m-4">
+      <div className="flex flex-wrap -m-2">
         {sortedProducts.map(product => (
-          <div key={product.id} className="p-4 md:w-1/3">
+          <div key={product.id} className="p-2 md:w-1/3">
             <Product
               product={product}
               isAdmin={false} 
@@ -163,3 +163,5 @@ const Shop = () => {
 };
 
 export default Shop;
+
+

@@ -59,14 +59,14 @@ const MaintenanceHero = () => {
                                 </a>
                             </div>
                             <div className="inline-flex items-center justify-center flex-shrink-0 w-64 h-64 text-brown-500 rounded-full sm:w-72 sm:h-72 sm:mr-10">
-                                <img src={repair3}alt="" className="w-full h-full object-cover rounded-full"/>
+                                <img src={repair2}alt="" className="w-full h-full object-cover rounded-full"/>
                             </div>
                         </div>
 
                         {/* Troisième bloc de conseils */}
                         <div className="flex flex-col items-center pb-10 mx-auto mb-10 border-b border-gray-200 lg:w-3/5 sm:flex-row">
                             <div className="inline-flex items-center justify-center flex-shrink-0 w-64 h-64 text-brown-500 rounded-full sm:w-72 sm:h-72 sm:mr-10">
-                                <img src={repair2} alt="Repair Image 3" className="w-full h-full object-cover rounded-full" />
+                                <img src={repair3} alt="Repair Image 3" className="w-full h-full object-cover rounded-full" />
                             </div>
                             <div className="flex-grow mt-6 text-center sm:text-left sm:mt-0">
                                 <h2 className="entretien mb-2 text-3xl font-medium title-font " style={{ fontFamily: 'Chakra Petch' }}>TOUS LES 3 À 6 MOIS</h2>

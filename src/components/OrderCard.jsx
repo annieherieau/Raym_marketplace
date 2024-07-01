@@ -5,6 +5,7 @@ export default function OrderCard({ order, paid, error, details = true }) {
   const isDarkMode = localStorage.getItem('darkMode') === 'true';
 
   if (order) {
+    const amount = parseFloat(order.amount).toFixed(2); // Conversion en nombre et ajout de toFixed(2)
     return (
       <div className={`shadow-md rounded-lg p-6 mb-4 ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
         <h1 className="text-xl font-bold mb-2">
@@ -15,7 +16,7 @@ export default function OrderCard({ order, paid, error, details = true }) {
         </p>
         {error && <p className="text-red-500 mb-1">{error}</p>}
         <p className="mb-1">
-          Total: {order.amount}€
+          Total: {amount}€
         </p>
         <p className={`text-sm mb-4 ${paid ? 'text-green-500' : 'text-yellow-500'}`}>
           {paid ? "Payé" : "En attente de paiement"}

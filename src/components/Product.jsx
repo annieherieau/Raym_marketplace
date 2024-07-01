@@ -70,7 +70,7 @@ const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
         </h2>
         <p className="mt-1">{product.price ? `${product.price.toFixed(2)}€` : "0.00€"}</p>
         <p className="mt-1 mb-4">{product.description}</p>
-        {isLoggedIn && !isAdmin && (
+        {!isAdmin && (
           <CartButton onClick={handleAddToCart} />
         )}
         <Link

@@ -214,7 +214,7 @@ const ProductList = () => {
     </div>
     <div className="flex flex-wrap md:-m-2 -m-1" style={{ borderRadius: '20px' }}>
       <div className="flex flex-wrap w-full lg:w-1/2">
-        <div className={`md:p-2 p-1 w-full sm:w-1/2 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
+        <div className={`md:p-2 p-1 w-full sm:w-1/2 ${sortedProducts[0] ? (isDarkMode ? 'bg-gray-800' : 'bg-white') : 'bg-black'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
           {sortedProducts[0] && (
             <Product
               product={sortedProducts[0]}
@@ -224,7 +224,7 @@ const ProductList = () => {
             />
           )}
         </div>
-        <div className={`md:p-2 p-1 w-full sm:w-1/2 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
+        <div className={`md:p-2 p-1 w-full sm:w-1/2 ${sortedProducts[1] ? (isDarkMode ? 'bg-gray-800' : 'bg-white') : 'bg-black'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
           {sortedProducts[1] && (
             <Product
               product={sortedProducts[1]}
@@ -234,7 +234,7 @@ const ProductList = () => {
             />
           )}
         </div>
-        <div className={`md:p-2 p-1 w-full ${isDarkMode ? 'bg-gray-800' : 'bg-white'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
+        <div className={`md:p-2 p-1 w-full ${sortedProducts[2] ? (isDarkMode ? 'bg-gray-800' : 'bg-white') : 'bg-black'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
           {sortedProducts[2] && (
             <Product
               product={sortedProducts[2]}
@@ -246,7 +246,7 @@ const ProductList = () => {
         </div>
       </div>
       <div className="flex flex-wrap w-full lg:w-1/2">
-        <div className={`md:p-2 p-1 w-full ${isDarkMode ? 'bg-gray-800' : 'bg-white'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
+        <div className={`md:p-2 p-1 w-full ${sortedProducts[3] ? (isDarkMode ? 'bg-gray-800' : 'bg-white') : 'bg-black'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
           {sortedProducts[3] && (
             <Product
               product={sortedProducts[3]}
@@ -256,7 +256,7 @@ const ProductList = () => {
             />
           )}
         </div>
-        <div className={`md:p-2 p-1 w-full sm:w-1/2 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
+        <div className={`md:p-2 p-1 w-full sm:w-1/2 ${sortedProducts[4] ? (isDarkMode ? 'bg-gray-800' : 'bg-white') : 'bg-black'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
           {sortedProducts[4] && (
             <Product
               product={sortedProducts[4]}
@@ -266,7 +266,7 @@ const ProductList = () => {
             />
           )}
         </div>
-        <div className={`md:p-2 p-1 w-full sm:w-1/2 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
+        <div className={`md:p-2 p-1 w-full sm:w-1/2 ${sortedProducts[5] ? (isDarkMode ? 'bg-gray-800' : 'bg-white') : 'bg-black'} border border-black`} style={{ borderWidth: '8px', borderRadius: '20px' }}>
           {sortedProducts[5] && (
             <Product
               product={sortedProducts[5]}

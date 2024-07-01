@@ -6,7 +6,7 @@ import { userAtom, isAuthAtom } from "../../app/atoms";
 
 const Shop = () => {
   const user = useAtomValue(userAtom);
-  const isLoggedIn = useAtomValue(isAuthAtom);
+
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [colors, setColors] = useState([]);
@@ -92,6 +92,46 @@ const Shop = () => {
 
   const handleSortOrderChange = (event) => {
     setSortOrder(event.target.value);
+  };
+
+  const handleUpdateProduct = async (id, updatedProduct) => {
+    const { url, options } = buildRequestOptions("products", "update", {
+      id,
+      body: updatedProduct,
+      token: user.token,
+    });
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Réponse réseau incorrecte");
+      }
+      const updatedProductData = await response.json();
+      setProducts(
+        products.map((product) =>
+          product.id === id ? updatedProductData : product
+        )
+      );
+    } catch (error) {
+      console.error("Error updating product:", error);
+      setError("Error updating product. Veuillez réessayer plus tard.");
+    }
+  };
+
+  const handleDeleteProduct = async (id) => {
+    const { url, options } = buildRequestOptions("products", "delete", {
+      id,
+      token: user.token,
+    });
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Réponse réseau incorrecte");
+      }
+      setProducts(products.filter((product) => product.id !== id));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      setError("Error deleting product. Veuillez réessayer plus tard.");
+    }
   };
 
   const filteredProducts = products.filter((product) => {
@@ -188,10 +228,8 @@ const Shop = () => {
           <div key={product.id} className="p-2 md:w-1/3">
             <Product
               product={product}
-              isAdmin={false}
-              onUpdateProduct={null}
-              onDeleteProduct={null}
-              isDarkMode={isDarkMode}
+              onUpdateProduct={user.isAdmin ? handleUpdateProduct : null}
+              onDeleteProduct={user.isAdmin ? handleDeleteProduct : null}
             />
           </div>
         ))}

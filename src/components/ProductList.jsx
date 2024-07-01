@@ -285,7 +285,6 @@ const ProductList = () => {
                 {sortedProducts[0] && (
                   <Product
                     product={sortedProducts[0]}
-                    isAdmin={isAdmin}
                     onUpdateProduct={isAdmin ? handleUpdateProduct : null}
                     onDeleteProduct={isAdmin ? handleDeleteProduct : null}
                   />

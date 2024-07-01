@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import ProductForm from "./ProductForm";
 import { buildRequestOptions } from "../app/api";
 import { useAtom, useAtomValue } from "jotai";
 import { noticeAtom, userAtom } from "../app/atoms";
 
 const CreateProduct = ({ redirect }) => {
-  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [colors, setColors] = useState([]);
   const user = useAtomValue(userAtom);
-  const [notice, setNotice] = useAtom(noticeAtom);
+  const [, setNotice] = useAtom(noticeAtom);
 
   useEffect(() => {
     if (!user || !user.token) {

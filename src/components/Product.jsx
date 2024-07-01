@@ -4,11 +4,10 @@ import { userAtom, isAuthAtom, updateCartAtom } from "../app/atoms";
 import { useNavigate, Link } from "react-router-dom";
 import { buildRequestOptions } from "../app/api";
 import CartButton from "./CartButton/CartButton";
-import { useRef } from "react";
 import SchemaOrg from './SchemaOrg';
 
-const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
-  const user = useAtomValue(userAtom);
+const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
+  const {token, isAdmin} = useAtomValue(userAtom);
   const isLoggedIn = useAtomValue(isAuthAtom);
   const navigate = useNavigate();
   const [, setUpdateCart] = useAtom(updateCartAtom);
@@ -19,7 +18,7 @@ const Product = ({ product, isAdmin, onUpdateProduct, onDeleteProduct }) => {
   const handleAddToCart = () => {
     const { url, options } = buildRequestOptions("cart_items", "create", {
       body: { product_id: product.id, quantity: 1 },
-      token: user.token,
+      token: token,
     });
     fetch(url, options)
       .then((response) => {
@@ -117,7 +116,6 @@ Product.propTypes = {
       name: PropTypes.string,
     }),
   }).isRequired,
-  isAdmin: PropTypes.bool.isRequired,
   onUpdateProduct: PropTypes.func,
   onDeleteProduct: PropTypes.func,
 };

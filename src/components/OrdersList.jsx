@@ -31,7 +31,7 @@ export default function OrdersList() {
       <div>
         <h1>Orders</h1>
         {orders.map((order) => (
-          <OrderCard key={order.id} order={order} details={false} />
+          <OrderCard key={order.id} order={order} details={false} paid={order.paid}/>
         ))}
       </div>
     );

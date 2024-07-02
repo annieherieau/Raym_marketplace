@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useAtom, useAtomValue } from 'jotai';
-import { userAtom, isAuthAtom, updateCartAtom } from '../app/atoms';
-import { buildRequestOptions } from '../app/api';
-import Comments from '../components/Comments';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useAtom, useAtomValue } from "jotai";
+import { userAtom, isAuthAtom, updateCartAtom } from "../app/atoms";
+import { buildRequestOptions } from "../app/api";
+import Comments from "../components/Comments";
+import { useNavigate } from "react-router-dom";
+import Modal from "../components/Modal/Modal";
+import CartButton from "../components/CartButton/CartButton";
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -16,11 +18,11 @@ const ProductPage = () => {
   const [error, setError] = useState(null);
   const [, setUpdateCart] = useAtom(updateCartAtom);
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [isImageFullScreen, setIsImageFullScreen] = useState(false);
 
   const handleAddToCart = () => {
-    if (isAdmin) {
-      alert("Vous êtes administrateur. Vous ne pouvez pas commander !");
-    } else if (isLoggedIn) {
+    if (isLoggedIn) {
       const { url, options } = buildRequestOptions("cart_items", "create", {
         body: { product_id: product.id, quantity: 1 },
         token: token,
@@ -35,19 +37,24 @@ const ProductPage = () => {
         .catch((error) => console.error("Error:", error));
       setUpdateCart(true);
     } else {
-      alert("Veuillez vous connecter pour commander");
-      navigate(`/login?redirect=product/${product.id}`)
+      setShowModal(true);
     }
+  };
+
+  const toggleImageFullScreen = () => {
+    setIsImageFullScreen(!isImageFullScreen);
   };
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const { url, options } = buildRequestOptions('products', 'show', { id: productId });
+      const { url, options } = buildRequestOptions("products", "show", {
+        id: productId,
+      });
 
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
-          throw new Error('Failed to fetch product details');
+          throw new Error("Échec de la récupération de product details");
         }
         const data = await response.json();
         setProduct(data);
@@ -63,17 +70,22 @@ const ProductPage = () => {
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      const { url, options } = buildRequestOptions(null, 'current_user', { token });
+      const { url, options } = buildRequestOptions(null, "current_user", {
+        token,
+      });
 
       try {
         const response = await fetch(url, options);
         if (!response.ok) {
-          throw new Error('Failed to fetch current user');
+          throw new Error("Échec de la récupération de  l'utilisateur actuel");
         }
         const data = await response.json();
         setCurrentUser(data);
       } catch (error) {
-        console.error('Error fetching current user:', error);
+        console.error(
+          "Erreur lors de la récupération de l'utilisateur actuel:",
+          error
+        );
       }
     };
 
@@ -92,50 +104,82 @@ const ProductPage = () => {
           <div className="md:flex-1 px-4">
             <div className="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
               {product.photo_url && (
-                <img
-                  className="w-full h-full object-cover pt-5"
-                  src={product.photo_url}
-                  alt={product.name}
-                />
+                <>
+                  {isImageFullScreen && (
+                    <div className="fixed inset-0 bg-white bg-opacity-70 backdrop-blur-sm z-40"></div>
+                  )}
+                  <img
+                    className={`w-full h-full pt-5 ${isImageFullScreen ? 'fixed top-0 left-0 w-[75%] h-[75%] z-50 transform -translate-x-1/2 -translate-y-1/2' : 'object-cover'}`}
+                    src={product.photo_url}
+                    alt={product.name}
+                    onClick={toggleImageFullScreen}
+                    style={isImageFullScreen ? { top: '50%', left: '50%', objectFit: 'contain' } : {}}
+                  />
+                </>
               )}
             </div>
-            <div className="flex -mx-2 mb-4">
-              <div className="w-full px-2">
-                <button onClick={handleAddToCart} className="w-full bg-green-400 dark:bg-gray-600 text-gray-900 py-2 px-4 rounded-full font-bold hover:bg-green-600 dark:hover:bg-gray-700">
-                  Ajouter au panier
-                </button>
+            {!isAdmin && (
+              <div className="flex -mx-2 mb-4">
+                <div className="w-full px-2">
+                  <CartButton onClick={handleAddToCart} />
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <div className="md:flex-1 px-4">
-            <h1 className="text-5xl font-bold text-green-400 dark:text-white mb-2" style={{ fontFamily: "Chakra Petch" }}>{product.name}</h1>
-            <p className="text-gray-100 dark:text-gray-300 text-sm mb-4">
-              {product.description}
-            </p>
+            <h1
+              className="text-5xl font-bold text-green-400 dark:text-white mb-2"
+              style={{ fontFamily: "Chakra Petch" }}
+            >
+              {product.name}
+            </h1>
             <div className="flex mb-4">
               <div className="mr-4">
-                <span className="font-bold text-gray-100 dark:text-gray-300">Prix:</span>
-                <span className="text-palegreen-500 dark:text-gray-300 text-3xl"> {product.price}€</span>
-              </div>
-              <div>
-                <span className="font-bold text-gray-100 dark:text-gray-300"> Disponibilité: </span>
-                <span className="text-palegreen-500 dark:text-gray-300 text-3xl"> En Stock</span>
+                <span className="font-bold text-gray-100 dark:text-gray-300">
+                  Prix:
+                </span>
+                <span className="text-palegreen-500 dark:text-gray-300 text-3xl">
+                  {" "}
+                  {parseFloat(product.price).toFixed(2)}€
+                </span>
               </div>
             </div>
             <div className="mb-4">
-              <span className="font-bold text-gray-100 dark:text-gray-300">Description:</span>
+              <span className="font-bold text-gray-100 dark:text-gray-300">
+                Description:
+              </span>
               <p className="text-gray-100 dark:text-gray-300 text-sm mt-2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                sed ante justo. Integer euismod libero id mauris malesuada tincidunt. Vivamus commodo nulla ut
-                lorem rhoncus aliquet. Duis dapibus augue vel ipsum pretium, et venenatis sem blandit. Quisque
-                ut erat vitae nisi ultrices placerat non eget velit. Integer ornare mi sed ipsum lacinia, non
-                sagittis mauris blandit. Morbi fermentum libero vel nisl suscipit, nec tincidunt mi consectetur.
+                {product.description}
+              </p>
+              <p className="text-gray-100 dark:text-gray-300 text-sm mt-2">
+                {product.long_description}
               </p>
             </div>
-            <Comments productId={productId} isLoggedIn={isLoggedIn} token={token} currentUser={currentUser} />
+            <Comments
+              productId={productId}
+              isLoggedIn={isLoggedIn}
+              token={token}
+              currentUser={currentUser}
+            />
           </div>
         </div>
       </div>
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        title="Ajouter au panier"
+      >
+        <>
+          <p>Veuillez vous connecter pour commander</p>
+          <button
+            type="button"
+            onClick={() => navigate(`/login?redirect=product/${product.id}`)}
+            className="my-5 px-8 py-3 font-semibold rounded bg-gray-800 dark:bg-gray-100 text-gray-100 hover:bg-green-500 dark:hover:bg-gray-700"
+          >
+            Se Connecter
+          </button>
+        </>
+      </Modal>
     </div>
   );
 };

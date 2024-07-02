@@ -1,6 +1,7 @@
 import bike1 from '../../assets/VELO6RAPTOR-RAYM.png';
 import bike2 from '../../assets/OnRoad-Raym.png';
 import bike3 from '../../assets/Hybrid-Raym.png';
+import RaymW from '../../assets/raymW.png';
 
 const Brand = () => {
     return (
@@ -10,7 +11,7 @@ const Brand = () => {
                 <div className="container mx-auto flex px-5 py-24 md:flex-row justify-center items-center">
                     <div className="lg:flex-grow md:w-1/2 flex flex-col md:items-center md:text-center items-center text-center">
                         <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-white" style={{ fontFamily: 'Chakra Petch', color: 'rgb(74, 255, 170)' }}>
-                            Bienvenue chez <img src="/src/assets/raymW.png" alt="" className='w-80 h-30 pt-5' />
+                            Bienvenue chez <img src={RaymW} alt="" className='w-80 h-30 pt-5' />
                         </h1>
                     </div>
                 </div>

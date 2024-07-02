@@ -29,20 +29,20 @@ export default function ForgotPassword() {
       if (response) {
         const { status } = await response.json();
         setNotice({
-          type: status.code == 200 ? "success" : "error",
+          title: status.code == 200 ? "success" : "Erreur",
           message: status.message,
         });
       }
     } catch (error) {
       setNotice({
-        type: "error",
-        message: "Something gets wrong!",
+        title: "Erreur",
+        message: "Une erreur s'est produite, veuillez réessayer.",
       });
       console.log(error.message);
     }
   };
   useEffect(() => {
-    if (isLoggedIn || notice.type == "success") {
+    if (isLoggedIn || notice.title == "success") {
       navigate("/");
     }
   }, [isLoggedIn, notice]);

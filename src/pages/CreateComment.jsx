@@ -24,14 +24,14 @@ const CreateComment = ({ onCommentCreated }) => {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || 'Failed to create comment');
+        setError(data.error || 'Échec de la création du commentaire');
         return;
       }
 
       onCommentCreated(); // Refetch les commentaires
       navigate(`/product/${productId}`);
     } catch (error) {
-      console.error('Error creating comment:', error);
+      console.error('Erreur de la création du commentaire:', error);
       setError(error.message);
     }
   };

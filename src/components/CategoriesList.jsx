@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useAtomValue } from 'jotai';
-import { userAtom } from '../app/atoms';
-import { buildRequestOptions } from '../app/api';
+import React, { useState, useEffect } from "react";
+import { useAtomValue } from "jotai";
+import { userAtom } from "../app/atoms";
+import { buildRequestOptions } from "../app/api";
 
 const CategoriesList = () => {
   const user = useAtomValue(userAtom);
@@ -11,27 +11,27 @@ const CategoriesList = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
   const [formData, setFormData] = useState({
-    name: '',
+    name: "",
     configurator: false,
     bike: false,
     clothing: false,
   });
   const [categoryToDelete, setCategoryToDelete] = useState(null);
-  const isDarkMode = localStorage.getItem('darkMode') === 'true';
+  const isDarkMode = localStorage.getItem("darkMode") === "true";
 
   useEffect(() => {
     fetchCategories();
   }, [user.token]);
 
   const fetchCategories = async () => {
-    const { url, options } = buildRequestOptions('categories', 'index', {
+    const { url, options } = buildRequestOptions("categories", "index", {
       token: user.token,
     });
 
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
-        throw new Error('Failed to fetch categories');
+        throw new Error("Échec de la récupération de categories");
       }
       const data = await response.json();
       setCategories(data);
@@ -44,7 +44,7 @@ const CategoriesList = () => {
     const { name, value, type, checked } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -52,12 +52,14 @@ const CategoriesList = () => {
     e.preventDefault();
 
     if (formData.bike && formData.clothing) {
-      setFormError("Une catégorie ne peut pas être à la fois 'Bike' et 'Clothing'.");
+      setFormError(
+        "Une catégorie ne peut pas être à la fois 'Bike' et 'Clothing'."
+      );
       return;
     }
 
-    const endpoint = isEditing ? 'update' : 'create';
-    const { url, options } = buildRequestOptions('categories', endpoint, {
+    const endpoint = isEditing ? "update" : "create";
+    const { url, options } = buildRequestOptions("categories", endpoint, {
       id: editingCategory ? editingCategory.id : undefined,
       token: user.token,
       body: formData,
@@ -66,10 +68,15 @@ const CategoriesList = () => {
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
-        throw new Error('Failed to submit form');
+        throw new Error("Échec de l'envoi du formulaire");
       }
       fetchCategories();
-      setFormData({ name: '', configurator: false, bike: false, clothing: false });
+      setFormData({
+        name: "",
+        configurator: false,
+        bike: false,
+        clothing: false,
+      });
       setIsEditing(false);
       setEditingCategory(null);
       setFormError(null);
@@ -90,7 +97,7 @@ const CategoriesList = () => {
   };
 
   const handleDelete = async (id) => {
-    const { url, options } = buildRequestOptions('categories', 'delete', {
+    const { url, options } = buildRequestOptions("categories", "delete", {
       id,
       token: user.token,
     });
@@ -98,7 +105,7 @@ const CategoriesList = () => {
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
-        throw new Error('Failed to delete category');
+        throw new Error("Échec de la suppression de category");
       }
       fetchCategories();
     } catch (error) {
@@ -126,7 +133,11 @@ const CategoriesList = () => {
   }
 
   return (
-    <div className={`max-w-3xl mx-auto p-6 shadow-md rounded-lg ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+    <div
+      className={`max-w-3xl mx-auto p-6 shadow-md rounded-lg ${
+        isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+      }`}
+    >
       <h3 className="text-2xl font-semibold mb-4">Liste des Catégories</h3>
       <form onSubmit={handleSubmit} className="mb-6">
         <div className="mb-4">
@@ -137,7 +148,9 @@ const CategoriesList = () => {
             value={formData.name}
             onChange={handleChange}
             required
-            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${isDarkMode ? 'bg-gray-700 text-white' : 'text-black'}`}
+            className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline ${
+              isDarkMode ? "bg-gray-700 text-white" : "text-black"
+            }`}
           />
         </div>
         <div className="mb-4">
@@ -171,17 +184,20 @@ const CategoriesList = () => {
           />
         </div>
         {formError && <p className="text-red-500 mb-4">{formError}</p>}
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          {isEditing ? 'Update' : 'Create'} Category
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          {isEditing ? "Update" : "Create"} Category
         </button>
       </form>
       <ul className="space-y-4">
-        {categories.map(category => (
+        {categories.map((category) => (
           <li key={category.id} className="border-b pb-4">
             <h4 className="text-xl">{category.name}</h4>
-            <p>Configurator: {category.configurator ? 'Oui' : 'Non'}</p>
-            <p>Bike: {category.bike ? 'Oui' : 'Non'}</p>
-            <p>Clothing: {category.clothing ? 'Oui' : 'Non'}</p>
+            <p>Configurator: {category.configurator ? "Oui" : "Non"}</p>
+            <p>Bike: {category.bike ? "Oui" : "Non"}</p>
+            <p>Clothing: {category.clothing ? "Oui" : "Non"}</p>
             <div className="mt-2 space-x-2">
               <button
                 onClick={() => handleEdit(category)}
@@ -201,8 +217,16 @@ const CategoriesList = () => {
       </ul>
       {categoryToDelete && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className={`p-6 rounded-lg shadow-lg ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
-            <p className="mb-4">Êtes-vous sûr de vouloir supprimer la catégorie : {categoryToDelete.name}, et tous les produits qui lui sont associés?</p>
+          <div
+            className={`p-6 rounded-lg shadow-lg ${
+              isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+            }`}
+          >
+            <p className="mb-4">
+              Êtes-vous sûr de vouloir supprimer la catégorie :{" "}
+              {categoryToDelete.name}, et tous les produits qui lui sont
+              associés?
+            </p>
             <div className="flex justify-end">
               <button
                 onClick={cancelDelete}

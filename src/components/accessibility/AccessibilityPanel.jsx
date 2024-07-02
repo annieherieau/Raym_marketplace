@@ -83,7 +83,7 @@ const AccessibilityPanel = ({
   );
 
   return (
-    <div className={`fixed bottom-16 left-4 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-4 rounded-lg shadow-lg z-50 w-64 accessibility-panel`}>
+    <div className={`fixed bottom-16 right-4 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} p-4 rounded-lg shadow-lg z-50 w-64 accessibility-panel`}>
       <button className="absolute top-2 right-2 text-red-500 close-btn" onClick={onClose}>
         X
       </button>

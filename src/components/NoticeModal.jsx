@@ -1,28 +1,29 @@
 import { useAtom } from "jotai";
 import { emptyNotice, noticeAtom } from "../app/atoms";
-import { useEffect } from "react";
-import { useState } from "react";
+import Modal from "./Modal/Modal";
 
 export default function NoticeModal() {
   const [notice, setNotice] = useAtom(noticeAtom);
-  const [show, setShow] = useState(notice.type == 'error' ? true : false);
 
   const handleClose = () => {
-    setShow(false);
     setNotice(emptyNotice);
   };
 
-  useEffect(() => {
-    setShow(notice.type == 'error' ? true : false);
-  }, [notice]);
-
-  if (show) {
+  if (notice.message) {
     return (
       <div>
-        <p>
-          {notice.type} : {notice.message}
-        </p>
-        <button onClick={handleClose}>Fermer</button>
+        <Modal show={true} onClose={notice.onClose || handleClose} title={notice.title}>
+          <>
+            <p>{notice.message}</p>
+            <button
+              type="button"
+              onClick={handleClose}
+              className="my-5 px-8 py-3 font-semibold rounded bg-gray-800 dark:bg-gray-100 text-gray-100 hover:bg-green-500 dark:hover:bg-gray-700"
+            >
+              Fermer
+            </button>
+          </>
+        </Modal>
       </div>
     );
   }

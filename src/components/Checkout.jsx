@@ -2,15 +2,17 @@ export default function Checkout({action}) {
   if (action == "success") {
     return (
       <section>
-        <h1>PAYMENT OK : SUCCESS</h1>
+        <h1>Paiement réussie</h1>
       </section>
     );
   }
   
   if (action == "cancel") {
     return (
-      <section>
-        <h1>PAYMENT ERROR</h1>
+      <section style={{ textAlign: 'center' }}>
+        <h1>Paiement annulé</h1>
+        <p>Vous ne serez pas prélevé</p>
+        <br />
       </section>
     );
   }

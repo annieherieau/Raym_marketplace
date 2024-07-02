@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { buildRequestOptions } from "../../app/api";
 import { useEffect } from "react";
 import CartButton from "../CartButton/CartButton.jsx";
+import Modal from "../Modal/Modal.jsx";
+import "./Carousel.css"; 
 
 const Carousel = ({ products, selectedProduct }) => {
   const { isAdmin, token } = useAtomValue(userAtom);
@@ -12,7 +14,7 @@ const Carousel = ({ products, selectedProduct }) => {
   const [, setUpdateCart] = useAtom(updateCartAtom);
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const [showModal, setShowModal] = useState(false);
 
   const handlePrevious = () => {
     const newIndex = (currentIndex - 1 + products.length) % products.length;
@@ -25,9 +27,7 @@ const Carousel = ({ products, selectedProduct }) => {
   };
 
   const handleAddToCart = () => {
-    if (isAdmin) {
-      alert("Vous êtes administrateur. Vous ne pouvez pas commander !");
-    } else if (isLoggedIn) {
+    if (isLoggedIn) {
       const { url, options } = buildRequestOptions("cart_items", "create", {
         body: { product_id: products[currentIndex].id, quantity: 1 },
         token: token,
@@ -42,8 +42,7 @@ const Carousel = ({ products, selectedProduct }) => {
         .catch((error) => console.error("Error:", error));
       setUpdateCart(true);
     } else {
-      alert("Veuillez vous connecter pour commander");
-      navigate("/login?redirect=configurateur");
+      setShowModal(true);
     }
   };
 
@@ -59,20 +58,22 @@ const Carousel = ({ products, selectedProduct }) => {
   }, [products, selectedProduct]);
 
   return (
-    <div className="relative">
-      <div className="overflow-hidden p-4">
+    <div className="relative w-full h-full">
+      <div className="overflow-hidden p-4 w-full h-full">
         <img
           src={products[currentIndex].photo_url}
           alt={`${products[currentIndex].name}`}
-          className="w-full h-auto"
+          className="w-full h-full object-cover"
         />
-        <div
-          className="bg-gray-800 bg-opacity-50 rounded-md py-2 mt-3 text-center"
-        >
+        <div className="rounded-md py-2 mt-3 text-center">
           <h3 className="text-base font-semibold text-white sm:text-lg">
             {products[currentIndex].name}
           </h3>
-          <p className="text-white">{products[currentIndex].price} €</p>
+          <p className="text-white">
+            {products[currentIndex].price
+              ? `${parseFloat(products[currentIndex].price).toFixed(2)} €`
+              : "0.00 €"}
+          </p>
         </div>
         <div className="mt-3 text-center">
           <CartButton onClick={handleAddToCart} />
@@ -80,7 +81,7 @@ const Carousel = ({ products, selectedProduct }) => {
       </div>
       <button
         onClick={handlePrevious}
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 shadow-lg focus:outline-none"
+        className="arrow-button left"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +89,6 @@ const Carousel = ({ products, selectedProduct }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="size-6"
         >
           <path
             strokeLinecap="round"
@@ -99,7 +99,7 @@ const Carousel = ({ products, selectedProduct }) => {
       </button>
       <button
         onClick={handleNext}
-        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 shadow-lg focus:outline-none"
+        className="arrow-button right"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +107,6 @@ const Carousel = ({ products, selectedProduct }) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="size-6"
         >
           <path
             strokeLinecap="round"
@@ -116,8 +115,31 @@ const Carousel = ({ products, selectedProduct }) => {
           />
         </svg>
       </button>
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        title="Ajouter au panier"
+      >
+        <>
+          <p>
+            {isAdmin
+              ? "Vous êtes administrateur. Vous ne pouvez pas commander !"
+              : "Veuillez vous connecter pour commander"}
+          </p>
+          {!isAdmin && (
+            <button
+              type="button"
+              onClick={() => navigate("/login?redirect=configurateur")}
+              className="my-5 px-8 py-3 font-semibold rounded bg-gray-800 dark:bg-gray-100 text-gray-100 hover:bg-green-500 dark:hover:bg-gray-700"
+            >
+              Se Connecter
+            </button>
+          )}
+        </>
+      </Modal>
     </div>
   );
 };
 
 export default Carousel;
+

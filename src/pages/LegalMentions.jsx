@@ -3,7 +3,7 @@ import React from 'react';
 
 const LegalMentions = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-black text-white rounded-2xl">
       <h1 className="text-3xl font-bold mb-6">Mentions légales</h1>
       
       <section className="mb-6">

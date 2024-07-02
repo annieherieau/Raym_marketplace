@@ -120,7 +120,7 @@ export function buildRequestOptions(
   const endpointConfig = endpoints[endpoint];
 
   if (!endpointConfig) {
-    throw new Error(`Endpoint ${endpoint} not defined`);
+    throw new Error(`Endpoint ${endpoint} non défini`);
   }
 
   const { method, url } = endpointConfig;

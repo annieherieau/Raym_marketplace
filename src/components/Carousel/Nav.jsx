@@ -2,6 +2,7 @@ import { useState } from "react";
 import CategoryButton from "./CategoryButton";
 import veloIcon from "../../assets/veloIcon.png";
 import tshirtIcon from "../../assets/tshirtIcon.png";
+import "./Carousel.css"; 
 
 export default function Nav(props) {
   const {bikeCategories, clothingCategories, setSelectedBikeCategory, setSelectedClothingCategory} =props
@@ -88,3 +89,4 @@ export default function Nav(props) {
     </nav>
   );
 }
+

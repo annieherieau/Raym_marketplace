@@ -20,7 +20,7 @@ export default function ContactForm() {
     event.preventDefault();
 
     if (!captchaValue) {
-      setNotice({ type: "error", message: "Veuillez compléter le CAPTCHA" });
+      setNotice({ title: "Erreur", message: "Veuillez compléter le CAPTCHA"});
       return;
     }
 
@@ -40,22 +40,22 @@ export default function ContactForm() {
       if (response) {
         const { data, status } = await response.json();
         if (status.code === 200) {
-          setNotice({ type: "success", message: status.message });
+          setNotice({ title: "Message envoyé", message: status.message });
         } else {
           setNotice({
-            type: "error",
-            message: `Erreur ${status.code}: ${status.message}`,
+            title: "Erreur",
+            message: `${status.code}: ${status.message}`,
           });
         }
       }
     } catch (error) {
-      setNotice({ type: "error", message: "Une erreur s'est produite" });
+      setNotice({ title: "Erreur", message: "Une erreur s'est produite, veuillez réessayer." });
       console.log(error.message);
     }
   };
 
   useEffect(() => {
-    if (notice.type === "success") {
+    if (notice.title === "success") {
       document.forms["contact-form"].reset();
     }
   }, [notice]);
@@ -162,11 +162,6 @@ export default function ContactForm() {
               Envoyer
             </button>
           </form>
-          <p className="text-xs text-gray-500 mt-3">
-            Chicharrones blog helvetica normcore iceland tousled brook viral
-            artisan.
-          </p>
-          <p>{notice.message}</p>
         </div>
       </div>
     </section>

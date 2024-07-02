@@ -33,13 +33,13 @@ export default function ResetPassword() {
       if (response) {
         const { status } = await response.json();
         setNotice({
-          type: status.code == 200 ? "success" : "error",
+          title: status.code == 200 ? "success" : "Erreur",
           message: status.message,
         });
       }
     } catch (error) {
       setNotice({
-        type: "error",
+        title: "Erreur",
         message: error.message,
       });
       console.log(error.message);
@@ -47,7 +47,7 @@ export default function ResetPassword() {
   };
 
   useEffect(() => {
-    if (isLoggedIn || notice.type == "success") {
+    if (isLoggedIn || notice.title == "success") {
       navigate("/");
     }
   }, [isLoggedIn, notice]);

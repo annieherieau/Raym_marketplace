@@ -4,6 +4,9 @@ import Nav from "../../components/Carousel/Nav.jsx";
 import offRoadConfig from "../../assets/offRoad-config.png";
 import Carousel from "../../components/Carousel/Carousel.jsx";
 import { useSearchParams } from "react-router-dom";
+import onRoadConfig from "../../assets/onRoad-config.png";
+import onHybridConfig from "../../assets/onHybrid-config.png";
+
 const Configurator = () => {
   const [searchParams] = useSearchParams();
   const param = searchParams.get("category")
@@ -16,6 +19,7 @@ const Configurator = () => {
   const [selectedClothingCategory, setSelectedClothingCategory] =
     useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [backgroundImage, setBackgroundImage] = useState(offRoadConfig);
 
   function handleResponse(response) {
     // liste des produits par catégories
@@ -33,7 +37,7 @@ const Configurator = () => {
     // random product
     function random(max){
       return Math.floor(Math.random() * max);
-    };
+    }
     let defautBikes =
       response[selectedBikeCategory || bikeCats[random(bikeCats.length)]]
         .products;
@@ -48,6 +52,25 @@ const Configurator = () => {
     setClothingCategories(clothingCats);
     setSelectedClothingCategory(clothingCats[0]);
   }
+
+
+  // Change background
+  useEffect(()=>{
+    switch (selectedBikeCategory) {
+      case 'On Road':
+        setBackgroundImage(onRoadConfig)
+        break;
+
+        case 'Off Road':
+          setBackgroundImage(offRoadConfig)
+        break;
+        case 'Hybrid':
+          setBackgroundImage(onHybridConfig)
+        break;
+      default:
+        break;
+    }
+  },[selectedBikeCategory])
 
   // Fetching products by catégories
   useEffect(() => {
@@ -71,7 +94,7 @@ const Configurator = () => {
           <div
             className=" bg-gray-100 rounded-3xl min-w-36 bg-cover bg-center"
             style={{
-              backgroundImage: `url(${offRoadConfig})`
+              backgroundImage: `url(${backgroundImage})`
             }}
           >
             <div className=" bg-black">
@@ -96,7 +119,7 @@ const Configurator = () => {
                   selectedProduct={selectedProduct}
                 />
               </div>
-              <div className="p-2 sm:w-4/12">
+              <div className="p-2 sm:w-4/12 carousel-container">
                 <Carousel
                   products={products[selectedClothingCategory].products}
                   onClick={handleProductDetails}
@@ -110,3 +133,6 @@ const Configurator = () => {
 };
 
 export default Configurator;
+
+
+

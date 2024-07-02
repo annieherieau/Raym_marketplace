@@ -34,14 +34,14 @@ export const AdminProvider = ({ children }) => {
         });
 
         if (!response.ok) {
-          throw new Error('Failed to check admin status');
+          throw new Error('Échec de la vérification du statut d'administrateur');
         }
 
         const data = await response.json();
-        console.log('Admin check response:', data);
+        console.log("Réponse de vérification de l'administrateur:", data);
         setIsAdmin(data.admin);
       } catch (error) {
-        console.error('Error checking admin status:', error);
+        console.error("Erreur lors de la vérification du statut d'administrateur:", error);
       } finally {
         console.log('Setting loading to false');
         setLoading(false);

@@ -34,6 +34,8 @@ Site e-commerce spécialisé dans l’univers du vélo : Nous proposons des équ
 - Google Recaptcha
 
 ### 3.3. Backend
+[Repo GitHub](https://github.com/annieherieau/Raym_api)
+
 
 - Ruby on Rails
 - Gestions des users et admin : Devise
@@ -42,6 +44,7 @@ Site e-commerce spécialisé dans l’univers du vélo : Nous proposons des équ
 - Hébergement de production : [Render.com](https://render.com/)
 - Gestion des versions : Git / gitHub
 - Rubocop
+
 
 ## 4. La version minimaliste MVP
 

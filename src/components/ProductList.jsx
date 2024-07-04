@@ -197,7 +197,7 @@ const ProductList = () => {
       >
         <div
           className={`w-full px-8 py-10 mx-auto flex flex-wrap ${
-            isDarkMode ? "bg-gray-900" : "bg-black"
+            isDarkMode ? "bg-black" : "bg-black"
           }`}
         >
           <div className="flex w-full mb-10 flex-wrap">

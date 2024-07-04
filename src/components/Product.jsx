@@ -50,7 +50,7 @@ const Product = ({ product, onUpdateProduct, onDeleteProduct }) => {
       "@type": "Offer",
       "priceCurrency": "EUR",
       "price": product.price || 0,
-      "url": `/products/${product.id}` // URL du produit
+      "url": `/products/${product.id}` 
     }
   };
 
@@ -117,5 +117,6 @@ Product.propTypes = {
 };
 
 export default Product;
+
 
 

@@ -28,17 +28,17 @@
 
 .logo path:nth-child(2) {
   animation: lightUp 10s infinite;
-  animation-delay: 0.1s; /* Décalage pour le 2ème */
+  animation-delay: 0.1s; 
 }
 
 .logo path:nth-child(4) {
   animation: lightUp 10s infinite;
-  animation-delay: 0.2s; /* Décalage pour le 3ème */
+  animation-delay: 0.2s; 
 }
 
 .logo path:nth-child(3) {
   animation: lightUp 10s infinite;
-  animation-delay: 0.3s; /* Décalage pour le 4ème */
+  animation-delay: 0.3s; 
 }
 
 
@@ -85,6 +85,10 @@ header {
   outline: none;
   animation-duration: 300ms; 
   animation-timing-function: ease;
+}
+
+.header__button.dark-mode {
+  background-color: rgb(255, 255, 255);
 }
 
 .header__button[data-open='true'] {
@@ -460,4 +464,5 @@ header__content {
 }
 
 /* ###### End Navbar ###### */
+
 

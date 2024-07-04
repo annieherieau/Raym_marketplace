@@ -219,7 +219,7 @@ const ProductList = () => {
                 value={selectedCategory}
                 onChange={handleCategoryChange}
                 className={`p-2 border rounded ${
-                  isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+                  isDarkMode ? "bg-gray-800 text-white" : "bg-gray-800 text-white"
                 }`}
               >
                 <option value="all">Toutes</option>
@@ -239,7 +239,7 @@ const ProductList = () => {
                 value={selectedColor}
                 onChange={handleColorChange}
                 className={`p-2 border rounded ${
-                  isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+                  isDarkMode ? "bg-gray-800 text-white" : "bg-gray-800 text-white"
                 }`}
               >
                 <option value="all">Toutes</option>
@@ -259,7 +259,7 @@ const ProductList = () => {
                 value={sortOrder}
                 onChange={handleSortOrderChange}
                 className={`p-2 border rounded pr-8 ${
-                  isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+                  isDarkMode ? "bg-gray-800 text-white" : "bg-gray-800 text-white"
                 }`}
               >
                 <option value="asc">Croissant</option>

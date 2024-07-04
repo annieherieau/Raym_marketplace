@@ -7,6 +7,8 @@ import Comments from "../components/Comments";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal/Modal";
 import CartButton from "../components/CartButton/CartButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -98,7 +100,7 @@ const ProductPage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="bg-black dark:bg-gray-800 py-8 rounded-[20px]">
+    <div className="bg-black dark:bg-gray-800 py-8 rounded-[20px] relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row mx-auto">
           <div className="md:flex-1 px-4">
@@ -180,6 +182,15 @@ const ProductPage = () => {
           </button>
         </>
       </Modal>
+      <div className="absolute bottom-8 left-10 flex items-center">
+        <button
+          onClick={() => navigate("/shop")}
+          className="flex items-center text-white transition-transform transform hover:scale-105 p-2"
+        >
+          <FontAwesomeIcon icon={faArrowLeft} className="mr-2 text-3xl hover:text-palegreen-500" />
+        </button>
+        <span className="text-white" style={{ transition: 'none' }}>Retour</span>
+      </div>
     </div>
   );
 };

@@ -111,11 +111,11 @@ const ProductPage = () => {
                     <div className="fixed inset-0 bg-white bg-opacity-70 backdrop-blur-sm z-40"></div>
                   )}
                   <img
-                    className={`w-full h-full pt-5 ${isImageFullScreen ? 'fixed top-0 left-0 w-[75%] h-[75%] z-50 transform -translate-x-1/2 -translate-y-1/2' : 'object-cover'}`}
+                    className={`w-full h-full pt-5 transition-transform duration-300 ${isImageFullScreen ? 'fixed top-0 left-0 w-[75%] h-[75%] z-50 transform -translate-x-1/2 -translate-y-1/2 cursor-zoom-out' : 'object-cover hover:scale-105 cursor-zoom-in'}`}
                     src={product.photo_url}
                     alt={product.name}
                     onClick={toggleImageFullScreen}
-                    style={isImageFullScreen ? { top: '50%', left: '50%', objectFit: 'contain' } : {}}
+                    style={isImageFullScreen ? { top: '50%', left: '50%', objectFit: 'contain' } : { cursor: 'zoom-in' }}
                   />
                 </>
               )}
@@ -187,9 +187,9 @@ const ProductPage = () => {
           onClick={() => navigate("/shop")}
           className="flex items-center text-white transition-transform transform hover:scale-105 p-2"
         >
-          <FontAwesomeIcon icon={faArrowLeft} className="mr-2 text-3xl hover:text-palegreen-500" />
+          <FontAwesomeIcon icon={faArrowLeft} className="mr-2 text-2xl hover:text-palegreen-500" />
         </button>
-        <span className="text-white" style={{ transition: 'none' }}>Retour</span>
+        <span className="ml-2 text-white" style={{ transition: 'none' }}>Retour</span>
       </div>
     </div>
   );

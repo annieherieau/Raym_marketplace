@@ -28,6 +28,7 @@ export default {
         beige: {
           200: '#ffdfa7',
         },
+        turquoise: '#40E0D0',
       },
     },
   },
@@ -36,4 +37,3 @@ export default {
     forms,
   ],
 }
-

@@ -1,7 +1,12 @@
 import Team from '../../components/Team';
 import ContactForm from '../../components/ContactForm';
+import { useEffect } from 'react';
 
 const Contact = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   return (
     <div className="flex justify-center">
       <section className=" body-font bg-black w-full mx-8 rounded-[20px]">

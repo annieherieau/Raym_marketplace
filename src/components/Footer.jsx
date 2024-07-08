@@ -11,12 +11,12 @@ const Footer = () => {
         </div>
         <p className="text-sm text-gray-400 flex items-center ml-4">
            © 2024 Team RAYM —
-          <Link to="/contact" className="hover:text-white"> Robena / Annie / Yann / Malo —</Link>
+          <Link to="/contact#top" className="hover:text-white"> Robena / Annie / Yann / Malo —</Link>
           <a href="https://www.thehackingproject.org/" className="text-gray-400 ml-1 hover:text-white" rel="noopener noreferrer" target="_blank">@The Hacking Project</a>
         </p>
         </div>
         <div className="mt-4 md:mt-0 flex flex-row">
-          <Link to="/mentions-legales" className="text-gray-400 text-sm hover:text-white mr-5">
+          <Link to="/mentions-legales#top" className="text-gray-400 text-sm hover:text-white mr-5">
             Mentions légales
           </Link>
           <a className="text-gray-400 hover:text-blue-500 hover:scale-110 transition-transform duration-300" href="https://www.facebook.com">

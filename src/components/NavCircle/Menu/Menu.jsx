@@ -175,7 +175,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="menu-body">
+    <div className="menu-body" id='top'>
       <header className="header__content p-4">
         <a href="/" className="logo-container">
           {isDarkMode ? (

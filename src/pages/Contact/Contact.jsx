@@ -4,12 +4,18 @@ import { useEffect } from 'react';
 
 const Contact = () => {
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const hash = window.location.hash;
+    if (hash === "#top") {
+      const element = document.getElementById("top");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   }, []);
 
   return (
     <div className="flex justify-center">
-      <section className=" body-font bg-black w-full mx-8 rounded-[20px]">
+          <section className=" body-font bg-black w-full mx-8 rounded-[20px]">
         <div className="container px-5 py-24 mx-auto flex flex-col items-center">
           <div className="w-full">
             <Team />
@@ -20,6 +26,7 @@ const Contact = () => {
         </div>
       </section>
     </div>
+
   );
 };
 

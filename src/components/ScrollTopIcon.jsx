@@ -1,40 +1,42 @@
 import React, { useState, useEffect } from 'react';
 
 const ScrollTopIcon = () => {
-    // visibilité du bouton 
+  // État pour gérer la visibilité du bouton de retour en haut
   const [isVisible, setIsVisible] = useState(false);
 
-  const handleWheel = () => {
-    // Position scroll avec overflow: auto (wheel fonctionne, scroll non) --> marchera pas si l'user a une scrollbar et s'en sert
+  const handleScroll = () => {
+    // Position de défilement de l'élément avec overflow: auto
     const scrollTop = document.getElementById('root').scrollTop;
-    // au delà de 300 pixels scrollés, le bouton apparaît (is visible = true)
+    // Met à jour la visibilité du bouton en fonction de la position de défilement
     setIsVisible(scrollTop > 300);
   };
 
   const scrollToTop = () => {
-    // root est l'élément évalué par scrollTop
+    // Défilement fluide vers le haut de la page
     document.getElementById('root').scrollTo({
       top: 0,
-      // c'est de l'animation de scroll
       behavior: 'smooth',
     });
-    setIsVisible(false); // Cache le bouton après le clic
+    // Cache le bouton après le clic
+    setIsVisible(false);
   };
 
   useEffect(() => {
     const rootElement = document.getElementById('root');
-    rootElement.addEventListener('wheel', handleWheel);
+    // Ajoute les écouteurs d'événements pour le défilement
+    rootElement.addEventListener('scroll', handleScroll);
 
-    // Initial check
-    handleWheel();
+    // Vérification initiale de la position de défilement
+    handleScroll();
 
     return () => {
-      rootElement.removeEventListener('wheel', handleWheel);
+      // Supprime les écouteurs d'événements lors du démontage du composant
+      rootElement.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   return (
-    <div className="fixed bottom-20 right-5 z-50"> 
+    <div className="fixed bottom-20 right-5 z-50">
       {isVisible && (
         <button
           onClick={scrollToTop}

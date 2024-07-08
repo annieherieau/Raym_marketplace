@@ -5,20 +5,20 @@
 html, body, #root {
   height: 100%;
   margin: 0;
-  overflow: auto; /* Ajouté pour permettre le défilement */
+  overflow: auto; 
 }
 
 body {
   display: flex;
   flex-direction: column;
-  overflow: auto; /* Ajouté pour permettre le défilement */
+  overflow: auto; 
 }
 
 main {
   flex: 1;
   padding-bottom: 50px;
   justify-content: center; 
-  overflow: auto; /* Ajouté pour permettre le défilement */
+  overflow: auto; 
 }
 
 
@@ -34,7 +34,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
-  overflow: auto; /* Ajouté pour permettre le défilement */
+  overflow: auto; 
 }
 
 /* Maintenance */
@@ -133,5 +133,6 @@ strong {
   font-size: 24px;
   line-height: 1; 
 }
+
 
 

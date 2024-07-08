@@ -1,7 +1,17 @@
 // src/pages/LegalMentions.jsx
-import React from 'react';
+import React, {useEffect} from 'react';
 
 const LegalMentions = () => {
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash === "#top") {
+      const element = document.getElementById("top");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, []);
+
   return (
     <div className="container mx-auto px-4 py-8 bg-black text-white rounded-2xl">
       <h1 className="text-3xl font-bold mb-6">Mentions légales</h1>

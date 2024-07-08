@@ -7,6 +7,8 @@ import Comments from "../components/Comments";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal/Modal";
 import CartButton from "../components/CartButton/CartButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -98,7 +100,7 @@ const ProductPage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="bg-black dark:bg-gray-800 py-8 rounded-[20px]">
+    <div className="bg-black dark:bg-gray-800 py-8 rounded-[20px] relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row mx-auto">
           <div className="md:flex-1 px-4">
@@ -109,11 +111,11 @@ const ProductPage = () => {
                     <div className="fixed inset-0 bg-white bg-opacity-70 backdrop-blur-sm z-40"></div>
                   )}
                   <img
-                    className={`w-full h-full pt-5 ${isImageFullScreen ? 'fixed top-0 left-0 w-[75%] h-[75%] z-50 transform -translate-x-1/2 -translate-y-1/2' : 'object-cover'}`}
+                    className={`w-full h-full pt-5 transition-transform duration-300 ${isImageFullScreen ? 'fixed top-0 left-0 w-[75%] h-[75%] z-50 transform -translate-x-1/2 -translate-y-1/2 cursor-zoom-out' : 'object-cover hover:scale-105 cursor-zoom-in'}`}
                     src={product.photo_url}
                     alt={product.name}
                     onClick={toggleImageFullScreen}
-                    style={isImageFullScreen ? { top: '50%', left: '50%', objectFit: 'contain' } : {}}
+                    style={isImageFullScreen ? { top: '50%', left: '50%', objectFit: 'contain' } : { cursor: 'zoom-in' }}
                   />
                 </>
               )}
@@ -180,6 +182,15 @@ const ProductPage = () => {
           </button>
         </>
       </Modal>
+      <div className="absolute bottom-8 left-10 flex items-center">
+        <button
+          onClick={() => navigate("/shop")}
+          className="flex items-center text-white transition-transform transform hover:scale-105 p-2"
+        >
+          <FontAwesomeIcon icon={faArrowLeft} className="mr-2 text-2xl hover:text-palegreen-500" />
+        </button>
+        <span className="ml-2 text-white" style={{ transition: 'none' }}>Retour</span>
+      </div>
     </div>
   );
 };

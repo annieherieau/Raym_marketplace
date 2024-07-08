@@ -27,6 +27,7 @@ import { unknownUser } from "./app/atoms";
 import CreateProduct from "./components/CreateProduct";
 import AccessibilityIcon from "./components/accessibility/AccessibilityIcon";
 import Shop from "./pages/Shop/Shop";
+import ScrollTopIcon from "./components/ScrollTopIcon";
 
 const api_url = import.meta.env.VITE_BACK_API_URL;
 
@@ -142,6 +143,7 @@ function App() {
             />
           </Routes>
         </main>
+        <ScrollTopIcon />
         <AccessibilityIcon setDarkMode={setIsDarkMode} />
         <footer>
           <Footer />

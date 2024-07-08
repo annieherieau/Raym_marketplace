@@ -1,4 +1,3 @@
-import React from 'react';
 import tdfImage from '../assets/TDF.jpg';
 import teamLabImage from '../assets/TeamLab.jpg';
 import tdfLogo from '../assets/TdfLogo.jpg';
@@ -8,7 +7,7 @@ import rafaleLogo from '../assets/RafaleLogo.jpg';
 
 const BentoGrid = () => {
     return (
-        <section className="text-gray-600 body-font ml-8 mr-8 mb-8" style={{ background: 'repeating-linear-gradient(45deg, #000, #000 10px, #444 10px, #444 20px)', borderRadius: '20px' }}>
+        <section className="text-gray-600 body-font ml-8 mr-8 mb-8" style={{ background: 'repeating-linear-gradient(45deg, #1C1C1C, #1C1C1C 10px, #000 10px, #000 20px)', borderRadius: '20px' }}>
             <div className="container px-5 py-8 mx-auto flex flex-wrap">
                 <div className="flex w-full mb-8 flex-wrap">
                     <h1 className="sm:text-3xl text-2xl title-font lg:mb-0 mb-4" style={{ backgroundColor: 'black', fontSize: '2.4rem' }}>

@@ -1,18 +1,24 @@
+import React, { useState, useEffect } from 'react';
 import { useAtom, useAtomValue } from "jotai";
 import { isAuthAtom, noticeAtom } from "../app/atoms";
 import { buildRequestOptions, getTokenFromResponse } from "../app/api";
 import { checkPasswords, createCookie, getFormData } from "../app/utils";
-import { useEffect } from "react";
-import { Link } from "react-router-dom"; 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [notice, setNotice] = useAtom(noticeAtom);
   const navigate = useNavigate();
+  const [isCGUChecked, setIsCGUChecked] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!isCGUChecked) {
+      setShowModal(true);
+      return;
+    }
 
     // récupérer les données du formulaire
     const userData = getFormData(event.target);
@@ -115,7 +121,7 @@ export default function Register() {
                 </div>
                 <div className="flex items-center justify-between mt-3">
                   <label
-                    htmlFor="password"
+                    htmlFor="password_confirmation"
                     className="block text-sm font-medium leading-6 text-black"
                   >
                     Confirmez le mot de passe
@@ -139,15 +145,17 @@ export default function Register() {
                   name="remember_me"
                   id="remember_me"
                   className="mr-2 focus:ring-0 focus:outline-none"
+                  onChange={(e) => setIsCGUChecked(e.target.checked)}
                 />
                 <label htmlFor="remember_me" className="text-sm font-medium leading-6 text-black">
-                  Se souvenir de moi
+                  J'accepte les CGU
                 </label>
               </div>
               <div>
                 <button
                   type="submit"
                   className="flex w-full justify-center mt-9 rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-palegreen-500 shadow-sm hover:bg-palegreen hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  onClick={() => setShowModal(!isCGUChecked)}
                 >
                   Valider
                 </button>
@@ -167,6 +175,19 @@ export default function Register() {
           <p>lundi au vendredi : 8h - 20h / samedi : 9h - 19h (hors jours fériés)</p>
         </div>
       </div>
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
+            <p className='text-white'>Veuillez accepter les CGU</p>
+            <button
+              onClick={() => setShowModal(false)}
+              className="mt-4 px-4 py-2 bg-palegreen-500 text-black rounded"
+            >
+              Fermer
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

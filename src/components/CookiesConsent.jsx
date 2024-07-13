@@ -4,21 +4,21 @@ import { HashLink as Link } from "react-router-hash-link";
 
 export default function CookiesConsent() {
   const [showModal, setShowModal] = useState(false);
+  const raymCookieChecker = "raymCookieChecker";
 
   const handleAccept = () => {
     setShowModal(false);
   };
 
   const handleDecline = () => {
-    document.cookie =
-      "raymCookieChecker=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = `${raymCookieChecker}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     // window.location.href = "https://www.google.com";
     history.back();
     setShowModal(false);
   };
 
   useEffect(() => {
-    const consentValue = getCookieConsentValue("raymCookieChecker");
+    const consentValue = getCookieConsentValue(raymCookieChecker);
     if (consentValue !== "true") {
       setShowModal(true);
     }
@@ -32,13 +32,11 @@ export default function CookiesConsent() {
         location="bottom"
         buttonText="ACCEPTER"
         onAccept={handleAccept}
-        declineButtonText="REFUSER et quitter la page"
-        cookieName="raymCookieChecker"
+        declineButtonText="REFUSER et quitter"
+        cookieName={raymCookieChecker}
         style={{
           background: "#FFFFFF",
           padding: "10px",
-          margin: "0 10px 10px",
-          maxWidth: "calc(100% - 20px)",
         }}
         expires={150}
         enableDeclineButton
@@ -59,21 +57,17 @@ export default function CookiesConsent() {
         }}
       >
         <h3 className="text-lg font-semibold text-gray-900">
-          Votre vie privée
+          Bienvenue sur Raym Marketplace !
         </h3>
         <p className="text-sm text-gray-900">
-          Bienvenue sur Raym Marketplace ! Notre site utilise des cookies pour
-          améliorer votre expérience de navigation. En continuant à utiliser
-          notre site, vous acceptez notre utilisation de cookies conformément à
-          notre politique de confidentialité. En cliquant sur
-          &apos;ACCEPTER&apos;, vous acceptez les conditions énoncées dans notre{" "}
+          En poursuivant votre navigation sur ce site, vous acceptez
+          l’utilisation de cookies pour maintenir votre session ouverte.&nbsp;
           <Link
             to="/mentions-legales#cookies"
             className="underline text-blue-500"
           >
-            Politique de confidentialité
+            En savoir plus
           </Link>
-          .{" "}
         </p>
       </CookieConsent>
     </div>

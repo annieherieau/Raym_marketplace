@@ -10,19 +10,12 @@ export default function CookiesConsent() {
     setShowModal(false);
   };
 
-  const handleDecline = () => {
-    document.cookie = `${raymCookieChecker}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    // window.location.href = "https://www.google.com";
-    history.back();
-    setShowModal(false);
-  };
-
   useEffect(() => {
     const consentValue = getCookieConsentValue(raymCookieChecker);
     if (consentValue !== "true") {
       setShowModal(true);
     }
-  }, []);
+  }, [showModal]);
 
   if (!showModal) return null;
 
@@ -39,7 +32,7 @@ export default function CookiesConsent() {
           padding: "10px",
         }}
         expires={150}
-        enableDeclineButton
+        // enableDeclineButton
         onDecline={handleDecline}
         buttonStyle={{
           backgroundColor: "#4A90E2",

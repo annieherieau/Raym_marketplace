@@ -1,17 +1,6 @@
 // src/pages/LegalMentions.jsx
-import React, {useEffect} from 'react';
 
 const LegalMentions = () => {
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash === "#top") {
-      const element = document.getElementById("top");
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  }, []);
-
   return (
     <div className="container mx-auto px-4 py-8 bg-black text-white rounded-2xl">
       <h1 className="text-3xl font-bold mb-6">Mentions légales</h1>
@@ -43,7 +32,7 @@ const LegalMentions = () => {
       </section>
 
       <section className="mb-6">
-        <h2 className="text-2xl font-semibold mb-2">4. Cookies</h2>
+        <h2 id='cookies' className="text-2xl font-semibold mb-2">4. Cookies</h2>
 
         <div className="mb-4">
           <h3 className="text-xl font-semibold mb-2">4.1 Utilisation des cookies</h3>

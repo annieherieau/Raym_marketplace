@@ -24,7 +24,6 @@ import Maintenance from "./pages/Maintenance/Maintenance";
 import Configurator from "./pages/Configurator/Configurator";
 import { loadCookie } from "./app/utils";
 import { unknownUser } from "./app/atoms";
-import CreateProduct from "./components/CreateProduct";
 import AccessibilityIcon from "./components/accessibility/AccessibilityIcon";
 import Shop from "./pages/Shop/Shop";
 import ScrollTopIcon from "./components/ScrollTopIcon";

@@ -1,17 +1,7 @@
 import Team from '../../components/Team';
 import ContactForm from '../../components/ContactForm';
-import { useEffect } from 'react';
 
 const Contact = () => {
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash === "#top") {
-      const element = document.getElementById("top");
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  }, []);
 
   return (
     <div className="flex justify-center">

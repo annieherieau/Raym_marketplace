@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
+import { HashLink as Link } from 'react-router-hash-link';
 import logo from '../assets/raymW.png';
+import CookiesConsent from './CookiesConsent';
 
 const Footer = () => {
   return (
     <footer className="bg-black text-white mt-auto">
+      <CookiesConsent />
       <div className="container mx-auto px-5 py-6 flex flex-col md:flex-row items-center justify-between">
         <div className='flex flex-row'>
         <div className="flex items-center justify-center md:justify-start mb-4 md:mb-0 h-20">

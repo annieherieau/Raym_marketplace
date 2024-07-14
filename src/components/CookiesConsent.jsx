@@ -33,7 +33,7 @@ export default function CookiesConsent() {
         }}
         expires={150}
         // enableDeclineButton
-        onDecline={handleDecline}
+        // onDecline={handleDecline}
         buttonStyle={{
           backgroundColor: "#4A90E2",
           color: "white",

@@ -57,7 +57,7 @@ const LegalMentions = () => {
         </div>
       </section>
 
-      <section className="mb-6">
+      <section id="userdata" className="mb-6">
         <h2 className="text-2xl font-semibold mb-2">5. Protection des données personnelles</h2>
 
         <div className="mb-4">

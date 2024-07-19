@@ -32,7 +32,7 @@ const api_url = import.meta.env.VITE_BACK_API_URL;
 
 function App() {
   const isLoggedIn = useAtomValue(isAuthAtom);
-  const [user, setUser] = useAtom(userAtom);
+  const [, setUser] = useAtom(userAtom);
   const initializeDarkMode = () => {
     const darkMode = localStorage.getItem("darkMode");
     if (darkMode === null) {

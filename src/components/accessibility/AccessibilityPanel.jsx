@@ -12,19 +12,24 @@ const AccessibilityPanel = ({
 }) => {
   const [activeTab, setActiveTab] = useState('general');
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [modeText, setModeText] = useState(isDarkMode ? 'Mode clair': 'Mode sombre');
 
   useEffect(() => {
     const darkModeSetting = localStorage.getItem('darkMode') === 'true';
     setIsDarkMode(darkModeSetting);
   }, []);
 
+  useEffect(() => {
+    setModeText(isDarkMode ? 'Mode clair': 'Mode sombre')
+  }, [isDarkMode]);
+
   const renderGeneralSettings = () => (
     <div className="space-y-2">
       <button
-        onClick={toggleDarkMode}
+        onClick={()=> {toggleDarkMode(); setIsDarkMode( isDarkMode=> !isDarkMode)}}
         className={`w-full py-2 px-4 ${isDarkMode ? 'bg-gray-700' : 'bg-blue-500'} text-white rounded-lg hover:bg-blue-600`}
       >
-        Mode sombre
+      {modeText}
       </button>
       <button
         onClick={toggleOpenDyslexic}

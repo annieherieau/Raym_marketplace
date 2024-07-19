@@ -1,24 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAtom, useAtomValue } from "jotai";
 import { isAuthAtom, noticeAtom } from "../app/atoms";
 import { buildRequestOptions, getTokenFromResponse } from "../app/api";
 import { checkPasswords, createCookie, getFormData } from "../app/utils";
 import { Link, useNavigate } from "react-router-dom";
+import ConnexionCard from '../components/userConnexion/ConnexionCard';
+import SubmitButton from '../components/userConnexion/SubmitButton';
+import { HashLink } from 'react-router-hash-link';
 
 export default function Register() {
   const isLoggedIn = useAtomValue(isAuthAtom);
   const [notice, setNotice] = useAtom(noticeAtom);
   const navigate = useNavigate();
-  const [isCGUChecked, setIsCGUChecked] = useState(false);
-  const [showModal, setShowModal] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    if (!isCGUChecked) {
-      setShowModal(true);
-      return;
-    }
 
     // récupérer les données du formulaire
     const userData = getFormData(event.target);
@@ -71,20 +67,13 @@ export default function Register() {
   }, [isLoggedIn, notice, navigate]);
 
   return (
-    <div>
-      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm border border-black rounded-lg bg-beige">
-          <div className="bg-black p-4 rounded-t-lg">
-            <h2 className="text-center mt-8 mb-4 text-4xl font-bold leading-9 tracking-tight text-palegreen-500">
-              Enregistrez-vous
-            </h2>
-          </div>
-          <div className="p-4">
+    <section>
+      <ConnexionCard title='Enregistrez-vous'>
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm mt-9 font-medium leading-6 text-black"
+                  className="required block text-sm mt-9 font-medium leading-6"
                 >
                   Adresse email
                 </label>
@@ -95,7 +84,7 @@ export default function Register() {
                     type="email"
                     autoComplete="email"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block text-black w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -103,7 +92,7 @@ export default function Register() {
                 <div className="flex items-center justify-between">
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-black"
+                    className="required block text-sm font-medium leading-6"
                   >
                     Mot de passe
                   </label>
@@ -115,14 +104,14 @@ export default function Register() {
                     type="password"
                     autoComplete="current-password"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block text-black w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     onChange={checkPasswords}
                   />
                 </div>
                 <div className="flex items-center justify-between mt-3">
                   <label
                     htmlFor="password_confirmation"
-                    className="block text-sm font-medium leading-6 text-black"
+                    className="required block text-sm font-medium leading-6"
                   >
                     Confirmez le mot de passe
                   </label>
@@ -134,7 +123,7 @@ export default function Register() {
                     type="password"
                     autoComplete="current-password"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block text-black w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     onChange={checkPasswords}
                   />
                 </div>
@@ -144,21 +133,15 @@ export default function Register() {
                   type="checkbox"
                   name="remember_me"
                   id="remember_me"
-                  className="mr-2 focus:ring-0 focus:outline-none"
-                  onChange={(e) => setIsCGUChecked(e.target.checked)}
+                  required
+                  className="mr-2 ocus:ring-0 focus:outline-none"
                 />
-                <label htmlFor="remember_me" className="text-sm font-medium leading-6 text-black">
-                  J'accepte les CGU
+                <label htmlFor="remember_me" className="required text-sm font-medium leading-6">
+                  J'accepte la <HashLink to='/mentions-legales#userdata'>politique de confidentialité</HashLink>
                 </label>
               </div>
               <div>
-                <button
-                  type="submit"
-                  className="flex w-full justify-center mt-9 rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-palegreen-500 shadow-sm hover:bg-palegreen hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  onClick={() => setShowModal(!isCGUChecked)}
-                >
-                  Valider
-                </button>
+                <SubmitButton/>
               </div>
             </form>
             <p className="mt-10 text-center text-sm text-gray-500">
@@ -167,27 +150,12 @@ export default function Register() {
                 Connectez-vous ici
               </Link>
             </p>
-          </div>
-        </div>
+          </ConnexionCard>
         <div className="mt-10 text-center text-sm text-gray-500">
           <p>Une question ? Appelez-nous</p>
           <p className="font-bold">0 969 323 551</p>
           <p>lundi au vendredi : 8h - 20h / samedi : 9h - 19h (hors jours fériés)</p>
         </div>
-      </div>
-      {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
-            <p className='text-white'>Veuillez accepter les CGU</p>
-            <button
-              onClick={() => setShowModal(false)}
-              className="mt-4 px-4 py-2 bg-palegreen-500 text-black rounded"
-            >
-              Fermer
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+    </section>
   );
 }

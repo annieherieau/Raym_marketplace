@@ -1,3 +1,4 @@
+
 const Modal = ({ show, onClose, title, children }) => {
   const isDarkMode = localStorage.getItem('darkMode') === 'true';
 

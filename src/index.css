@@ -37,6 +37,13 @@ body {
   overflow: auto; 
 }
 
+/* Formulaires */
+.required:after { 
+  color:  red;
+  content: " * ";
+  position: relative;
+}
+
 /* Maintenance */
 strong {
   font-weight: bold;

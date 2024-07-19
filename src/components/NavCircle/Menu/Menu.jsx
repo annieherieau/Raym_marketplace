@@ -206,14 +206,14 @@ const Navbar = () => {
         <div className="icons-container">
           <i
             ref={userIconRef}
-            className="fas fa-user text-2xl cursor-pointer user-icon"
+            className={`${isDarkMode ? "hover:text-palegreen-500" : ""} fas fa-user text-2xl cursor-pointer user-icon`}
             onClick={handleUserIconClick}
             onMouseEnter={handleUserIconHover}
             onMouseLeave={handleUserIconLeave}
           ></i>
           <FontAwesomeIcon
             icon={faShoppingCart}
-            className="text-2xl cursor-pointer cart-icon"
+            className={`${isDarkMode ? "hover:text-palegreen-500" : ""} text-2xl cursor-pointer cart-icon`}
             onClick={handleCartToggle}
           />
           <button
